@@ -1,0 +1,191 @@
+<!DOCTYPE html><html lang="zh"><head><meta charSet="utf-8" data-next-head=""/><meta name="viewport" content="width=device-width, initial-scale=1.0" data-next-head=""/><meta name="theme-color" content="#f7f9fb" data-next-head=""/><title data-next-head="">使用 Tailwind CSS 实现博客在移动端和电脑端的字体适配 - 代码民工</title><meta name="description" content="通过 Tailwind CSS 移动端和电脑端分别设置不同的字体大小" data-next-head=""/><meta name="author" content="代码民工" data-next-head=""/><meta name="keywords" content="使用 Tailwind CSS 实现博客在移动端和电脑端的字体适配, 其他, 技术博客" data-next-head=""/><meta name="robots" content="index, follow" data-next-head=""/><link rel="canonical" href="https://suijf.site/blog/articles/2022-03-14/" data-next-head=""/><meta property="og:title" content="使用 Tailwind CSS 实现博客在移动端和电脑端的字体适配 - 代码民工" data-next-head=""/><meta property="og:description" content="通过 Tailwind CSS 移动端和电脑端分别设置不同的字体大小" data-next-head=""/><meta property="og:type" content="article" data-next-head=""/><meta property="og:url" content="https://suijf.site/blog/articles/2022-03-14/" data-next-head=""/><meta property="og:site_name" content="代码民工" data-next-head=""/><meta property="og:locale" content="zh_CN" data-next-head=""/><meta property="og:image" content="https://suijf.site/logo.svg" data-next-head=""/><meta property="og:image:alt" content="使用 Tailwind CSS 实现博客在移动端和电脑端的字体适配" data-next-head=""/><meta name="twitter:card" content="summary" data-next-head=""/><meta name="twitter:title" content="使用 Tailwind CSS 实现博客在移动端和电脑端的字体适配 - 代码民工" data-next-head=""/><meta name="twitter:description" content="通过 Tailwind CSS 移动端和电脑端分别设置不同的字体大小" data-next-head=""/><meta name="twitter:image" content="https://suijf.site/logo.svg" data-next-head=""/><meta name="twitter:image:alt" content="使用 Tailwind CSS 实现博客在移动端和电脑端的字体适配" data-next-head=""/><link rel="icon" href="/favicon.png" type="image/png"/><link rel="alternate icon" href="/favicon.svg" type="image/svg+xml"/><link rel="preload" href="/_next/static/chunks/0~s9f1qsu~ga0.css" as="style"/><style>
+            html.official-home-html {
+              background-color: #0d1117;
+              color: #e8eaf0;
+            }
+
+            html.official-home-html body {
+              background-color: #0d1117;
+            }
+
+            html.official-home-html[data-theme='light'] {
+              background-color: #f8fafc;
+              color: #102033;
+            }
+
+            html.official-home-html[data-theme='light'] body {
+              background-color: #f8fafc;
+            }
+
+            html.blog-html {
+              background-color: #f7f9fb;
+              color: #21313c;
+            }
+
+            html.blog-html body {
+              background-color: #f7f9fb;
+            }
+
+            html.blog-html[data-theme='dark'] {
+              background-color: #070910;
+              color: #e8eaf0;
+            }
+
+            html.blog-html[data-theme='dark'] body {
+              background-color: #070910;
+            }
+          </style><script>
+      (function () {
+        var root = document.documentElement;
+        var isOfficialHome = window.location.pathname === '/';
+
+        function isThemeValue(value) {
+          return value === 'light' || value === 'dark';
+        }
+
+        function getSavedTheme() {
+          try {
+            return window.localStorage.getItem('theme');
+          } catch (error) {
+            return null;
+          }
+        }
+
+        function getSystemTheme(fallbackTheme) {
+          if (!window.matchMedia) {
+            return fallbackTheme;
+          }
+
+          return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+
+        function applyInitialTheme(fallbackTheme) {
+          var savedTheme = getSavedTheme();
+          root.dataset.theme = isThemeValue(savedTheme) ? savedTheme : getSystemTheme(fallbackTheme);
+        }
+
+        if (isOfficialHome) {
+          root.classList.add('official-home-html');
+          root.classList.add('theme-preload');
+          applyInitialTheme('dark');
+          return;
+        }
+
+        root.classList.add('blog-html');
+        root.classList.add('theme-preload');
+        applyInitialTheme('light');
+      })();
+    </script><link rel="stylesheet" href="/_next/static/chunks/0~s9f1qsu~ga0.css" data-n-g=""/><noscript data-n-css=""></noscript><script src="/_next/static/chunks/0ydd6~w3_fayi.js" defer=""></script><script src="/_next/static/chunks/05cu9m5z3rq~h.js" defer=""></script><script src="/_next/static/chunks/0i.lj6jsn6e_1.js" defer=""></script><script src="/_next/static/chunks/0q77~okj5tq6y.js" defer=""></script><script src="/_next/static/chunks/turbopack-03-9wliwew3j..js" defer=""></script><script src="/_next/static/chunks/0p9klbulnm85m.js" defer=""></script><script src="/_next/static/chunks/02vkjufltungy.js" defer=""></script><script src="/_next/static/chunks/14kq3.jhtis21.js" defer=""></script><script src="/_next/static/chunks/0ryadc0~2syp5.js" defer=""></script><script src="/_next/static/chunks/0eurpglntds-u.js" defer=""></script><script src="/_next/static/chunks/turbopack-093raz3rf~z-p.js" defer=""></script><script src="/_next/static/_rfoJLW6lvSfDuya4X6cz/_buildManifest.js" defer=""></script><script src="/_next/static/_rfoJLW6lvSfDuya4X6cz/_ssgManifest.js" defer=""></script><script src="/_next/static/_rfoJLW6lvSfDuya4X6cz/_clientMiddlewareManifest.js" defer=""></script></head><body><div id="__next"><div class="blog-shell flex flex-col min-h-screen opacity-100 transition-opacity duration-1000"><header class="theme-header theme-border fixed top-0 z-20 w-full border-b shadow-[0_8px_30px_rgba(33,49,60,0.06)] backdrop-blur transition-transform duration-300 translate-y-0"><div class="theme-header-progress h-1 fixed transition-all duration-300 ease-in-out w-0"></div><div class="blog-nav-wrapper"><div class="blog-nav-inner"><div class="flex min-w-0 flex-1 items-center gap-4 md:gap-6"><a class="app-brand-logo" href="/"><svg xmlns="http://www.w3.org/2000/svg" width="260" height="57" viewBox="38 68 260 57" fill="none" class="app-brand-logo__image" role="img" aria-label="代码民工"><title>代码民工</title><defs><clipPath id="textReveal-light"><rect x="106" y="72" width="186" height="46" rx="6"></rect></clipPath><linearGradient id="shineGradient-light-off" x1="106" y1="96" x2="140" y2="96" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="rgba(255,255,255,0)"></stop><stop offset="0.5" stop-color="rgba(255,255,255,0.82)"></stop><stop offset="1" stop-color="rgba(255,255,255,0)"></stop></linearGradient></defs><style>
+          .brand-logo__mark {
+            stroke: var(--logo-mark, #4f606b);
+            stroke-width: 8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            opacity: 0.92;
+          }
+
+          .brand-logo__accent {
+            stroke: var(--accent, #0f766e);
+            stroke-width: 8;
+            stroke-linecap: round;
+          }
+
+          .brand-logo__text {
+            fill: var(--logo-text, #21313c);
+            font-family: 'PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans SC',sans-serif;
+            font-size: 41px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+          }
+
+          .brand-logo__shine {
+            fill: url(#shineGradient-light-off);
+            transform: skewX(-20deg) translateX(-170px);
+            animation: none;
+            mix-blend-mode: soft-light;
+            opacity: 0;
+          }
+
+          @keyframes brandLogoSweep {
+            0%, 42% {
+              opacity: 0;
+              transform: skewX(-20deg) translateX(-170px);
+            }
+
+            48% {
+              opacity: 0.26;
+            }
+
+            66% {
+              opacity: 0.26;
+              transform: skewX(-20deg) translateX(190px);
+            }
+
+            72%, 100% {
+              opacity: 0;
+              transform: skewX(-20deg) translateX(190px);
+            }
+          }
+
+          @media (prefers-reduced-motion: reduce) {
+            .brand-logo__shine {
+              animation: none;
+              opacity: 0.14;
+              transform: none;
+            }
+          }
+        </style><path class="brand-logo__mark" d="M44 82L58 95L44 108"></path><path class="brand-logo__accent" d="M67 108H86"></path><g clip-path="url(#textReveal-light)"><text class="brand-logo__text" x="104" y="109">代码民工</text></g></svg></a><nav class="hidden flex-1 items-center justify-end gap-1 pr-4 md:flex xl:pr-8"><a class="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-base font-medium transition-colors theme-nav-link" href="/blog/"><svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5.5A2.5 2.5 0 016.5 3H20v15.5A2.5 2.5 0 0117.5 21H6.5A2.5 2.5 0 014 18.5v-13zM8 7h8M8 11h8M8 15h5"></path></svg>博客</a><a class="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-base font-medium transition-colors theme-nav-link" href="/blog/articles/"><svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>文章</a><a class="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-base font-medium transition-colors theme-nav-link" href="/blog/archive/"><svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 8h-1V6a2 2 0 00-2-2h-1V3h-2v1H9V3H7v1H6a2 2 0 00-2 2v2H3v2h1v8a2 2 0 002 2h10a2 2 0 002-2v-8h1V8zm-3 10H6v-6h10v6z"></path></svg>归档</a><a class="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-base font-medium transition-colors theme-nav-link" href="/blog/about/"><svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>关于</a></nav></div><div class="ml-4 flex items-center gap-2 md:gap-3"><div class="theme-toggle blog-desktop-theme-toggle hidden md:inline-flex" aria-label="主题切换"><button type="button" class="theme-toggle__item is-active" aria-label="浅色模式" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.25"></circle><path d="M12 1.75v2.5M12 19.75v2.5M4.75 4.75l1.8 1.8M17.45 17.45l1.8 1.8M1.75 12h2.5M19.75 12h2.5M4.75 19.25l1.8-1.8M17.45 6.55l1.8-1.8"></path></svg></button><button type="button" class="theme-toggle__item " aria-label="深色模式" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.08 14.64A8.75 8.75 0 1 1 9.36 3.92a7.1 7.1 0 0 0 10.72 10.72Z"></path></svg></button></div><button class="theme-icon-button md:hidden"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg></button></div></div></div></header><div class="mt-14 flex min-h-[calc(100vh-56px)] justify-center md:mt-[72px] md:min-h-[calc(100vh-72px)]"><div class="flex w-full max-w-[1600px] items-start gap-5 px-4 md:px-8 xl:px-10 2xl:px-16 py-6"><div class="hidden w-60 flex-shrink-0 self-start transition-[top] duration-300 xl:block xl:w-64 2xl:w-72" style="position:sticky;top:var(--blog-sidebar-offset, 88px)"><aside class="w-full"><div class="space-y-3 pr-2 transition-[max-height] duration-300"><div class="theme-panel rounded-2xl border shadow-[0_2px_10px_rgba(33,49,60,0.05)] p-4"><div class="flex items-center gap-3 mb-3"><div class="theme-author-mark flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full font-bold text-white select-none" style="font-size:var(--fs-base)">代</div><div class="min-w-0"><div class="theme-author-name body-lead truncate text-[--ink]">代码民工</div><div class="theme-author-bio truncate text-xs text-[--muted]">网络开发者和科技爱好者</div></div></div><p class="theme-author-description text-xs leading-relaxed">一个分享网络开发、编程和科技趋势的博客</p><div class="mt-3 flex gap-2"><a href="https://github.com/suijiafeng" target="_blank" rel="noreferrer" class="theme-sidebar-action inline-flex items-center gap-1.5 rounded-lg border px-1.5 py-1 font-medium" style="font-size:var(--fs-xs)"><svg viewBox="64 64 896 896" width="16" height="16" fill="currentColor"><path d="M511.6 76.3C264.3 76.2 64 276.4 64 523.5 64 718.9 189.3 885 363.8 946c23.5 5.9 19.9-10.8 19.9-22.2v-77.5c-135.7 15.9-141.2-73.9-150.3-88.9C215 726 171.5 718 184.5 703c30.9-15.9 62.4 4 98.9 57.9 26.4 39.1 77.9 32.5 104 26 5.7-23.5 17.9-44.5 34.7-60.8-140.6-25.2-199.2-111-199.2-213 0-49.5 16.3-95 48.3-131.7-20.4-60.5 1.9-112.3 4.9-120 58.1-5.2 118.5 41.6 123.2 45.3 33-8.9 70.7-13.6 112.9-13.6 42.4 0 80.2 4.9 113.5 13.9 11.3-8.6 67.3-48.8 121.3-43.9 2.9 7.7 24.7 58.3 5.5 118 32.4 36.8 48.9 82.7 48.9 132.3 0 102.2-59 188.1-200 212.9a127.5 127.5 0 0138.1 91v112.5c.8 9 0 17.9 15 17.9 177.1-59.7 304.6-227 304.6-424.1 0-247.2-200.4-447.3-447.5-447.3z"></path></svg>GitHub</a><a href="mailto:suijiafeng@hotmail.com" class="theme-sidebar-action inline-flex items-center gap-1.5 rounded-lg border px-1.5 py-1 font-medium" style="font-size:var(--fs-xs)"><svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>邮件</a></div></div><div class="theme-panel rounded-2xl border shadow-[0_2px_10px_rgba(33,49,60,0.05)] p-4"><div class="body-copy mb-3 font-semibold tracking-[0.12em] text-[--muted] uppercase">热门标签</div></div><div class="theme-panel rounded-2xl border shadow-[0_2px_10px_rgba(33,49,60,0.05)] p-4"><div class="body-copy mb-3 font-semibold tracking-[0.12em] text-[--muted] uppercase">年度归档</div></div></div></aside></div><main class="min-w-0 flex-1 overflow-x-hidden"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"使用 Tailwind CSS 实现博客在移动端和电脑端的字体适配","description":"通过 Tailwind CSS 移动端和电脑端分别设置不同的字体大小","datePublished":"2022-03-14 19:32:44","dateModified":"2022-03-14 19:32:44","mainEntityOfPage":"https://suijf.site/blog/articles/2022-03-14/","url":"https://suijf.site/blog/articles/2022-03-14/","image":["https://suijf.site/logo.svg"],"author":{"@type":"Person","name":"代码民工","url":"https://suijf.site/blog/about/"},"publisher":{"@type":"Organization","name":"代码民工","logo":{"@type":"ImageObject","url":"https://suijf.site/logo.svg"}},"keywords":"其他","articleSection":"其他","wordCount":2196}</script><div class="theme-panel mx-auto rounded-2xl border p-5 shadow-[0_14px_30px_rgba(33,49,60,0.05)] md:p-7"><article class="markdown-body prose"><h1 class="theme-heading-strong">使用 Tailwind CSS 实现博客在移动端和电脑端的字体适配</h1><div class="mb-3 flex flex-wrap items-center gap-x-3 gap-y-1.5 meta-text"><div class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon" class="h-3.5 w-3.5 flex-shrink-0"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"></path></svg><time dateTime="2022-03-14 19:32:44">2022-03-14 19:32:44</time></div><div class="flex flex-wrap gap-1.5"><a class="theme-tag-meta inline-flex items-center px-2.5 font-medium" style="font-size:var(--fs-xs)" href="/blog/tags/other/">其他</a></div></div><div class="pt-0"><p>在进行博客设计时，确保在移动端和电脑端都拥有良好的阅读体验是非常重要的。借助 Tailwind CSS，我们可以轻松实现这一目标。本文将为你介绍如何使用 Tailwind CSS 优化博客的字体设计，并确保在不同设备上获得一致的用户体验。</p>
+<h3>1. <strong>基础字体大小设计</strong></h3>
+<p>在 Tailwind CSS 中，你可以通过 <code>text-base</code>、<code>text-lg</code> 等类来轻松设置不同设备的字体大小。以下是移动端和电脑端的基础字体大小设计建议：</p>
+<ul>
+<li>
+<p><strong>移动端：</strong></p>
+<ul>
+<li>正文：<code>text-base</code>（默认是 16px）</li>
+<li>一级标题：<code>text-2xl</code>（默认是 24px）</li>
+<li>二级标题：<code>text-xl</code>（默认是 20px）</li>
+<li>三级标题：<code>text-lg</code>（默认是 18px）</li>
+<li>辅助文字：<code>text-sm</code>（默认是 14px）</li>
+</ul>
+</li>
+<li>
+<p><strong>电脑端：</strong></p>
+<ul>
+<li>正文：<code>lg:text-lg</code>（18px）</li>
+<li>一级标题：<code>lg:text-4xl</code>（36px）</li>
+<li>二级标题：<code>lg:text-2xl</code>（24px）</li>
+<li>三级标题：<code>lg:text-xl</code>（20px）</li>
+<li>辅助文字：<code>lg:text-base</code>（16px）</li>
+</ul>
+</li>
+</ul>
+<p>通过这种方式，你可以确保博客在不同设备上都拥有适合的阅读体验。</p>
+<h3>2. <strong>响应式设计</strong></h3>
+<p>借助 Tailwind CSS 的响应式工具，你可以为不同的设备屏幕设置不同的样式。在 Tailwind 中，默认提供了几个断点：</p>
+<ul>
+<li><code>sm</code>：适用于 640px 及以下的设备（移动端）</li>
+<li><code>md</code>：适用于 768px 及以下的设备（平板）</li>
+<li><code>lg</code>：适用于 1024px 及以上的设备（电脑端）</li>
+<li><code>xl</code>：适用于 1280px 及以上的设备（大屏幕）</li>
+</ul>
+<p>例如，通过以下代码，你可以为移动端和电脑端分别设置不同的字体大小：</p>
+<pre><div class="relative group"><button class="absolute top-2 right-2 px-2 py-1 bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">复制</button></div></pre>
+<p>在这个示例中，移动端会使用较小的字体，而在较大的屏幕上，字体会自动变大，以提升可读性。</p>
+<h3>3. <strong>自定义行距</strong></h3>
+<p>在长篇阅读内容中，行距的调整同样非常重要。Tailwind CSS 提供了 <code>leading</code> 类来控制行距。例如：</p>
+<pre><div class="relative group"><button class="absolute top-2 right-2 px-2 py-1 bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">复制</button></div></pre>
+<ul>
+<li><code>leading-7</code>：表示行距为字体大小的 1.75 倍，适合长时间阅读。</li>
+<li><code>lg:leading-8</code>：确保在大屏设备上有更舒适的阅读体验。</li>
+</ul>
+<h3>4. <strong>图片的自适应设计</strong></h3>
+<p>除了文字，图片等媒体内容也需要适应不同设备。你可以通过 <code>w-full</code> 和 <code>h-auto</code> 类来使图片根据容器自动调整大小：</p>
+<pre><div class="relative group"><button class="absolute top-2 right-2 px-2 py-1 bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">复制</button></div></pre>
+<p>这确保了图片能够在移动端和电脑端都以适当的比例显示，保持良好的视觉效果。</p>
+<h3>5. <strong>示例代码总结</strong></h3>
+<p>为了更好地理解，我们可以通过以下完整的代码示例来展示如何使用 Tailwind CSS 实现响应式的博客字体设计：</p>
+<pre><div class="relative group"><button class="absolute top-2 right-2 px-2 py-1 bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">复制</button></div></pre>
+<h3>6. <strong>结论</strong></h3>
+<p>借助 Tailwind CSS 的灵活性，你可以通过响应式工具轻松调整博客在不同设备上的字体大小、行距和媒体展示效果。无论是移动端还是电脑端，你的博客都将拥有良好的视觉层次感和阅读体验。</p>
+<hr/>
+<p>通过以上方案，你可以确保博客在各种设备上都有一致的视觉效果和用户体验。这种基于 Tailwind CSS 的解决方案，不仅简洁易用，还能够根据需要快速调整和优化布局。</p></div><div class="mt-5 flex justify-end gap-4"><button class="inline-flex items-center rounded-full border px-2.5 py-1 text-sm font-medium transition-colors duration-300 theme-like-button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-thumbs-up" aria-hidden="true"><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"></path><path d="M7 10v12"></path></svg><span class="ml-1.5 leading-none">点赞<!-- -->（<!-- -->7<!-- -->）</span></button></div></article></div><nav class="mt-4" aria-label="文章导航"><div class="theme-panel rounded-2xl border p-4 shadow-[0_10px_24px_rgba(33,49,60,0.04)] md:p-5" style="--fs-base:0.875rem"><div class="grid gap-3 md:grid-cols-2"><a class="theme-title-link block min-w-0" href="/blog/articles/frontend-scroll-linked-animation-2022/"><span class="meta-text block">上一篇</span><span class="title-small mt-1 block truncate">滚动驱动动画入门：让页面动画跟着滚动走</span></a><a class="theme-title-link block min-w-0 md:text-right" href="/blog/articles/frontend-javascript-modules-2022/"><span class="meta-text block">下一篇</span><span class="title-small mt-1 block truncate">JavaScript 模块化基础：为什么前端工程越来越离不开模块边界</span></a></div></div><div class="mt-4 theme-panel rounded-2xl border p-4 shadow-[0_10px_24px_rgba(33,49,60,0.04)] md:p-5" style="--fs-xl:1.05rem;--fs-lg:0.9375rem;--fs-base:0.875rem;--fs-sm:0.78rem"><div class="theme-divider mb-3 flex items-center justify-between border-b pb-3"><div class="section-title text-[--ink]">推荐阅读</div><a class="btn-text" href="/blog/articles/">全部文章</a></div><div class="space-y-3"><a class="theme-divider block border-b pb-3 last:border-b-0 last:pb-0" href="/blog/articles/vue-computed-watch-2018/"><span class="title-small block truncate text-[--ink] transition-colors hover:text-[--accent]">Vue 里 computed 和 watch 到底怎么选：别把两种能力写成一回事</span><span class="body-copy mt-1 block line-clamp-1">回到 Vue 日常开发最容易混淆的一组能力，讲清楚 computed 和 watch 在职责上的差异。</span></a><a class="theme-divider block border-b pb-3 last:border-b-0 last:pb-0" href="/blog/articles/frontend-request-alova-2023/"><span class="title-small block truncate text-[--ink] transition-colors hover:text-[--accent]">前端请求库不只是发请求：从 Axios 到 Alova 的思路变化</span><span class="body-copy mt-1 block line-clamp-1">介绍现代请求库从简单 HTTP 客户端走向请求状态管理、缓存、分页和框架集成的趋势。</span></a><a class="theme-divider block border-b pb-3 last:border-b-0 last:pb-0" href="/blog/articles/introduction-to-react-hooks/"><span class="title-small block truncate text-[--ink] transition-colors hover:text-[--accent]">React Hooks 入门指南</span><span class="body-copy mt-1 block line-clamp-1">探索 React Hooks 的基础知识，了解如何简化你的函数组件</span></a></div></div></nav></main></div></div><footer class="theme-footer app-footer mt-4 border-t md:mt-6"><div class="app-footer__container mx-auto max-w-5xl px-4 py-3 md:px-8 md:py-5 xl:px-10 2xl:px-16"><div class="app-footer__content flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 md:flex-row md:justify-between md:gap-3"><div class="app-footer__brand flex min-w-0 items-center justify-center gap-1.5"><span class="app-footer__name text-sm font-semibold leading-5 text-[var(--app-footer-ink)]">代码民工</span><span class="app-footer__slogan-separator hidden text-xs leading-5 text-[var(--app-footer-dot)] sm:inline">·</span><span class="app-footer__slogan hidden text-xs leading-5 text-[var(--app-footer-muted)] sm:inline">探索科技世界</span></div><nav class="app-footer__nav flex items-center gap-3 md:gap-4"><a class="inline-flex cursor-pointer items-center border-0 bg-transparent p-0 text-xs font-[inherit] leading-5 text-[var(--app-footer-muted)] transition-colors hover:text-[var(--app-footer-hover)]" href="/blog/articles/">博文</a><a class="inline-flex cursor-pointer items-center border-0 bg-transparent p-0 text-xs font-[inherit] leading-5 text-[var(--app-footer-muted)] transition-colors hover:text-[var(--app-footer-hover)]" href="/blog/tags/">标签</a><a class="inline-flex cursor-pointer items-center border-0 bg-transparent p-0 text-xs font-[inherit] leading-5 text-[var(--app-footer-muted)] transition-colors hover:text-[var(--app-footer-hover)]" href="/blog/archive/">归档</a><a class="inline-flex cursor-pointer items-center border-0 bg-transparent p-0 text-xs font-[inherit] leading-5 text-[var(--app-footer-muted)] transition-colors hover:text-[var(--app-footer-hover)]" href="/blog/about/">关于</a></nav><div class="app-footer__right flex items-center gap-2.5 md:gap-3"><a href="https://github.com/suijiafeng" target="_blank" rel="noreferrer" aria-label="GitHub" class="text-[var(--app-footer-muted)] transition-colors hover:text-[var(--app-footer-hover)]"><svg viewBox="0 0 24 24" class="h-4 w-4 fill-current" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.04c-3.34.73-4.04-1.42-4.04-1.42-.55-1.38-1.34-1.74-1.34-1.74-1.1-.74.08-.73.08-.73 1.21.08 1.85 1.23 1.85 1.23 1.08 1.84 2.83 1.31 3.52 1 .11-.77.42-1.31.76-1.61-2.66-.3-5.47-1.32-5.47-5.9 0-1.3.47-2.36 1.23-3.19-.12-.3-.53-1.52.12-3.17 0 0 1.01-.32 3.3 1.22a11.5 11.5 0 0 1 6 0c2.28-1.54 3.29-1.22 3.29-1.22.66 1.65.25 2.87.12 3.17.77.83 1.23 1.89 1.23 3.19 0 4.59-2.81 5.6-5.49 5.89.43.37.82 1.1.82 2.23v3.31c0 .32.21.7.83.58A12 12 0 0 0 12 .5Z"></path></svg></a><a href="mailto:suijiafeng@hotmail.com" aria-label="Email" class="text-[var(--app-footer-muted)] transition-colors hover:text-[var(--app-footer-hover)]"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg></a><span class="text-xs leading-5 text-[var(--app-footer-dot)]">·</span><span class="text-xs leading-5 text-[var(--app-footer-muted)]">© <!-- -->2018<!-- -->–<!-- -->2026</span></div></div></div></footer></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"postData":{"title":"使用 Tailwind CSS 实现博客在移动端和电脑端的字体适配","date":"2022-03-14 19:32:44","excerpt":"通过 Tailwind CSS 移动端和电脑端分别设置不同的字体大小","tags":["其他"],"slug":"2022-03-14","category":"","likeCount":7,"postId":"16952364-d17a-32a3-6d9e-9ec3943022b2","viewCount":1385,"readTime":"3分钟","coverImage":null,"content":"\n在进行博客设计时，确保在移动端和电脑端都拥有良好的阅读体验是非常重要的。借助 Tailwind CSS，我们可以轻松实现这一目标。本文将为你介绍如何使用 Tailwind CSS 优化博客的字体设计，并确保在不同设备上获得一致的用户体验。\n\n### 1. **基础字体大小设计**\n\n在 Tailwind CSS 中，你可以通过 `text-base`、`text-lg` 等类来轻松设置不同设备的字体大小。以下是移动端和电脑端的基础字体大小设计建议：\n\n- **移动端：**\n  - 正文：`text-base`（默认是 16px）\n  - 一级标题：`text-2xl`（默认是 24px）\n  - 二级标题：`text-xl`（默认是 20px）\n  - 三级标题：`text-lg`（默认是 18px）\n  - 辅助文字：`text-sm`（默认是 14px）\n\n- **电脑端：**\n  - 正文：`lg:text-lg`（18px）\n  - 一级标题：`lg:text-4xl`（36px）\n  - 二级标题：`lg:text-2xl`（24px）\n  - 三级标题：`lg:text-xl`（20px）\n  - 辅助文字：`lg:text-base`（16px）\n\n通过这种方式，你可以确保博客在不同设备上都拥有适合的阅读体验。\n\n### 2. **响应式设计**\n\n借助 Tailwind CSS 的响应式工具，你可以为不同的设备屏幕设置不同的样式。在 Tailwind 中，默认提供了几个断点：\n- `sm`：适用于 640px 及以下的设备（移动端）\n- `md`：适用于 768px 及以下的设备（平板）\n- `lg`：适用于 1024px 及以上的设备（电脑端）\n- `xl`：适用于 1280px 及以上的设备（大屏幕）\n\n例如，通过以下代码，你可以为移动端和电脑端分别设置不同的字体大小：\n\n```html\n\u003c!-- Tailwind CSS 示例 --\u003e\n\u003cdiv class=\"prose\"\u003e\n  \u003ch1 class=\"text-2xl lg:text-4xl\"\u003e一级标题\u003c/h1\u003e\n  \u003ch2 class=\"text-xl lg:text-2xl\"\u003e二级标题\u003c/h2\u003e\n  \u003cp class=\"text-base lg:text-lg\"\u003e这是正文内容。\u003c/p\u003e\n  \u003cspan class=\"text-sm lg:text-base\"\u003e辅助文字\u003c/span\u003e\n\u003c/div\u003e\n```\n\n在这个示例中，移动端会使用较小的字体，而在较大的屏幕上，字体会自动变大，以提升可读性。\n\n### 3. **自定义行距**\n\n在长篇阅读内容中，行距的调整同样非常重要。Tailwind CSS 提供了 `leading` 类来控制行距。例如：\n```html\n\u003cp class=\"text-base leading-7 lg:text-lg lg:leading-8\"\u003e\n  这是适合博客的正文文字。\n\u003c/p\u003e\n```\n- `leading-7`：表示行距为字体大小的 1.75 倍，适合长时间阅读。\n- `lg:leading-8`：确保在大屏设备上有更舒适的阅读体验。\n\n### 4. **图片的自适应设计**\n\n除了文字，图片等媒体内容也需要适应不同设备。你可以通过 `w-full` 和 `h-auto` 类来使图片根据容器自动调整大小：\n```html\n\u003cimg src=\"image.jpg\" class=\"w-full h-auto\" alt=\"Responsive image\"\u003e\n```\n\n这确保了图片能够在移动端和电脑端都以适当的比例显示，保持良好的视觉效果。\n\n### 5. **示例代码总结**\n\n为了更好地理解，我们可以通过以下完整的代码示例来展示如何使用 Tailwind CSS 实现响应式的博客字体设计：\n```html\n\u003cdiv class=\"prose max-w-none\"\u003e\n  \u003ch1 class=\"text-2xl lg:text-4xl leading-tight\"\u003e博客标题\u003c/h1\u003e\n  \u003ch2 class=\"text-xl lg:text-2xl leading-snug mt-4\"\u003e二级标题\u003c/h2\u003e\n  \u003cp class=\"text-base lg:text-lg leading-7 lg:leading-8 mt-2\"\u003e\n    这是文章的正文，适合长时间阅读，行距设置为 1.75 倍，确保内容清晰易读。\n  \u003c/p\u003e\n  \u003cspan class=\"text-sm lg:text-base text-gray-500 mt-1 block\"\u003e日期：2024-09-04\u003c/span\u003e\n\u003c/div\u003e\n```\n\n### 6. **结论**\n\n借助 Tailwind CSS 的灵活性，你可以通过响应式工具轻松调整博客在不同设备上的字体大小、行距和媒体展示效果。无论是移动端还是电脑端，你的博客都将拥有良好的视觉层次感和阅读体验。\n\n---\n\n通过以上方案，你可以确保博客在各种设备上都有一致的视觉效果和用户体验。这种基于 Tailwind CSS 的解决方案，不仅简洁易用，还能够根据需要快速调整和优化布局。\n"},"randomPosts":[{"title":"Vue 里 computed 和 watch 到底怎么选：别把两种能力写成一回事","date":"2018-11-16","excerpt":"回到 Vue 日常开发最容易混淆的一组能力，讲清楚 computed 和 watch 在职责上的差异。","tags":["Vue","前端开发"],"slug":"vue-computed-watch-2018","category":"","likeCount":6,"postId":"afe7173c-7cea-829f-39ab-d16d3ae725af","viewCount":1244,"readTime":null,"coverImage":null},{"title":"前端请求库不只是发请求：从 Axios 到 Alova 的思路变化","date":"2023-05-04","excerpt":"介绍现代请求库从简单 HTTP 客户端走向请求状态管理、缓存、分页和框架集成的趋势。","tags":["前端开发","Vue","React"],"slug":"frontend-request-alova-2023","category":"","likeCount":6,"postId":"12618464-0fa9-e0e6-111b-7f00caf1db51","viewCount":2341,"readTime":null,"coverImage":null},{"title":"React Hooks 入门指南","date":"2023-08-15","excerpt":"探索 React Hooks 的基础知识，了解如何简化你的函数组件","tags":["其他"],"slug":"introduction-to-react-hooks","category":"","likeCount":7,"postId":"8cd9c4fa-d5ef-897b-1e8b-ef602f10e233","viewCount":1882,"readTime":null,"coverImage":null}],"prevPost":{"title":"滚动驱动动画入门：让页面动画跟着滚动走","date":"2022-03-24","excerpt":"介绍滚动驱动动画的基本概念，以及为什么它能减少一部分滚动监听带来的复杂度。","tags":["前端开发"],"slug":"frontend-scroll-linked-animation-2022","category":"","likeCount":7,"postId":"0e38bf5e-3c69-cfb2-9828-5201890c674d","viewCount":2199,"readTime":null,"coverImage":null},"nextPost":{"title":"JavaScript 模块化基础：为什么前端工程越来越离不开模块边界","date":"2022-03-11","excerpt":"介绍 JavaScript 模块化的基本价值，以及它为什么会成为现代前端工程的基础能力之一。","tags":["前端开发","工程化"],"slug":"frontend-javascript-modules-2022","category":"","likeCount":7,"postId":"d852dd0b-c05e-a48e-d799-41f267a43b32","viewCount":1221,"readTime":null,"coverImage":null}},"__N_SSG":true},"page":"/blog/articles/[...slug]","query":{"slug":["2022-03-14"]},"buildId":"_rfoJLW6lvSfDuya4X6cz","isFallback":false,"gsp":true,"scriptLoader":[]}</script></body></html>

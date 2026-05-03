@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="260" height="57" viewBox="38 68 260 57" fill="none">
+  <defs>
+    <clipPath id="textReveal">
+      <rect class="reveal-mask" x="106" y="72" width="0" height="46" rx="6" />
+    </clipPath>
+    <linearGradient id="shineGradient" x1="106" y1="96" x2="140" y2="96" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="rgba(255,255,255,0)" />
+      <stop offset="0.5" stop-color="rgba(255,255,255,0.85)" />
+      <stop offset="1" stop-color="rgba(255,255,255,0)" />
+    </linearGradient>
+  </defs>
+
+  <style>
+    .logo-mark {
+      stroke: #4f606b;
+      stroke-width: 8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      opacity: 0.9;
+    }
+
+    .logo-accent {
+      stroke: #0f766e;
+      stroke-width: 8;
+      stroke-linecap: round;
+    }
+
+    .logo-text {
+      fill: #21313c;
+      letter-spacing: 0.5px;
+      clip-path: url(#textReveal);
+    }
+
+    .reveal-mask {
+      width: 186px;
+    }
+
+    .shine {
+      fill: url(#shineGradient);
+      transform: skewX(-20deg) translateX(-170px);
+      animation: sweep 3.6s ease-in-out infinite;
+      mix-blend-mode: soft-light;
+    }
+
+    @keyframes sweep {
+      0%, 42% {
+        opacity: 0;
+        transform: skewX(-20deg) translateX(-170px);
+      }
+      48% {
+        opacity: 0.32;
+      }
+      66% {
+        opacity: 0.32;
+        transform: skewX(-20deg) translateX(190px);
+      }
+      72%, 100% {
+        opacity: 0;
+        transform: skewX(-20deg) translateX(190px);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .shine {
+        animation: none;
+        opacity: 0.22;
+        transform: none;
+      }
+    }
+  </style>
+
+  <path class="logo-mark" d="M44 82L58 95L44 108" />
+  <path class="logo-accent" d="M67 108H86" />
+
+  <g>
+    <text class="logo-text" x="104" y="109" font-family="'PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans SC',sans-serif" font-size="41" font-weight="600">
+      代码民工
+    </text>
+    <rect class="shine" x="106" y="74" width="34" height="44" clip-path="url(#textReveal)" />
+  </g>
+</svg>

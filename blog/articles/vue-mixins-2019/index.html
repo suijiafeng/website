@@ -1,0 +1,173 @@
+<!DOCTYPE html><html lang="zh"><head><meta charSet="utf-8" data-next-head=""/><meta name="viewport" content="width=device-width, initial-scale=1.0" data-next-head=""/><meta name="theme-color" content="#f7f9fb" data-next-head=""/><title data-next-head="">Vue Mixins 用久了为什么容易乱：复用逻辑不等于把代码拼在一起 - 代码民工</title><meta name="description" content="回顾 Vue Mixins 在项目里的使用体验，说明它为什么一开始方便，后面却容易失控。" data-next-head=""/><meta name="author" content="代码民工" data-next-head=""/><meta name="keywords" content="Vue Mixins 用久了为什么容易乱：复用逻辑不等于把代码拼在一起, Vue, 技术博客" data-next-head=""/><meta name="robots" content="index, follow" data-next-head=""/><link rel="canonical" href="https://suijf.site/blog/articles/vue-mixins-2019/" data-next-head=""/><meta property="og:title" content="Vue Mixins 用久了为什么容易乱：复用逻辑不等于把代码拼在一起 - 代码民工" data-next-head=""/><meta property="og:description" content="回顾 Vue Mixins 在项目里的使用体验，说明它为什么一开始方便，后面却容易失控。" data-next-head=""/><meta property="og:type" content="article" data-next-head=""/><meta property="og:url" content="https://suijf.site/blog/articles/vue-mixins-2019/" data-next-head=""/><meta property="og:site_name" content="代码民工" data-next-head=""/><meta property="og:locale" content="zh_CN" data-next-head=""/><meta property="og:image" content="https://suijf.site/logo.svg" data-next-head=""/><meta property="og:image:alt" content="Vue Mixins 用久了为什么容易乱：复用逻辑不等于把代码拼在一起" data-next-head=""/><meta name="twitter:card" content="summary" data-next-head=""/><meta name="twitter:title" content="Vue Mixins 用久了为什么容易乱：复用逻辑不等于把代码拼在一起 - 代码民工" data-next-head=""/><meta name="twitter:description" content="回顾 Vue Mixins 在项目里的使用体验，说明它为什么一开始方便，后面却容易失控。" data-next-head=""/><meta name="twitter:image" content="https://suijf.site/logo.svg" data-next-head=""/><meta name="twitter:image:alt" content="Vue Mixins 用久了为什么容易乱：复用逻辑不等于把代码拼在一起" data-next-head=""/><link rel="icon" href="/favicon.png" type="image/png"/><link rel="alternate icon" href="/favicon.svg" type="image/svg+xml"/><link rel="preload" href="/_next/static/chunks/0~s9f1qsu~ga0.css" as="style"/><style>
+            html.official-home-html {
+              background-color: #0d1117;
+              color: #e8eaf0;
+            }
+
+            html.official-home-html body {
+              background-color: #0d1117;
+            }
+
+            html.official-home-html[data-theme='light'] {
+              background-color: #f8fafc;
+              color: #102033;
+            }
+
+            html.official-home-html[data-theme='light'] body {
+              background-color: #f8fafc;
+            }
+
+            html.blog-html {
+              background-color: #f7f9fb;
+              color: #21313c;
+            }
+
+            html.blog-html body {
+              background-color: #f7f9fb;
+            }
+
+            html.blog-html[data-theme='dark'] {
+              background-color: #070910;
+              color: #e8eaf0;
+            }
+
+            html.blog-html[data-theme='dark'] body {
+              background-color: #070910;
+            }
+          </style><script>
+      (function () {
+        var root = document.documentElement;
+        var isOfficialHome = window.location.pathname === '/';
+
+        function isThemeValue(value) {
+          return value === 'light' || value === 'dark';
+        }
+
+        function getSavedTheme() {
+          try {
+            return window.localStorage.getItem('theme');
+          } catch (error) {
+            return null;
+          }
+        }
+
+        function getSystemTheme(fallbackTheme) {
+          if (!window.matchMedia) {
+            return fallbackTheme;
+          }
+
+          return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+
+        function applyInitialTheme(fallbackTheme) {
+          var savedTheme = getSavedTheme();
+          root.dataset.theme = isThemeValue(savedTheme) ? savedTheme : getSystemTheme(fallbackTheme);
+        }
+
+        if (isOfficialHome) {
+          root.classList.add('official-home-html');
+          root.classList.add('theme-preload');
+          applyInitialTheme('dark');
+          return;
+        }
+
+        root.classList.add('blog-html');
+        root.classList.add('theme-preload');
+        applyInitialTheme('light');
+      })();
+    </script><link rel="stylesheet" href="/_next/static/chunks/0~s9f1qsu~ga0.css" data-n-g=""/><noscript data-n-css=""></noscript><script src="/_next/static/chunks/0ydd6~w3_fayi.js" defer=""></script><script src="/_next/static/chunks/05cu9m5z3rq~h.js" defer=""></script><script src="/_next/static/chunks/0i.lj6jsn6e_1.js" defer=""></script><script src="/_next/static/chunks/0q77~okj5tq6y.js" defer=""></script><script src="/_next/static/chunks/turbopack-03-9wliwew3j..js" defer=""></script><script src="/_next/static/chunks/0p9klbulnm85m.js" defer=""></script><script src="/_next/static/chunks/02vkjufltungy.js" defer=""></script><script src="/_next/static/chunks/14kq3.jhtis21.js" defer=""></script><script src="/_next/static/chunks/0ryadc0~2syp5.js" defer=""></script><script src="/_next/static/chunks/0eurpglntds-u.js" defer=""></script><script src="/_next/static/chunks/turbopack-093raz3rf~z-p.js" defer=""></script><script src="/_next/static/_rfoJLW6lvSfDuya4X6cz/_buildManifest.js" defer=""></script><script src="/_next/static/_rfoJLW6lvSfDuya4X6cz/_ssgManifest.js" defer=""></script><script src="/_next/static/_rfoJLW6lvSfDuya4X6cz/_clientMiddlewareManifest.js" defer=""></script></head><body><div id="__next"><div class="blog-shell flex flex-col min-h-screen opacity-100 transition-opacity duration-1000"><header class="theme-header theme-border fixed top-0 z-20 w-full border-b shadow-[0_8px_30px_rgba(33,49,60,0.06)] backdrop-blur transition-transform duration-300 translate-y-0"><div class="theme-header-progress h-1 fixed transition-all duration-300 ease-in-out w-0"></div><div class="blog-nav-wrapper"><div class="blog-nav-inner"><div class="flex min-w-0 flex-1 items-center gap-4 md:gap-6"><a class="app-brand-logo" href="/"><svg xmlns="http://www.w3.org/2000/svg" width="260" height="57" viewBox="38 68 260 57" fill="none" class="app-brand-logo__image" role="img" aria-label="代码民工"><title>代码民工</title><defs><clipPath id="textReveal-light"><rect x="106" y="72" width="186" height="46" rx="6"></rect></clipPath><linearGradient id="shineGradient-light-off" x1="106" y1="96" x2="140" y2="96" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="rgba(255,255,255,0)"></stop><stop offset="0.5" stop-color="rgba(255,255,255,0.82)"></stop><stop offset="1" stop-color="rgba(255,255,255,0)"></stop></linearGradient></defs><style>
+          .brand-logo__mark {
+            stroke: var(--logo-mark, #4f606b);
+            stroke-width: 8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            opacity: 0.92;
+          }
+
+          .brand-logo__accent {
+            stroke: var(--accent, #0f766e);
+            stroke-width: 8;
+            stroke-linecap: round;
+          }
+
+          .brand-logo__text {
+            fill: var(--logo-text, #21313c);
+            font-family: 'PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans SC',sans-serif;
+            font-size: 41px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+          }
+
+          .brand-logo__shine {
+            fill: url(#shineGradient-light-off);
+            transform: skewX(-20deg) translateX(-170px);
+            animation: none;
+            mix-blend-mode: soft-light;
+            opacity: 0;
+          }
+
+          @keyframes brandLogoSweep {
+            0%, 42% {
+              opacity: 0;
+              transform: skewX(-20deg) translateX(-170px);
+            }
+
+            48% {
+              opacity: 0.26;
+            }
+
+            66% {
+              opacity: 0.26;
+              transform: skewX(-20deg) translateX(190px);
+            }
+
+            72%, 100% {
+              opacity: 0;
+              transform: skewX(-20deg) translateX(190px);
+            }
+          }
+
+          @media (prefers-reduced-motion: reduce) {
+            .brand-logo__shine {
+              animation: none;
+              opacity: 0.14;
+              transform: none;
+            }
+          }
+        </style><path class="brand-logo__mark" d="M44 82L58 95L44 108"></path><path class="brand-logo__accent" d="M67 108H86"></path><g clip-path="url(#textReveal-light)"><text class="brand-logo__text" x="104" y="109">代码民工</text></g></svg></a><nav class="hidden flex-1 items-center justify-end gap-1 pr-4 md:flex xl:pr-8"><a class="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-base font-medium transition-colors theme-nav-link" href="/blog/"><svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5.5A2.5 2.5 0 016.5 3H20v15.5A2.5 2.5 0 0117.5 21H6.5A2.5 2.5 0 014 18.5v-13zM8 7h8M8 11h8M8 15h5"></path></svg>博客</a><a class="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-base font-medium transition-colors theme-nav-link" href="/blog/articles/"><svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>文章</a><a class="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-base font-medium transition-colors theme-nav-link" href="/blog/archive/"><svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 8h-1V6a2 2 0 00-2-2h-1V3h-2v1H9V3H7v1H6a2 2 0 00-2 2v2H3v2h1v8a2 2 0 002 2h10a2 2 0 002-2v-8h1V8zm-3 10H6v-6h10v6z"></path></svg>归档</a><a class="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-base font-medium transition-colors theme-nav-link" href="/blog/about/"><svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>关于</a></nav></div><div class="ml-4 flex items-center gap-2 md:gap-3"><div class="theme-toggle blog-desktop-theme-toggle hidden md:inline-flex" aria-label="主题切换"><button type="button" class="theme-toggle__item is-active" aria-label="浅色模式" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.25"></circle><path d="M12 1.75v2.5M12 19.75v2.5M4.75 4.75l1.8 1.8M17.45 17.45l1.8 1.8M1.75 12h2.5M19.75 12h2.5M4.75 19.25l1.8-1.8M17.45 6.55l1.8-1.8"></path></svg></button><button type="button" class="theme-toggle__item " aria-label="深色模式" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.08 14.64A8.75 8.75 0 1 1 9.36 3.92a7.1 7.1 0 0 0 10.72 10.72Z"></path></svg></button></div><button class="theme-icon-button md:hidden"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg></button></div></div></div></header><div class="mt-14 flex min-h-[calc(100vh-56px)] justify-center md:mt-[72px] md:min-h-[calc(100vh-72px)]"><div class="flex w-full max-w-[1600px] items-start gap-5 px-4 md:px-8 xl:px-10 2xl:px-16 py-6"><div class="hidden w-60 flex-shrink-0 self-start transition-[top] duration-300 xl:block xl:w-64 2xl:w-72" style="position:sticky;top:var(--blog-sidebar-offset, 88px)"><aside class="w-full"><div class="space-y-3 pr-2 transition-[max-height] duration-300"><div class="theme-panel rounded-2xl border shadow-[0_2px_10px_rgba(33,49,60,0.05)] p-4"><div class="flex items-center gap-3 mb-3"><div class="theme-author-mark flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full font-bold text-white select-none" style="font-size:var(--fs-base)">代</div><div class="min-w-0"><div class="theme-author-name body-lead truncate text-[--ink]">代码民工</div><div class="theme-author-bio truncate text-xs text-[--muted]">网络开发者和科技爱好者</div></div></div><p class="theme-author-description text-xs leading-relaxed">一个分享网络开发、编程和科技趋势的博客</p><div class="mt-3 flex gap-2"><a href="https://github.com/suijiafeng" target="_blank" rel="noreferrer" class="theme-sidebar-action inline-flex items-center gap-1.5 rounded-lg border px-1.5 py-1 font-medium" style="font-size:var(--fs-xs)"><svg viewBox="64 64 896 896" width="16" height="16" fill="currentColor"><path d="M511.6 76.3C264.3 76.2 64 276.4 64 523.5 64 718.9 189.3 885 363.8 946c23.5 5.9 19.9-10.8 19.9-22.2v-77.5c-135.7 15.9-141.2-73.9-150.3-88.9C215 726 171.5 718 184.5 703c30.9-15.9 62.4 4 98.9 57.9 26.4 39.1 77.9 32.5 104 26 5.7-23.5 17.9-44.5 34.7-60.8-140.6-25.2-199.2-111-199.2-213 0-49.5 16.3-95 48.3-131.7-20.4-60.5 1.9-112.3 4.9-120 58.1-5.2 118.5 41.6 123.2 45.3 33-8.9 70.7-13.6 112.9-13.6 42.4 0 80.2 4.9 113.5 13.9 11.3-8.6 67.3-48.8 121.3-43.9 2.9 7.7 24.7 58.3 5.5 118 32.4 36.8 48.9 82.7 48.9 132.3 0 102.2-59 188.1-200 212.9a127.5 127.5 0 0138.1 91v112.5c.8 9 0 17.9 15 17.9 177.1-59.7 304.6-227 304.6-424.1 0-247.2-200.4-447.3-447.5-447.3z"></path></svg>GitHub</a><a href="mailto:suijiafeng@hotmail.com" class="theme-sidebar-action inline-flex items-center gap-1.5 rounded-lg border px-1.5 py-1 font-medium" style="font-size:var(--fs-xs)"><svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>邮件</a></div></div><div class="theme-panel rounded-2xl border shadow-[0_2px_10px_rgba(33,49,60,0.05)] p-4"><div class="body-copy mb-3 font-semibold tracking-[0.12em] text-[--muted] uppercase">热门标签</div></div><div class="theme-panel rounded-2xl border shadow-[0_2px_10px_rgba(33,49,60,0.05)] p-4"><div class="body-copy mb-3 font-semibold tracking-[0.12em] text-[--muted] uppercase">年度归档</div></div></div></aside></div><main class="min-w-0 flex-1 overflow-x-hidden"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Vue Mixins 用久了为什么容易乱：复用逻辑不等于把代码拼在一起","description":"回顾 Vue Mixins 在项目里的使用体验，说明它为什么一开始方便，后面却容易失控。","datePublished":"2019-08-17","dateModified":"2019-08-17","mainEntityOfPage":"https://suijf.site/blog/articles/vue-mixins-2019/","url":"https://suijf.site/blog/articles/vue-mixins-2019/","image":["https://suijf.site/logo.svg"],"author":{"@type":"Person","name":"代码民工","url":"https://suijf.site/blog/about/"},"publisher":{"@type":"Organization","name":"代码民工","logo":{"@type":"ImageObject","url":"https://suijf.site/logo.svg"}},"keywords":"Vue","articleSection":"Vue","wordCount":632}</script><div class="theme-panel mx-auto rounded-2xl border p-5 shadow-[0_14px_30px_rgba(33,49,60,0.05)] md:p-7"><article class="markdown-body prose"><h1 class="theme-heading-strong">Vue Mixins 用久了为什么容易乱：复用逻辑不等于把代码拼在一起</h1><div class="mb-3 flex flex-wrap items-center gap-x-3 gap-y-1.5 meta-text"><div class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon" class="h-3.5 w-3.5 flex-shrink-0"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"></path></svg><time dateTime="2019-08-17">2019-08-17</time></div><div class="flex flex-wrap gap-1.5"><a class="theme-tag-meta inline-flex items-center px-2.5 font-medium" style="font-size:var(--fs-xs)" href="/blog/tags/vue/">Vue</a></div></div><div class="pt-0"><p>Vue 里做逻辑复用时，Mixins 是很自然会接触到的一种方式。</p>
+<p>刚开始用时它很顺手：提一段公共逻辑，多个组件混进来就能复用。可一旦项目做久，很多团队都会感受到同一个问题：Mixin 好写，但不太好管。</p>
+<h2>Mixin 最大的问题是“隐式”</h2>
+<p>组件引入一个 Mixin 后，表面上只是多了一行配置，实际上它可能带来：</p>
+<ul>
+<li>data</li>
+<li>methods</li>
+<li>computed</li>
+<li>生命周期</li>
+</ul>
+<p>这些能力会直接混进当前组件里。</p>
+<p>功能上当然成立，但阅读代码的人很容易看不出来某个字段到底来自哪里。</p>
+<h2>一开始省事，后面成本会上来</h2>
+<p>Mixin 常常在项目前期特别讨喜，因为它能很快解决：</p>
+<ul>
+<li>表单通用逻辑</li>
+<li>列表加载逻辑</li>
+<li>权限判断逻辑</li>
+</ul>
+<p>可随着 Mixin 越来越多，组件就开始出现两个典型问题：</p>
+<ul>
+<li>命名冲突</li>
+<li>来源不清</li>
+</ul>
+<p>这时调试体验会明显变差。</p>
+<h2>复用逻辑不能只看“抽没抽出来”</h2>
+<p>真正稳定的复用，不只是把代码搬到另一个文件，而是要让依赖关系仍然清楚。</p>
+<p>如果一个组件用了多个 Mixin，后面想知道：</p>
+<ul>
+<li>哪个方法是谁提供的</li>
+<li>哪个生命周期里做了什么</li>
+<li>为什么这个字段会突然存在</li>
+</ul>
+<p>这些问题都会变得不那么直观。</p>
+<h2>写在最后</h2>
+<p>Mixin 当然能用，但它更适合短期、简单、边界清楚的逻辑复用。</p>
+<p>一旦项目越来越复杂，光“能复用”已经不够，来源和边界同样重要。代码复用如果把可读性搭进去，后面通常会还回来更多维护成本。</p></div><div class="mt-5 flex justify-end gap-4"><button class="inline-flex items-center rounded-full border px-2.5 py-1 text-sm font-medium transition-colors duration-300 theme-like-button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-thumbs-up" aria-hidden="true"><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"></path><path d="M7 10v12"></path></svg><span class="ml-1.5 leading-none">点赞<!-- -->（<!-- -->8<!-- -->）</span></button></div></article></div><nav class="mt-4" aria-label="文章导航"><div class="theme-panel rounded-2xl border p-4 shadow-[0_10px_24px_rgba(33,49,60,0.04)] md:p-5" style="--fs-base:0.875rem"><div class="grid gap-3 md:grid-cols-2"><a class="theme-title-link block min-w-0" href="/blog/articles/vue-async-components-2019/"><span class="meta-text block">上一篇</span><span class="title-small mt-1 block truncate">Vue 异步组件值得早点用：页面越大，按需加载越像基本功</span></a><a class="theme-title-link block min-w-0 md:text-right" href="/blog/articles/vue-webpack-bundle-analyzer-2019/"><span class="meta-text block">下一篇</span><span class="title-small mt-1 block truncate">Vue 项目包太大时先别慌：Webpack Bundle Analyzer 到底能帮你看清什么</span></a></div></div><div class="mt-4 theme-panel rounded-2xl border p-4 shadow-[0_10px_24px_rgba(33,49,60,0.04)] md:p-5" style="--fs-xl:1.05rem;--fs-lg:0.9375rem;--fs-base:0.875rem;--fs-sm:0.78rem"><div class="theme-divider mb-3 flex items-center justify-between border-b pb-3"><div class="section-title text-[--ink]">推荐阅读</div><a class="btn-text" href="/blog/articles/">全部文章</a></div><div class="space-y-3"><a class="theme-divider block border-b pb-3 last:border-b-0 last:pb-0" href="/blog/articles/frontend-semantic-html-2021/"><span class="title-small block truncate text-[--ink] transition-colors hover:text-[--accent]">语义化 HTML 为什么重要：它不只是面试题，而是页面质量的基础</span><span class="body-copy mt-1 block line-clamp-1">讨论语义化 HTML 在结构表达、可维护性和可访问性方面的价值，说明它为什么不只是理论概念。</span></a><a class="theme-divider block border-b pb-3 last:border-b-0 last:pb-0" href="/blog/articles/frontend-flvjs-live-optimization-2022/"><span class="title-small block truncate text-[--ink] transition-colors hover:text-[--accent]">flv.js 直播优化：追帧、断流重连和延迟控制</span><span class="body-copy mt-1 block line-clamp-1">介绍浏览器端使用 flv.js 播放直播流时常见的延迟、卡顿和断流问题，以及基本优化思路。</span></a><a class="theme-divider block border-b pb-3 last:border-b-0 last:pb-0" href="/blog/articles/vue-sfc-organization-2020/"><span class="title-small block truncate text-[--ink] transition-colors hover:text-[--accent]">Vue 单文件组件写久了以后，真正拉开差距的是组织方式</span><span class="body-copy mt-1 block line-clamp-1">讨论 Vue 单文件组件在真实项目里怎么组织更稳，避免一个 .vue 文件越写越大。</span></a></div></div></nav></main></div></div><footer class="theme-footer app-footer mt-4 border-t md:mt-6"><div class="app-footer__container mx-auto max-w-5xl px-4 py-3 md:px-8 md:py-5 xl:px-10 2xl:px-16"><div class="app-footer__content flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 md:flex-row md:justify-between md:gap-3"><div class="app-footer__brand flex min-w-0 items-center justify-center gap-1.5"><span class="app-footer__name text-sm font-semibold leading-5 text-[var(--app-footer-ink)]">代码民工</span><span class="app-footer__slogan-separator hidden text-xs leading-5 text-[var(--app-footer-dot)] sm:inline">·</span><span class="app-footer__slogan hidden text-xs leading-5 text-[var(--app-footer-muted)] sm:inline">探索科技世界</span></div><nav class="app-footer__nav flex items-center gap-3 md:gap-4"><a class="inline-flex cursor-pointer items-center border-0 bg-transparent p-0 text-xs font-[inherit] leading-5 text-[var(--app-footer-muted)] transition-colors hover:text-[var(--app-footer-hover)]" href="/blog/articles/">博文</a><a class="inline-flex cursor-pointer items-center border-0 bg-transparent p-0 text-xs font-[inherit] leading-5 text-[var(--app-footer-muted)] transition-colors hover:text-[var(--app-footer-hover)]" href="/blog/tags/">标签</a><a class="inline-flex cursor-pointer items-center border-0 bg-transparent p-0 text-xs font-[inherit] leading-5 text-[var(--app-footer-muted)] transition-colors hover:text-[var(--app-footer-hover)]" href="/blog/archive/">归档</a><a class="inline-flex cursor-pointer items-center border-0 bg-transparent p-0 text-xs font-[inherit] leading-5 text-[var(--app-footer-muted)] transition-colors hover:text-[var(--app-footer-hover)]" href="/blog/about/">关于</a></nav><div class="app-footer__right flex items-center gap-2.5 md:gap-3"><a href="https://github.com/suijiafeng" target="_blank" rel="noreferrer" aria-label="GitHub" class="text-[var(--app-footer-muted)] transition-colors hover:text-[var(--app-footer-hover)]"><svg viewBox="0 0 24 24" class="h-4 w-4 fill-current" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.04c-3.34.73-4.04-1.42-4.04-1.42-.55-1.38-1.34-1.74-1.34-1.74-1.1-.74.08-.73.08-.73 1.21.08 1.85 1.23 1.85 1.23 1.08 1.84 2.83 1.31 3.52 1 .11-.77.42-1.31.76-1.61-2.66-.3-5.47-1.32-5.47-5.9 0-1.3.47-2.36 1.23-3.19-.12-.3-.53-1.52.12-3.17 0 0 1.01-.32 3.3 1.22a11.5 11.5 0 0 1 6 0c2.28-1.54 3.29-1.22 3.29-1.22.66 1.65.25 2.87.12 3.17.77.83 1.23 1.89 1.23 3.19 0 4.59-2.81 5.6-5.49 5.89.43.37.82 1.1.82 2.23v3.31c0 .32.21.7.83.58A12 12 0 0 0 12 .5Z"></path></svg></a><a href="mailto:suijiafeng@hotmail.com" aria-label="Email" class="text-[var(--app-footer-muted)] transition-colors hover:text-[var(--app-footer-hover)]"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg></a><span class="text-xs leading-5 text-[var(--app-footer-dot)]">·</span><span class="text-xs leading-5 text-[var(--app-footer-muted)]">© <!-- -->2018<!-- -->–<!-- -->2026</span></div></div></div></footer></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"postData":{"title":"Vue Mixins 用久了为什么容易乱：复用逻辑不等于把代码拼在一起","date":"2019-08-17","excerpt":"回顾 Vue Mixins 在项目里的使用体验，说明它为什么一开始方便，后面却容易失控。","tags":["Vue"],"slug":"vue-mixins-2019","category":"","likeCount":8,"postId":"759ee61c-e580-f66c-4fbb-e7ba04d71911","viewCount":1794,"readTime":"2分钟","coverImage":null,"content":"\nVue 里做逻辑复用时，Mixins 是很自然会接触到的一种方式。\n\n刚开始用时它很顺手：提一段公共逻辑，多个组件混进来就能复用。可一旦项目做久，很多团队都会感受到同一个问题：Mixin 好写，但不太好管。\n\n## Mixin 最大的问题是“隐式”\n\n组件引入一个 Mixin 后，表面上只是多了一行配置，实际上它可能带来：\n\n- data\n- methods\n- computed\n- 生命周期\n\n这些能力会直接混进当前组件里。\n\n功能上当然成立，但阅读代码的人很容易看不出来某个字段到底来自哪里。\n\n## 一开始省事，后面成本会上来\n\nMixin 常常在项目前期特别讨喜，因为它能很快解决：\n\n- 表单通用逻辑\n- 列表加载逻辑\n- 权限判断逻辑\n\n可随着 Mixin 越来越多，组件就开始出现两个典型问题：\n\n- 命名冲突\n- 来源不清\n\n这时调试体验会明显变差。\n\n## 复用逻辑不能只看“抽没抽出来”\n\n真正稳定的复用，不只是把代码搬到另一个文件，而是要让依赖关系仍然清楚。\n\n如果一个组件用了多个 Mixin，后面想知道：\n\n- 哪个方法是谁提供的\n- 哪个生命周期里做了什么\n- 为什么这个字段会突然存在\n\n这些问题都会变得不那么直观。\n\n## 写在最后\n\nMixin 当然能用，但它更适合短期、简单、边界清楚的逻辑复用。\n\n一旦项目越来越复杂，光“能复用”已经不够，来源和边界同样重要。代码复用如果把可读性搭进去，后面通常会还回来更多维护成本。\n"},"randomPosts":[{"title":"语义化 HTML 为什么重要：它不只是面试题，而是页面质量的基础","date":"2021-08-12","excerpt":"讨论语义化 HTML 在结构表达、可维护性和可访问性方面的价值，说明它为什么不只是理论概念。","tags":["前端开发"],"slug":"frontend-semantic-html-2021","category":"","likeCount":5,"postId":"cb1b19ce-035b-e5b0-0c8a-edaed582c4d2","viewCount":1792,"readTime":null,"coverImage":null},{"title":"flv.js 直播优化：追帧、断流重连和延迟控制","date":"2022-07-21","excerpt":"介绍浏览器端使用 flv.js 播放直播流时常见的延迟、卡顿和断流问题，以及基本优化思路。","tags":["前端开发","性能优化"],"slug":"frontend-flvjs-live-optimization-2022","category":"","likeCount":8,"postId":"83eefc7b-1b30-dfde-f416-2561a478dc10","viewCount":1983,"readTime":null,"coverImage":null},{"title":"Vue 单文件组件写久了以后，真正拉开差距的是组织方式","date":"2020-03-21","excerpt":"讨论 Vue 单文件组件在真实项目里怎么组织更稳，避免一个 .vue 文件越写越大。","tags":["Vue"],"slug":"vue-sfc-organization-2020","category":"","likeCount":5,"postId":"9d9e32d2-1561-6dc5-590d-1081279404e6","viewCount":1793,"readTime":null,"coverImage":null}],"prevPost":{"title":"Vue 异步组件值得早点用：页面越大，按需加载越像基本功","date":"2019-10-08","excerpt":"说明 Vue 异步组件的适用场景和价值，为什么它不只是一个性能技巧，而是页面结构设计的一部分。","tags":["Vue","性能优化"],"slug":"vue-async-components-2019","category":"","likeCount":7,"postId":"3ddfaba3-8409-e84f-4001-fd4d6b1073d8","viewCount":3998,"readTime":null,"coverImage":null},"nextPost":{"title":"Vue 项目包太大时先别慌：Webpack Bundle Analyzer 到底能帮你看清什么","date":"2019-06-29","excerpt":"从 Vue 项目视角讲清楚包体积分析的意义，为什么在优化前先看清组成比盲猜更重要。","tags":["Vue","工程化","性能优化"],"slug":"vue-webpack-bundle-analyzer-2019","category":"","likeCount":8,"postId":"e4a453c9-67de-76a8-58ab-8d9150c88ff9","viewCount":1601,"readTime":null,"coverImage":null}},"__N_SSG":true},"page":"/blog/articles/[...slug]","query":{"slug":["vue-mixins-2019"]},"buildId":"_rfoJLW6lvSfDuya4X6cz","isFallback":false,"gsp":true,"scriptLoader":[]}</script></body></html>

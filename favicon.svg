@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="Code favicon">
+  <rect width="64" height="64" rx="15" fill="#eef4f3"/>
+  <path d="M18 18L34 32L18 46" fill="none" stroke="#27363f" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M39 46H52" fill="none" stroke="#0f766e" stroke-width="9" stroke-linecap="round"/>
+</svg>
