@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'site-cache-v1';
+const CACHE_VERSION = 'site-cache-v2';
 const CORE_CACHE = `${CACHE_VERSION}-core`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 
@@ -51,6 +51,11 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
+  if (isNextStaticAsset(request)) {
+    event.respondWith(networkFirst(request));
+    return;
+  }
+
   if (isStaticAsset(request)) {
     event.respondWith(cacheFirst(request));
   }
@@ -65,9 +70,13 @@ function isCacheableRequest(request) {
 function isStaticAsset(request) {
   const url = new URL(request.url);
   return (
-    url.pathname.startsWith('/_next/static/') ||
     /\.(?:css|js|png|jpg|jpeg|webp|svg|gif|ico|woff2?)$/i.test(url.pathname)
   );
+}
+
+function isNextStaticAsset(request) {
+  const url = new URL(request.url);
+  return url.pathname.startsWith('/_next/static/');
 }
 
 async function cacheFirst(request) {
