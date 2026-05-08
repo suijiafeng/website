@@ -1,0 +1,192 @@
+<!DOCTYPE html><html lang="zh"><head><meta charSet="utf-8" data-next-head=""/><meta name="viewport" content="width=device-width, initial-scale=1.0" data-next-head=""/><meta name="theme-color" content="#f7f9fb" data-next-head=""/><title data-next-head="">闭包为什么既好用又容易出坑：它不是高深概念，而是作用域结果 - 代码民工</title><meta name="description" content="从函数和作用域的关系出发，解释闭包为什么常见、能解决什么问题，以及哪些地方容易带来副作用。" data-next-head=""/><meta name="author" content="代码民工" data-next-head=""/><meta name="keywords" content="闭包为什么既好用又容易出坑：它不是高深概念，而是作用域结果, 前端基础, 技术博客" data-next-head=""/><meta name="robots" content="index, follow" data-next-head=""/><link rel="canonical" href="https://suijf.site/blog/articles/frontend-javascript-closure-2021/" data-next-head=""/><meta property="og:title" content="闭包为什么既好用又容易出坑：它不是高深概念，而是作用域结果 - 代码民工" data-next-head=""/><meta property="og:description" content="从函数和作用域的关系出发，解释闭包为什么常见、能解决什么问题，以及哪些地方容易带来副作用。" data-next-head=""/><meta property="og:type" content="article" data-next-head=""/><meta property="og:url" content="https://suijf.site/blog/articles/frontend-javascript-closure-2021/" data-next-head=""/><meta property="og:site_name" content="代码民工" data-next-head=""/><meta property="og:locale" content="zh_CN" data-next-head=""/><meta property="og:image" content="https://suijf.site/logo.svg" data-next-head=""/><meta property="og:image:alt" content="闭包为什么既好用又容易出坑：它不是高深概念，而是作用域结果" data-next-head=""/><meta name="twitter:card" content="summary" data-next-head=""/><meta name="twitter:title" content="闭包为什么既好用又容易出坑：它不是高深概念，而是作用域结果 - 代码民工" data-next-head=""/><meta name="twitter:description" content="从函数和作用域的关系出发，解释闭包为什么常见、能解决什么问题，以及哪些地方容易带来副作用。" data-next-head=""/><meta name="twitter:image" content="https://suijf.site/logo.svg" data-next-head=""/><meta name="twitter:image:alt" content="闭包为什么既好用又容易出坑：它不是高深概念，而是作用域结果" data-next-head=""/><link rel="icon" href="/favicon.png" type="image/png"/><link rel="alternate icon" href="/favicon.svg" type="image/svg+xml"/><link rel="preload" href="/_next/static/chunks/0s6iuuhop8tfa.css" as="style"/><style>
+            html.official-home-html {
+              background-color: #0d1117;
+              color: #e8eaf0;
+            }
+
+            html.official-home-html body {
+              background-color: #0d1117;
+            }
+
+            html.official-home-html[data-theme='light'] {
+              background-color: #f8fafc;
+              color: #102033;
+            }
+
+            html.official-home-html[data-theme='light'] body {
+              background-color: #f8fafc;
+            }
+
+            html.blog-html {
+              background-color: #f7f9fb;
+              color: #21313c;
+            }
+
+            html.blog-html body {
+              background-color: #f7f9fb;
+            }
+
+            html.blog-html[data-theme='dark'] {
+              background-color: #070910;
+              color: #e8eaf0;
+            }
+
+            html.blog-html[data-theme='dark'] body {
+              background-color: #070910;
+            }
+          </style><script>
+      (function () {
+        var root = document.documentElement;
+        var isOfficialHome = window.location.pathname === '/';
+
+        function isThemeValue(value) {
+          return value === 'light' || value === 'dark';
+        }
+
+        function getSavedTheme() {
+          try {
+            return window.localStorage.getItem('theme');
+          } catch (error) {
+            return null;
+          }
+        }
+
+        function getSystemTheme(fallbackTheme) {
+          if (!window.matchMedia) {
+            return fallbackTheme;
+          }
+
+          return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+
+        function applyInitialTheme(fallbackTheme) {
+          var savedTheme = getSavedTheme();
+          root.dataset.theme = isThemeValue(savedTheme) ? savedTheme : getSystemTheme(fallbackTheme);
+        }
+
+        if (isOfficialHome) {
+          root.classList.add('official-home-html');
+          root.classList.add('theme-preload');
+          applyInitialTheme('dark');
+          return;
+        }
+
+        root.classList.add('blog-html');
+        root.classList.add('theme-preload');
+        applyInitialTheme('light');
+      })();
+    </script><link rel="stylesheet" href="/_next/static/chunks/0s6iuuhop8tfa.css" data-n-g=""/><noscript data-n-css=""></noscript><script src="/_next/static/chunks/0ydd6~w3_fayi.js" defer=""></script><script src="/_next/static/chunks/0q77~okj5tq6y.js" defer=""></script><script src="/_next/static/chunks/0i.lj6jsn6e_1.js" defer=""></script><script src="/_next/static/chunks/00~oo5ny.p1v0.js" defer=""></script><script src="/_next/static/chunks/turbopack-0mt1i7-u~fr2b.js" defer=""></script><script src="/_next/static/chunks/0axbd.e7p~jm..js" defer=""></script><script src="/_next/static/chunks/0~kkop.tjz5dr.js" defer=""></script><script src="/_next/static/chunks/16~azu22xh1ij.js" defer=""></script><script src="/_next/static/chunks/0n~1o0cr.miug.js" defer=""></script><script src="/_next/static/chunks/0fy3ss9gkcfux.js" defer=""></script><script src="/_next/static/chunks/turbopack-0o_w8y.nxy29m.js" defer=""></script><script src="/_next/static/9aHOZOuG2e0vTTv94Qgqp/_buildManifest.js" defer=""></script><script src="/_next/static/9aHOZOuG2e0vTTv94Qgqp/_ssgManifest.js" defer=""></script><script src="/_next/static/9aHOZOuG2e0vTTv94Qgqp/_clientMiddlewareManifest.js" defer=""></script></head><body><div id="__next"><div class="blog-shell flex flex-col min-h-screen opacity-100 transition-opacity duration-1000"><header class="theme-header theme-border fixed top-0 z-20 w-full border-b shadow-[0_8px_30px_rgba(33,49,60,0.06)] backdrop-blur transition-transform duration-300 translate-y-0"><div class="theme-header-progress h-1 fixed transition-all duration-300 ease-in-out w-0"></div><div class="blog-nav-wrapper"><div class="blog-nav-inner"><div class="flex min-w-0 flex-1 items-center gap-4 md:gap-6"><a class="app-brand-logo" href="/"><svg xmlns="http://www.w3.org/2000/svg" width="260" height="57" viewBox="38 68 260 57" fill="none" class="app-brand-logo__image" role="img" aria-label="代码民工"><title>代码民工</title><defs><clipPath id="textReveal-light"><rect x="106" y="72" width="186" height="46" rx="6"></rect></clipPath><linearGradient id="shineGradient-light-off" x1="106" y1="96" x2="140" y2="96" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="rgba(255,255,255,0)"></stop><stop offset="0.5" stop-color="rgba(255,255,255,0.82)"></stop><stop offset="1" stop-color="rgba(255,255,255,0)"></stop></linearGradient></defs><style>
+          .brand-logo__mark {
+            stroke: var(--logo-mark, #4f606b);
+            stroke-width: 8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            opacity: 0.92;
+          }
+
+          .brand-logo__accent {
+            stroke: var(--accent, #0f766e);
+            stroke-width: 8;
+            stroke-linecap: round;
+          }
+
+          .brand-logo__text {
+            fill: var(--logo-text, #21313c);
+            font-family: 'PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans SC',sans-serif;
+            font-size: 41px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+          }
+
+          .brand-logo__shine {
+            fill: url(#shineGradient-light-off);
+            transform: skewX(-20deg) translateX(-170px);
+            animation: none;
+            mix-blend-mode: soft-light;
+            opacity: 0;
+          }
+
+          @keyframes brandLogoSweep {
+            0%, 42% {
+              opacity: 0;
+              transform: skewX(-20deg) translateX(-170px);
+            }
+
+            48% {
+              opacity: 0.26;
+            }
+
+            66% {
+              opacity: 0.26;
+              transform: skewX(-20deg) translateX(190px);
+            }
+
+            72%, 100% {
+              opacity: 0;
+              transform: skewX(-20deg) translateX(190px);
+            }
+          }
+
+          @media (prefers-reduced-motion: reduce) {
+            .brand-logo__shine {
+              animation: none;
+              opacity: 0.14;
+              transform: none;
+            }
+          }
+        </style><path class="brand-logo__mark" d="M44 82L58 95L44 108"></path><path class="brand-logo__accent" d="M67 108H86"></path><g clip-path="url(#textReveal-light)"><text class="brand-logo__text" x="104" y="109">代码民工</text></g></svg></a><nav class="hidden flex-1 items-center justify-end gap-1 pr-4 md:flex xl:pr-8"><a class="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-base font-medium transition-colors theme-nav-link" href="/blog/"><svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5.5A2.5 2.5 0 016.5 3H20v15.5A2.5 2.5 0 0117.5 21H6.5A2.5 2.5 0 014 18.5v-13zM8 7h8M8 11h8M8 15h5"></path></svg>博客</a><a class="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-base font-medium transition-colors theme-nav-link-active" href="/blog/articles/"><svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>文章</a><a class="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-base font-medium transition-colors theme-nav-link" href="/blog/archive/"><svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 8h-1V6a2 2 0 00-2-2h-1V3h-2v1H9V3H7v1H6a2 2 0 00-2 2v2H3v2h1v8a2 2 0 002 2h10a2 2 0 002-2v-8h1V8zm-3 10H6v-6h10v6z"></path></svg>归档</a><a class="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-base font-medium transition-colors theme-nav-link" href="/blog/about/"><svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>关于</a></nav></div><div class="ml-4 flex items-center gap-2 md:gap-3"><div class="theme-toggle blog-desktop-theme-toggle hidden md:inline-flex" aria-label="主题切换"><button type="button" class="theme-toggle__item is-active" aria-label="浅色模式" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.25"></circle><path d="M12 1.75v2.5M12 19.75v2.5M4.75 4.75l1.8 1.8M17.45 17.45l1.8 1.8M1.75 12h2.5M19.75 12h2.5M4.75 19.25l1.8-1.8M17.45 6.55l1.8-1.8"></path></svg></button><button type="button" class="theme-toggle__item " aria-label="深色模式" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.08 14.64A8.75 8.75 0 1 1 9.36 3.92a7.1 7.1 0 0 0 10.72 10.72Z"></path></svg></button></div><button class="theme-icon-button md:hidden"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg></button></div></div></div></header><div class="mt-14 flex min-h-[calc(100vh-56px)] justify-center md:mt-[72px] md:min-h-[calc(100vh-72px)]"><div class="flex w-full max-w-[1600px] items-start gap-5 px-4 md:px-8 xl:px-10 2xl:px-16 py-6"><div class="hidden w-60 flex-shrink-0 self-start transition-[top] duration-300 xl:block xl:w-64 2xl:w-72" style="position:sticky;top:var(--blog-sidebar-offset, 88px)"><aside class="w-full"><div class="space-y-3 pr-2 transition-[max-height] duration-300"><div class="theme-panel rounded-2xl border shadow-[0_2px_10px_rgba(33,49,60,0.05)] p-4"><div class="flex items-center gap-3 mb-3"><div class="theme-author-mark flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full font-bold text-white select-none" style="font-size:var(--fs-base)">代</div><div class="min-w-0"><div class="theme-author-name body-lead truncate text-[--ink]">代码民工</div><div class="theme-author-bio truncate text-xs text-[--muted]">网络开发者和科技爱好者</div></div></div><p class="theme-author-description text-xs leading-relaxed">一个分享网络开发、编程和科技趋势的博客</p><div class="mt-3 flex gap-2"><a href="https://github.com/suijiafeng" target="_blank" rel="noreferrer" class="theme-sidebar-action inline-flex items-center gap-1.5 rounded-lg border px-1.5 py-1 font-medium" style="font-size:var(--fs-xs)"><svg viewBox="64 64 896 896" width="16" height="16" fill="currentColor"><path d="M511.6 76.3C264.3 76.2 64 276.4 64 523.5 64 718.9 189.3 885 363.8 946c23.5 5.9 19.9-10.8 19.9-22.2v-77.5c-135.7 15.9-141.2-73.9-150.3-88.9C215 726 171.5 718 184.5 703c30.9-15.9 62.4 4 98.9 57.9 26.4 39.1 77.9 32.5 104 26 5.7-23.5 17.9-44.5 34.7-60.8-140.6-25.2-199.2-111-199.2-213 0-49.5 16.3-95 48.3-131.7-20.4-60.5 1.9-112.3 4.9-120 58.1-5.2 118.5 41.6 123.2 45.3 33-8.9 70.7-13.6 112.9-13.6 42.4 0 80.2 4.9 113.5 13.9 11.3-8.6 67.3-48.8 121.3-43.9 2.9 7.7 24.7 58.3 5.5 118 32.4 36.8 48.9 82.7 48.9 132.3 0 102.2-59 188.1-200 212.9a127.5 127.5 0 0138.1 91v112.5c.8 9 0 17.9 15 17.9 177.1-59.7 304.6-227 304.6-424.1 0-247.2-200.4-447.3-447.5-447.3z"></path></svg>GitHub</a><a href="mailto:suijiafeng@hotmail.com" class="theme-sidebar-action inline-flex items-center gap-1.5 rounded-lg border px-1.5 py-1 font-medium" style="font-size:var(--fs-xs)"><svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>邮件</a></div></div><div class="theme-panel rounded-2xl border shadow-[0_2px_10px_rgba(33,49,60,0.05)] p-4"><div class="body-copy mb-3 font-semibold tracking-[0.12em] text-[--muted] uppercase">热门标签</div></div><div class="theme-panel rounded-2xl border shadow-[0_2px_10px_rgba(33,49,60,0.05)] p-4"><div class="body-copy mb-3 font-semibold tracking-[0.12em] text-[--muted] uppercase">年度归档</div></div></div></aside></div><main class="min-w-0 flex-1 overflow-x-hidden"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"闭包为什么既好用又容易出坑：它不是高深概念，而是作用域结果","description":"从函数和作用域的关系出发，解释闭包为什么常见、能解决什么问题，以及哪些地方容易带来副作用。","datePublished":"2021-05-07","dateModified":"2021-05-07","mainEntityOfPage":"https://suijf.site/blog/articles/frontend-javascript-closure-2021/","url":"https://suijf.site/blog/articles/frontend-javascript-closure-2021/","image":["https://suijf.site/logo.svg"],"author":{"@type":"Person","name":"代码民工","url":"https://suijf.site/blog/about/"},"publisher":{"@type":"Organization","name":"代码民工","logo":{"@type":"ImageObject","url":"https://suijf.site/logo.svg"}},"keywords":"前端基础","articleSection":"前端基础","wordCount":2048}</script><div class="mx-auto max-w-4xl"><div class="theme-panel rounded-2xl border p-5 shadow-[0_14px_30px_rgba(33,49,60,0.05)] md:p-7"><article class="markdown-body prose"><h1 class="theme-heading-strong">闭包为什么既好用又容易出坑：它不是高深概念，而是作用域结果</h1><div class="mb-3 flex flex-wrap items-center gap-x-3 gap-y-1.5 meta-text"><div class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon" class="h-3.5 w-3.5 flex-shrink-0"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"></path></svg><time dateTime="2021-05-07">2021-05-07</time></div><div class="flex flex-wrap gap-1.5"><a class="theme-tag-meta inline-flex items-center px-2.5 font-medium" style="font-size:var(--fs-xs)" href="/blog/tags/frontend-dev/">前端基础</a></div></div><div class="pt-0"><p>闭包在前端基础里一直很有代表性。</p>
+<p>不少人第一次接触它，会觉得这是一个特别抽象的概念，仿佛只有面试或者高阶技巧里才会出现。实际上，只要你在 JavaScript 里写过函数嵌套、事件回调、工厂函数，基本就已经用到过闭包。</p>
+<p>真正需要理解的不是“闭包定义背诵版”，而是它为什么会出现，以及它会带来什么后果。</p>
+<h2>闭包和作用域是分不开的</h2>
+<p>JavaScript 函数在定义时，会记住自己所处的词法作用域。</p>
+<p>这意味着即使外层函数已经执行完，内层函数仍然可能访问外层作用域里的变量。</p>
+<p>例如：</p>
+<pre><div class="relative group"><button class="absolute top-2 right-2 px-2 py-1 bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">复制</button></div></pre>
+<p>这里返回出去的匿名函数依然能访问 <code>count</code>，这就是非常典型的闭包场景。</p>
+<h2>它为什么会这么好用</h2>
+<p>闭包最直观的价值，是可以把数据和操作绑在一起，并且隐藏内部状态。</p>
+<p>刚才那个计数器例子里，外部代码无法直接改 <code>count</code>，只能通过返回的函数操作它。这种模式在下面这些场景里都很常见：</p>
+<ul>
+<li>封装私有变量</li>
+<li>生成带参数的处理函数</li>
+<li>事件回调里保留上下文</li>
+<li>函数式组合</li>
+</ul>
+<p>所以闭包并不是“特殊技巧”，很多时候它只是函数能力自然延伸出来的结果。</p>
+<h2>为什么循环里的闭包容易出 bug</h2>
+<p>前端里一个经典坑就是循环注册事件。</p>
+<p>早期代码经常会看到类似：</p>
+<pre><div class="relative group"><button class="absolute top-2 right-2 px-2 py-1 bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">复制</button></div></pre>
+<p>不少人预期会输出 <code>0 1 2</code>，结果经常看到的是同一个值。问题本质上就在于多个回调共享了同一个外层变量，而这个变量在回调真正执行前已经变化了。</p>
+<p>这类问题说明闭包不是“会不会用”的问题，而是你是否清楚闭包抓住的到底是什么作用域环境。</p>
+<h2>闭包会保留状态，所以也会延长变量生命周期</h2>
+<p>这是它好用的地方，也是需要注意的地方。</p>
+<p>因为只要内部函数还可访问，外层作用域中的某些变量就可能继续存在。</p>
+<p>如果这里面保存了很大的对象、DOM 引用或者已经不再需要的数据，又一直没有释放，就可能造成不必要的内存占用。</p>
+<p>当然，现代 JavaScript 引擎已经比早年聪明很多，不需要一提闭包就紧张。但如果一个闭包长期持有大块数据，还是值得留意。</p>
+<h2>闭包最常见的价值，是让函数更贴近业务上下文</h2>
+<p>比如你有一个按钮列表，需要给每种操作生成不同处理函数：</p>
+<pre><div class="relative group"><button class="absolute top-2 right-2 px-2 py-1 bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">复制</button></div></pre>
+<p>这时每个回调都记住了自己的 <code>type</code>。从业务角度看非常自然，因为不同按钮本来就应该携带不同上下文。</p>
+<p>这类写法在前端组件、事件回调、请求参数预处理里都非常常见。</p>
+<h2>理解闭包，不是为了写炫技代码</h2>
+<p>我后来越来越觉得，闭包的学习重点不在于你能不能手写复杂面试题，而在于当你看到一层层函数返回和回调嵌套时，能否知道：</p>
+<ul>
+<li>哪些变量会被继续引用</li>
+<li>这些变量什么时候会变化</li>
+<li>它们是否会带来共享状态问题</li>
+</ul>
+<p>一旦这三件事清楚了，闭包就不会再显得神秘。</p>
+<p>它本质上只是函数和作用域共同作用后的结果。前端里很多看似灵活的写法，背后都离不开它。理解它，是为了更稳地利用这种能力，而不是被它制造的隐式状态绕进去。</p>
+<h2>前端里很多“记住上下文”的能力，本质上都靠闭包</h2>
+<p>比如你做一个请求封装，把 <code>baseURL</code>、默认 headers 和错误处理逻辑先关进去；或者写一个表单校验器，让不同字段处理函数各自记住自己的规则；又或者给列表项生成点击回调，让它们都携带各自的 id。这些场景看起来差别很大，但底层都很像：函数在创建时，把需要的上下文也一起带走了。</p>
+<p>这也是闭包为什么在前端里特别常见。因为 UI 交互天然就是“某个动作稍后发生，但仍然记得当时环境”的过程。</p>
+<h2>真正需要警惕的，是共享状态不够明显</h2>
+<p>闭包本身不是问题，问题通常出在状态被悄悄共享了。</p>
+<p>例如多个回调引用同一个可变变量、一个工具函数内部偷偷累计状态、两个看似独立的处理函数实际上都依赖同一块外部数据。短期看代码能跑，长期却很容易变得不可预测。</p>
+<p>所以我现在看到闭包时，会额外留意两件事：</p>
+<ul>
+<li>这个外部变量是不是会持续变化</li>
+<li>多个调用方是不是在共享同一份状态</li>
+</ul>
+<p>如果答案是“会”，那就要继续判断这是不是设计本意。理解闭包最实用的地方，不是会背定义，而是能提前闻到这种隐式耦合的味道。</p></div><div class="mt-5 flex justify-end gap-4"><button class="inline-flex items-center rounded-full border px-2.5 py-1 text-sm font-medium transition-colors duration-300 theme-like-button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-thumbs-up" aria-hidden="true"><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"></path><path d="M7 10v12"></path></svg><span class="ml-1.5 leading-none">点赞<!-- -->（<!-- -->6<!-- -->）</span></button></div></article></div><nav class="mt-4" aria-label="文章导航"><div class="theme-panel rounded-2xl border p-4 shadow-[0_10px_24px_rgba(33,49,60,0.04)] md:p-5" style="--fs-base:0.875rem"><div class="grid gap-3 md:grid-cols-2"><a class="theme-title-link block min-w-0" href="/blog/articles/frontend-javascript-event-loop-2021/"><span class="meta-text block">上一篇</span><span class="title-small mt-1 block truncate">事件循环到底在忙什么：为什么同步代码后面还有一堆异步顺序问题</span></a><a class="theme-title-link block min-w-0 md:text-right" href="/blog/articles/frontend-javascript-this-2021/"><span class="meta-text block">下一篇</span><span class="title-small mt-1 block truncate">JavaScript 里的 this 为什么总让人别扭：它不是指向写代码的人</span></a></div></div><div class="mt-4 theme-panel rounded-2xl border p-4 shadow-[0_10px_24px_rgba(33,49,60,0.04)] md:p-5" style="--fs-xl:1.05rem;--fs-lg:0.9375rem;--fs-base:0.875rem;--fs-sm:0.78rem"><div class="theme-divider mb-3 flex items-center justify-between border-b pb-3"><div class="section-title text-[--ink]">推荐阅读</div><a class="btn-text" href="/blog/articles/">全部文章</a></div><div class="space-y-3"><a class="theme-divider block border-b pb-3 last:border-b-0 last:pb-0" href="/blog/articles/frontend-constructable-stylesheets-2026/"><span class="title-small block truncate text-[--ink] transition-colors hover:text-[--accent]">Constructable Stylesheets：Web Components 样式复用的新方式</span><span class="body-copy mt-1 block line-clamp-1">介绍 Constructable Stylesheets 的作用，说明它如何让多个 Shadow DOM 共享同一份样式对象。</span></a><a class="theme-divider block border-b pb-3 last:border-b-0 last:pb-0" href="/blog/articles/rest-api-error-contract-2018/"><span class="title-small block truncate text-[--ink] transition-colors hover:text-[--accent]">前后端接口错误约定：message 不能每个接口都不一样</span><span class="body-copy mt-1 block line-clamp-1">从前后端联调角度整理 REST 接口错误结构、HTTP 状态码、业务 code、表单错误和前端统一处理方式。</span></a><a class="theme-divider block border-b pb-3 last:border-b-0 last:pb-0" href="/blog/articles/nginx-vue-history-deploy-2018/"><span class="title-small block truncate text-[--ink] transition-colors hover:text-[--accent]">Vue history 模式部署：本地能打开，不代表线上刷新不 404</span><span class="body-copy mt-1 block line-clamp-1">整理 Vue Router history 模式部署到 Nginx 时的刷新 404、二级目录、静态资源路径和缓存配置问题。</span></a></div></div></nav></div></main></div></div><footer class="theme-footer app-footer"><div class="app-footer__container mx-auto max-w-[1600px] px-4 py-3 md:px-8 md:py-5 xl:px-10 2xl:px-16"><div class="app-footer__content flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 md:flex-row md:justify-between md:gap-3"><div class="app-footer__brand flex min-w-0 items-center justify-center gap-1.5"><span class="app-footer__name text-sm font-semibold leading-5 text-[var(--app-footer-ink)]">代码民工</span><span class="app-footer__slogan-separator hidden text-xs leading-5 text-[var(--app-footer-dot)] sm:inline">·</span><span class="app-footer__slogan hidden text-xs leading-5 text-[var(--app-footer-muted)] sm:inline">探索科技世界</span></div><nav class="app-footer__nav flex items-center gap-3 md:gap-4"><a class="inline-flex cursor-pointer items-center border-0 bg-transparent p-0 text-xs font-[inherit] leading-5 text-[var(--app-footer-muted)] transition-colors hover:text-[var(--app-footer-hover)]" href="/">首页</a><a class="inline-flex cursor-pointer items-center border-0 bg-transparent p-0 text-xs font-[inherit] leading-5 text-[var(--app-footer-muted)] transition-colors hover:text-[var(--app-footer-hover)]" href="/blog/articles/">博文</a><a class="inline-flex cursor-pointer items-center border-0 bg-transparent p-0 text-xs font-[inherit] leading-5 text-[var(--app-footer-muted)] transition-colors hover:text-[var(--app-footer-hover)]" href="/blog/tags/">标签</a><a class="inline-flex cursor-pointer items-center border-0 bg-transparent p-0 text-xs font-[inherit] leading-5 text-[var(--app-footer-muted)] transition-colors hover:text-[var(--app-footer-hover)]" href="/blog/archive/">归档</a><a class="inline-flex cursor-pointer items-center border-0 bg-transparent p-0 text-xs font-[inherit] leading-5 text-[var(--app-footer-muted)] transition-colors hover:text-[var(--app-footer-hover)]" href="/blog/about/">关于</a></nav><div class="app-footer__right flex items-center gap-2.5 md:gap-3"><a href="https://github.com/suijiafeng" target="_blank" rel="noreferrer" aria-label="GitHub" class="text-[var(--app-footer-muted)] transition-colors hover:text-[var(--app-footer-hover)]"><svg viewBox="0 0 24 24" class="h-4 w-4 fill-current" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.04c-3.34.73-4.04-1.42-4.04-1.42-.55-1.38-1.34-1.74-1.34-1.74-1.1-.74.08-.73.08-.73 1.21.08 1.85 1.23 1.85 1.23 1.08 1.84 2.83 1.31 3.52 1 .11-.77.42-1.31.76-1.61-2.66-.3-5.47-1.32-5.47-5.9 0-1.3.47-2.36 1.23-3.19-.12-.3-.53-1.52.12-3.17 0 0 1.01-.32 3.3 1.22a11.5 11.5 0 0 1 6 0c2.28-1.54 3.29-1.22 3.29-1.22.66 1.65.25 2.87.12 3.17.77.83 1.23 1.89 1.23 3.19 0 4.59-2.81 5.6-5.49 5.89.43.37.82 1.1.82 2.23v3.31c0 .32.21.7.83.58A12 12 0 0 0 12 .5Z"></path></svg></a><a href="mailto:suijiafeng@hotmail.com" aria-label="Email" class="text-[var(--app-footer-muted)] transition-colors hover:text-[var(--app-footer-hover)]"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg></a><span class="text-xs leading-5 text-[var(--app-footer-dot)]">·</span><span class="text-xs leading-5 text-[var(--app-footer-muted)]">© <!-- -->2018<!-- -->–<!-- -->2026</span></div></div></div></footer></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"postData":{"title":"闭包为什么既好用又容易出坑：它不是高深概念，而是作用域结果","date":"2021-05-07","excerpt":"从函数和作用域的关系出发，解释闭包为什么常见、能解决什么问题，以及哪些地方容易带来副作用。","tags":["前端基础"],"slug":"frontend-javascript-closure-2021","category":"2021","likeCount":6,"postId":"a3f3d01b-b7eb-515b-5482-6174a900a3ff","viewCount":1960,"readTime":"10分钟","coverImage":null,"content":"\n闭包在前端基础里一直很有代表性。\n\n不少人第一次接触它，会觉得这是一个特别抽象的概念，仿佛只有面试或者高阶技巧里才会出现。实际上，只要你在 JavaScript 里写过函数嵌套、事件回调、工厂函数，基本就已经用到过闭包。\n\n真正需要理解的不是“闭包定义背诵版”，而是它为什么会出现，以及它会带来什么后果。\n\n## 闭包和作用域是分不开的\n\nJavaScript 函数在定义时，会记住自己所处的词法作用域。\n\n这意味着即使外层函数已经执行完，内层函数仍然可能访问外层作用域里的变量。\n\n例如：\n\n```javascript\nfunction createCounter() {\n  let count = 0;\n\n  return function () {\n    count += 1;\n    return count;\n  };\n}\n```\n\n这里返回出去的匿名函数依然能访问 `count`，这就是非常典型的闭包场景。\n\n## 它为什么会这么好用\n\n闭包最直观的价值，是可以把数据和操作绑在一起，并且隐藏内部状态。\n\n刚才那个计数器例子里，外部代码无法直接改 `count`，只能通过返回的函数操作它。这种模式在下面这些场景里都很常见：\n\n- 封装私有变量\n- 生成带参数的处理函数\n- 事件回调里保留上下文\n- 函数式组合\n\n所以闭包并不是“特殊技巧”，很多时候它只是函数能力自然延伸出来的结果。\n\n## 为什么循环里的闭包容易出 bug\n\n前端里一个经典坑就是循环注册事件。\n\n早期代码经常会看到类似：\n\n```javascript\nfor (var i = 0; i \u003c 3; i++) {\n  setTimeout(function () {\n    console.log(i);\n  }, 1000);\n}\n```\n\n不少人预期会输出 `0 1 2`，结果经常看到的是同一个值。问题本质上就在于多个回调共享了同一个外层变量，而这个变量在回调真正执行前已经变化了。\n\n这类问题说明闭包不是“会不会用”的问题，而是你是否清楚闭包抓住的到底是什么作用域环境。\n\n## 闭包会保留状态，所以也会延长变量生命周期\n\n这是它好用的地方，也是需要注意的地方。\n\n因为只要内部函数还可访问，外层作用域中的某些变量就可能继续存在。\n\n如果这里面保存了很大的对象、DOM 引用或者已经不再需要的数据，又一直没有释放，就可能造成不必要的内存占用。\n\n当然，现代 JavaScript 引擎已经比早年聪明很多，不需要一提闭包就紧张。但如果一个闭包长期持有大块数据，还是值得留意。\n\n## 闭包最常见的价值，是让函数更贴近业务上下文\n\n比如你有一个按钮列表，需要给每种操作生成不同处理函数：\n\n```javascript\nfunction createHandler(type) {\n  return function () {\n    console.log('current action:', type);\n  };\n}\n```\n\n这时每个回调都记住了自己的 `type`。从业务角度看非常自然，因为不同按钮本来就应该携带不同上下文。\n\n这类写法在前端组件、事件回调、请求参数预处理里都非常常见。\n\n## 理解闭包，不是为了写炫技代码\n\n我后来越来越觉得，闭包的学习重点不在于你能不能手写复杂面试题，而在于当你看到一层层函数返回和回调嵌套时，能否知道：\n\n- 哪些变量会被继续引用\n- 这些变量什么时候会变化\n- 它们是否会带来共享状态问题\n\n一旦这三件事清楚了，闭包就不会再显得神秘。\n\n它本质上只是函数和作用域共同作用后的结果。前端里很多看似灵活的写法，背后都离不开它。理解它，是为了更稳地利用这种能力，而不是被它制造的隐式状态绕进去。\n\n## 前端里很多“记住上下文”的能力，本质上都靠闭包\n\n比如你做一个请求封装，把 `baseURL`、默认 headers 和错误处理逻辑先关进去；或者写一个表单校验器，让不同字段处理函数各自记住自己的规则；又或者给列表项生成点击回调，让它们都携带各自的 id。这些场景看起来差别很大，但底层都很像：函数在创建时，把需要的上下文也一起带走了。\n\n这也是闭包为什么在前端里特别常见。因为 UI 交互天然就是“某个动作稍后发生，但仍然记得当时环境”的过程。\n\n## 真正需要警惕的，是共享状态不够明显\n\n闭包本身不是问题，问题通常出在状态被悄悄共享了。\n\n例如多个回调引用同一个可变变量、一个工具函数内部偷偷累计状态、两个看似独立的处理函数实际上都依赖同一块外部数据。短期看代码能跑，长期却很容易变得不可预测。\n\n所以我现在看到闭包时，会额外留意两件事：\n\n- 这个外部变量是不是会持续变化\n- 多个调用方是不是在共享同一份状态\n\n如果答案是“会”，那就要继续判断这是不是设计本意。理解闭包最实用的地方，不是会背定义，而是能提前闻到这种隐式耦合的味道。\n"},"randomPosts":[{"title":"Constructable Stylesheets：Web Components 样式复用的新方式","date":"2025-04-28","excerpt":"介绍 Constructable Stylesheets 的作用，说明它如何让多个 Shadow DOM 共享同一份样式对象。","tags":["前端基础","组件与状态","CSS"],"slug":"frontend-constructable-stylesheets-2026","category":"2025","likeCount":8,"postId":"2bdd2eab-e346-8064-35e9-713d211a8e0c","viewCount":2075,"readTime":null,"coverImage":null},{"title":"前后端接口错误约定：message 不能每个接口都不一样","date":"2018-09-18","excerpt":"从前后端联调角度整理 REST 接口错误结构、HTTP 状态码、业务 code、表单错误和前端统一处理方式。","tags":["前端基础","构建与模块化"],"slug":"rest-api-error-contract-2018","category":"2018","likeCount":8,"postId":"d49c5469-8e60-2730-dfcc-7be800f0caf2","viewCount":2918,"readTime":null,"coverImage":null},{"title":"Vue history 模式部署：本地能打开，不代表线上刷新不 404","date":"2018-10-16","excerpt":"整理 Vue Router history 模式部署到 Nginx 时的刷新 404、二级目录、静态资源路径和缓存配置问题。","tags":["Vue","构建与模块化"],"slug":"nginx-vue-history-deploy-2018","category":"2018","likeCount":5,"postId":"3631e00d-daf5-37dd-a18e-012349096bf3","viewCount":5379,"readTime":null,"coverImage":null}],"prevPost":{"title":"事件循环到底在忙什么：为什么同步代码后面还有一堆异步顺序问题","date":"2021-05-20","excerpt":"从执行栈、任务队列和异步回调顺序出发，解释前端里常见的事件循环理解误区。","tags":["前端基础"],"slug":"frontend-javascript-event-loop-2021","category":"2021","likeCount":7,"postId":"6d7198d0-1399-f9cf-4aab-6d6cb241e55e","viewCount":3372,"readTime":"10分钟","coverImage":null},"nextPost":{"title":"JavaScript 里的 this 为什么总让人别扭：它不是指向写代码的人","date":"2021-04-21","excerpt":"围绕函数调用方式梳理 JavaScript 中 this 的常见取值规则，解释为什么它经常让人误判。","tags":["前端基础"],"slug":"frontend-javascript-this-2021","category":"2021","likeCount":5,"postId":"324cb1df-05aa-f7e1-87c3-004d82bc46f3","viewCount":1626,"readTime":"10分钟","coverImage":null}},"__N_SSG":true},"page":"/blog/articles/[...slug]","query":{"slug":["frontend-javascript-closure-2021"]},"buildId":"9aHOZOuG2e0vTTv94Qgqp","isFallback":false,"gsp":true,"scriptLoader":[]}</script></body></html>
