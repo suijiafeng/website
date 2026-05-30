@@ -27,13 +27,13 @@ self.__BUILD_MANIFEST = {
     "static/chunks/0vuv322jl6d~a.js"
   ],
   "/blog/archive": [
-    "static/chunks/0vkhpkj2k2wlx.js"
+    "static/chunks/02a42.koz_xly.js"
   ],
   "/blog/archive/[year]": [
     "static/chunks/09x7vl942f31r.js"
   ],
   "/blog/articles": [
-    "static/chunks/0stst8~i9-_7m.js"
+    "static/chunks/0gxc6vb.o0rfs.js"
   ],
   "/blog/articles/[...slug]": [
     "static/chunks/0~~56l3rq3bfv.js"
@@ -45,7 +45,7 @@ self.__BUILD_MANIFEST = {
     "static/chunks/00_yw8cu.3gfz.js"
   ],
   "/blog/tags": [
-    "static/chunks/13dczzm7ljzih.js"
+    "static/chunks/070dg~778a.yv.js"
   ],
   "/blog/tags/[tag]": [
     "static/chunks/0w.o~webjf_tu.js"
