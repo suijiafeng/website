@@ -1,6 +1,6 @@
 self.__BUILD_MANIFEST = {
   "/": [
-    "static/chunks/0216zq4_xqaa0.js"
+    "static/chunks/0e9okuvn_lqp5.js"
   ],
   "/404": [
     "static/chunks/0~ijcn94aof_h.js"
@@ -18,7 +18,7 @@ self.__BUILD_MANIFEST = {
     "static/chunks/00i-xxt4~6cbu.js"
   ],
   "/blog": [
-    "static/chunks/0i1c5q1qr0dr~.js"
+    "static/chunks/0xnfc_w76a_.h.js"
   ],
   "/blog/[...slug]": [
     "static/chunks/140wbsvtmnmhl.js"
@@ -30,13 +30,13 @@ self.__BUILD_MANIFEST = {
     "static/chunks/0jyyuub7c5m4-.js"
   ],
   "/blog/archive/[year]": [
-    "static/chunks/0kd7pkni6er56.js"
+    "static/chunks/050jdg98gt3v3.js"
   ],
   "/blog/articles": [
-    "static/chunks/0d0eee6g.9wr0.js"
+    "static/chunks/00iobt~1icust.js"
   ],
   "/blog/articles/[...slug]": [
-    "static/chunks/0tdaa-wtv-n8j.js"
+    "static/chunks/185eq5h7uk-1..js"
   ],
   "/blog/posts": [
     "static/chunks/10hz-j~lubi0p.js"
@@ -51,7 +51,7 @@ self.__BUILD_MANIFEST = {
     "static/chunks/17oip_0ff24gh.js"
   ],
   "/blog/tags/[tag]": [
-    "static/chunks/0g6luptq65u.o.js"
+    "static/chunks/0ttiublgiogxg.js"
   ],
   "/logo-lab": [
     "static/chunks/0lkzwht.wassa.js"
