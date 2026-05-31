@@ -5,7 +5,7 @@
     <link>https://suijf.site/</link>
     <description>代码民工的个人主页，专注复杂中后台、配置平台与数据可视化，记录工程化、性能优化与产品实现上的判断。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Sun, 31 May 2026 12:57:42 GMT</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2026 16:51:07 GMT</lastBuildDate>
     <atom:link href="https://suijf.site/rss.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>shadcn/ui 这种「把代码抄进项目」的组件方案，用半年后的复盘</title>
@@ -19,14 +19,14 @@
       <link>https://suijf.site/blog/articles/ai-assisted-coding-tips-pitfalls-2026/</link>
       <guid isPermaLink="true">https://suijf.site/blog/articles/ai-assisted-coding-tips-pitfalls-2026/</guid>
       <pubDate>Tue, 05 May 2026 00:00:00 GMT</pubDate>
-      <description>不聊工具评测，记录几次和 AI 协作写代码后总结出来的实用习惯：先给上下文，先讲约束，先读代码和拆计划，每轮改完都要测试。</description>
+      <description>不聊工具评测，记录几次和 AI 协作写代码后留下来的实用习惯：先给上下文，先讲约束，先读代码和拆计划，每轮改完都要测试。</description>
     </item>
     <item>
       <title>TCP/IP 与前端性能：从数据包到首次渲染的底层逻辑</title>
       <link>https://suijf.site/blog/articles/tcp-ip-frontend-performance-2026/</link>
       <guid isPermaLink="true">https://suijf.site/blog/articles/tcp-ip-frontend-performance-2026/</guid>
       <pubDate>Mon, 04 May 2026 00:00:00 GMT</pubDate>
-      <description>从 TTFB、FP、数据包、IP、TCP 三次握手和四次挥手出发，串联 TCP/IP 协议栈与前端首屏性能之间的关系。</description>
+      <description>从一次首屏慢但 JS 并不大的排查经历出发，把 TTFB、FP、数据包、IP、TCP 握手和前端性能串起来看。</description>
     </item>
     <item>
       <title>Zod 4 实践：把校验、类型和接口契约收在一处</title>
@@ -34,6 +34,20 @@
       <guid isPermaLink="true">https://suijf.site/blog/articles/zod-4-schema-validation-2026/</guid>
       <pubDate>Sun, 03 May 2026 00:00:00 GMT</pubDate>
       <description>Zod 4 的性能改进和 API 变化落到真实项目里：表单校验、接口出入参解析、和 TypeScript 类型互推，以及 schema 复用时容易踩的坑。</description>
+    </item>
+    <item>
+      <title>TypeScript 7 Beta 用 Go 重写之后：我更关心反馈链路有没有变短</title>
+      <link>https://suijf.site/blog/articles/frontend-typescript-7-go-2026/</link>
+      <guid isPermaLink="true">https://suijf.site/blog/articles/frontend-typescript-7-go-2026/</guid>
+      <pubDate>Tue, 28 Apr 2026 00:00:00 GMT</pubDate>
+      <description>从大型前端项目的类型检查、编辑器响应和 CI 等待说起，聊聊我会怎么评估 TypeScript 7 Beta 的性能收益和升级风险。</description>
+    </item>
+    <item>
+      <title>看 ES2026 和 ESNext 新特性时，我更关心它什么时候能进业务代码</title>
+      <link>https://suijf.site/blog/articles/frontend-es2026-features/</link>
+      <guid isPermaLink="true">https://suijf.site/blog/articles/frontend-es2026-features/</guid>
+      <pubDate>Fri, 24 Apr 2026 00:00:00 GMT</pubDate>
+      <description>从不可变数据、资源管理和新语法落地说起，记录我如何判断 JavaScript 新特性是否适合进入真实项目。</description>
     </item>
     <item>
       <title>用 Biome 替掉 ESLint + Prettier：一次工具链瘦身的得与失</title>
@@ -61,7 +75,7 @@
       <link>https://suijf.site/blog/articles/qiankun-proxy-sandbox-2026/</link>
       <guid isPermaLink="true">https://suijf.site/blog/articles/qiankun-proxy-sandbox-2026/</guid>
       <pubDate>Sun, 15 Mar 2026 00:00:00 GMT</pubDate>
-      <description>从 ProxySandbox 和 LegacySandbox 两条主线拆解 qiankun 的 JS 沙箱隔离机制，理解 fakeWindow、with、unscopables、函数绑定和生命周期补丁的设计。</description>
+      <description>从一次微前端全局变量污染排查说起，拆解 qiankun ProxySandbox 和 LegacySandbox 为什么要设计 fakeWindow、with、函数绑定和生命周期补丁。</description>
     </item>
     <item>
       <title>TC39 Signals 提案与框架里的信号：响应式终于要进语言层了吗</title>
@@ -75,7 +89,7 @@
       <link>https://suijf.site/blog/articles/tanstack-router-type-safe-2026/</link>
       <guid isPermaLink="true">https://suijf.site/blog/articles/tanstack-router-type-safe-2026/</guid>
       <pubDate>Sat, 21 Feb 2026 00:00:00 GMT</pubDate>
-      <description>用过一段时间 TanStack Router 后的总结：文件式与代码式路由、search params 的类型校验、loader 数据预取，以及它和 React Router 的取舍。</description>
+      <description>用过一段时间 TanStack Router 后的复盘：文件式与代码式路由、search params 的类型校验、loader 数据预取，以及它和 React Router 的取舍。</description>
     </item>
     <item>
       <title>Vite 用上 Rolldown 之后：一次构建提速的真实体感和注意点</title>
@@ -104,13 +118,6 @@
       <guid isPermaLink="true">https://suijf.site/blog/articles/frontend-js-native-features-2025/</guid>
       <pubDate>Tue, 30 Dec 2025 00:00:00 GMT</pubDate>
       <description>记录我在维护后台项目时重新审视 JavaScript 原生 API 的过程：哪些地方可以少装库，哪些地方仍然要尊重兼容性和团队成本。</description>
-    </item>
-    <item>
-      <title>TypeScript 7 用 Go 重写之后：我更关心反馈链路有没有变短</title>
-      <link>https://suijf.site/blog/articles/frontend-typescript-7-go-2025/</link>
-      <guid isPermaLink="true">https://suijf.site/blog/articles/frontend-typescript-7-go-2025/</guid>
-      <pubDate>Fri, 05 Dec 2025 00:00:00 GMT</pubDate>
-      <description>从大型前端项目的类型检查、编辑器响应和 CI 等待说起，聊聊我会怎么评估 TypeScript 7 的性能收益和升级风险。</description>
     </item>
     <item>
       <title>React Context 性能复盘：我不再把“全局状态”当成省事方案</title>
@@ -202,13 +209,6 @@
       <guid isPermaLink="true">https://suijf.site/blog/articles/frontend-constructable-stylesheets/</guid>
       <pubDate>Mon, 28 Apr 2025 00:00:00 GMT</pubDate>
       <description>从 Web Components 里重复插入 style 的维护成本说起，记录 Constructable Stylesheets 适合什么场景，以及它和普通 CSS 的边界。</description>
-    </item>
-    <item>
-      <title>看 ES2026 新特性时，我更关心它什么时候能进业务代码</title>
-      <link>https://suijf.site/blog/articles/frontend-es2026-features/</link>
-      <guid isPermaLink="true">https://suijf.site/blog/articles/frontend-es2026-features/</guid>
-      <pubDate>Thu, 24 Apr 2025 00:00:00 GMT</pubDate>
-      <description>从不可变数据、资源管理和新语法落地说起，记录我如何判断 JavaScript 新特性是否适合进入真实项目。</description>
     </item>
     <item>
       <title>关注 Anchor Positioning：我最想少掉的是浮层定位里的那堆测量代码</title>

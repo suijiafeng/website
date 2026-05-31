@@ -16,20 +16,21 @@
 ## 最新文章
 
 - [shadcn/ui 这种「把代码抄进项目」的组件方案，用半年后的复盘](https://suijf.site/blog/articles/shadcn-ui-component-system-2026/): shadcn/ui 不发 npm 包、直接把组件源码装进你的仓库。聊聊这种 copy-in 模式的好处、维护成本、和传统组件库（Antd/MUI）的取舍。
-- [AI 辅助编程技巧与踩坑：一些我现在不会再省略的步骤](https://suijf.site/blog/articles/ai-assisted-coding-tips-pitfalls-2026/): 不聊工具评测，记录几次和 AI 协作写代码后总结出来的实用习惯：先给上下文，先讲约束，先读代码和拆计划，每轮改完都要测试。
-- [TCP/IP 与前端性能：从数据包到首次渲染的底层逻辑](https://suijf.site/blog/articles/tcp-ip-frontend-performance-2026/): 从 TTFB、FP、数据包、IP、TCP 三次握手和四次挥手出发，串联 TCP/IP 协议栈与前端首屏性能之间的关系。
+- [AI 辅助编程技巧与踩坑：一些我现在不会再省略的步骤](https://suijf.site/blog/articles/ai-assisted-coding-tips-pitfalls-2026/): 不聊工具评测，记录几次和 AI 协作写代码后留下来的实用习惯：先给上下文，先讲约束，先读代码和拆计划，每轮改完都要测试。
+- [TCP/IP 与前端性能：从数据包到首次渲染的底层逻辑](https://suijf.site/blog/articles/tcp-ip-frontend-performance-2026/): 从一次首屏慢但 JS 并不大的排查经历出发，把 TTFB、FP、数据包、IP、TCP 握手和前端性能串起来看。
 - [Zod 4 实践：把校验、类型和接口契约收在一处](https://suijf.site/blog/articles/zod-4-schema-validation-2026/): Zod 4 的性能改进和 API 变化落到真实项目里：表单校验、接口出入参解析、和 TypeScript 类型互推，以及 schema 复用时容易踩的坑。
+- [TypeScript 7 Beta 用 Go 重写之后：我更关心反馈链路有没有变短](https://suijf.site/blog/articles/frontend-typescript-7-go-2026/): 从大型前端项目的类型检查、编辑器响应和 CI 等待说起，聊聊我会怎么评估 TypeScript 7 Beta 的性能收益和升级风险。
+- [看 ES2026 和 ESNext 新特性时，我更关心它什么时候能进业务代码](https://suijf.site/blog/articles/frontend-es2026-features/): 从不可变数据、资源管理和新语法落地说起，记录我如何判断 JavaScript 新特性是否适合进入真实项目。
 - [用 Biome 替掉 ESLint + Prettier：一次工具链瘦身的得与失](https://suijf.site/blog/articles/biome-toolchain-2026/): 把项目的 lint 和格式化从 ESLint+Prettier 换成 Biome 的过程：速度提升有多明显、规则迁移缺了什么、以及哪些场景我还是留着 ESLint。
 - [跨文档 View Transitions：多页应用也能做出丝滑过渡了](https://suijf.site/blog/articles/view-transitions-cross-document-2026/): 同文档 View Transitions 之外，跨文档（MPA）过渡终于可用。记录我给一个传统多页站点加上页面切换动画的过程、view-transition-name 的配对和降级处理。
 - [原生 CSS 嵌套和 @scope：写了这么多年 Sass 之后的几点真实感受](https://suijf.site/blog/articles/css-scope-nesting-2026/): 原生嵌套和 @scope 落地后，我在项目里逐步去掉一部分 Sass 的过程：嵌套的坑、@scope 的下边界 donut scope、以及现在还不能完全替代预处理器的地方。
-- [qiankun JS 沙箱隔离机制：Proxy 篇](https://suijf.site/blog/articles/qiankun-proxy-sandbox-2026/): 从 ProxySandbox 和 LegacySandbox 两条主线拆解 qiankun 的 JS 沙箱隔离机制，理解 fakeWindow、with、unscopables、函数绑定和生命周期补丁的设计。
+- [qiankun JS 沙箱隔离机制：Proxy 篇](https://suijf.site/blog/articles/qiankun-proxy-sandbox-2026/): 从一次微前端全局变量污染排查说起，拆解 qiankun ProxySandbox 和 LegacySandbox 为什么要设计 fakeWindow、with、函数绑定和生命周期补丁。
 - [TC39 Signals 提案与框架里的信号：响应式终于要进语言层了吗](https://suijf.site/blog/articles/js-signals-proposal-2026/): 从 Vue ref、Solid signal 到 TC39 的 Signals 提案，聊聊信号这套响应式模型解决了什么、polyfill 怎么用、以及它和现有框架的关系。
-- [TanStack Router 的类型安全路由：把跳转和参数错误挪到编译期](https://suijf.site/blog/articles/tanstack-router-type-safe-2026/): 用过一段时间 TanStack Router 后的总结：文件式与代码式路由、search params 的类型校验、loader 数据预取，以及它和 React Router 的取舍。
+- [TanStack Router 的类型安全路由：把跳转和参数错误挪到编译期](https://suijf.site/blog/articles/tanstack-router-type-safe-2026/): 用过一段时间 TanStack Router 后的复盘：文件式与代码式路由、search params 的类型校验、loader 数据预取，以及它和 React Router 的取舍。
 - [Vite 用上 Rolldown 之后：一次构建提速的真实体感和注意点](https://suijf.site/blog/articles/vite-rolldown-2026/): Rolldown 把 Vite 的打包从 esbuild/Rollup 双引擎统一成一套 Rust 实现，记录我在中型项目里切过去的体感、兼容性问题和回退策略。
 - [Tailwind CSS v4 迁移记：新引擎、CSS 变量主题和那些不再需要的配置](https://suijf.site/blog/articles/tailwind-v4-migration-2026/): 从 v3 升到 v4 的真实迁移过程：Oxide 引擎带来的速度变化、配置从 JS 搬到 CSS、@theme 和 CSS 变量怎么用，以及几个升级时踩的坑。
 - [React Compiler 上手实践：我把它接进老项目后，哪些 useMemo 真的可以删了](https://suijf.site/blog/articles/react-compiler-practice-2026/): 记录把 React Compiler 接入一个真实项目的过程：它替我做了哪些手动 memo 化、哪些写法会让它直接放弃优化、以及上线前怎么验证它没改坏行为。
 - [少装一个库之后：我重新补了一遍 JavaScript 原生能力](https://suijf.site/blog/articles/frontend-js-native-features-2025/): 记录我在维护后台项目时重新审视 JavaScript 原生 API 的过程：哪些地方可以少装库，哪些地方仍然要尊重兼容性和团队成本。
-- [TypeScript 7 用 Go 重写之后：我更关心反馈链路有没有变短](https://suijf.site/blog/articles/frontend-typescript-7-go-2025/): 从大型前端项目的类型检查、编辑器响应和 CI 等待说起，聊聊我会怎么评估 TypeScript 7 的性能收益和升级风险。
 - [React Context 性能复盘：我不再把“全局状态”当成省事方案](https://suijf.site/blog/articles/react-context-performance-2025/): 记录一次中后台页面因 Context 混放状态导致输入卡顿的排查过程，以及我后来对状态边界、局部状态和细粒度订阅的判断。
 - [试 Bun 之后我更关心的不是跑分，而是反馈链路有没有变短](https://suijf.site/blog/articles/frontend-bun-toolchain-2025/): 从一次工具脚本迁移说起，记录我如何看待 Bun 的速度收益、兼容性边界，以及成熟前端项目为什么不该一口气迁移。
 - [AI 工具调用不是能调通就行：错误处理和可观测性才是落地关键](https://suijf.site/blog/articles/ai-tool-calling-error-handling-2025/): 从 Agent 和工具调用的真实失败场景出发，讨论 AI 应用为什么必须统一处理工具错误、参数校验和调用日志。
@@ -43,5 +44,4 @@
 - [和 AI 协作写代码：先让它读懂系统，再让它动手](https://suijf.site/blog/articles/ai-coding-agent-review/): 记录和 AI 编程助手协作时更稳定的工作方式：先读代码、拆任务、说明改动，再执行和验证。
 - [CSS view() 滚动动画：我想少写的是那堆 scroll 计算](https://suijf.site/blog/articles/frontend-css-view-scroll-animation/): 从一次滚动动画维护成本说起，记录 CSS view() 适合解决什么问题，以及真实项目里如何做兼容、降级和动效克制。
 - [Constructable Stylesheets：我在 Shadow DOM 重复样式里看到的价值](https://suijf.site/blog/articles/frontend-constructable-stylesheets/): 从 Web Components 里重复插入 style 的维护成本说起，记录 Constructable Stylesheets 适合什么场景，以及它和普通 CSS 的边界。
-- [看 ES2026 新特性时，我更关心它什么时候能进业务代码](https://suijf.site/blog/articles/frontend-es2026-features/): 从不可变数据、资源管理和新语法落地说起，记录我如何判断 JavaScript 新特性是否适合进入真实项目。
 - [关注 Anchor Positioning：我最想少掉的是浮层定位里的那堆测量代码](https://suijf.site/blog/articles/frontend-css-anchor-positioning-2025/): 从 Tooltip、Dropdown、Popover 的定位维护成本说起，记录我为什么关注 CSS Anchor Positioning，以及真实项目里不会立刻全量替换的原因。
