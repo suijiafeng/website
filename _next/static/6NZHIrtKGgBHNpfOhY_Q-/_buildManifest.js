@@ -3,7 +3,7 @@ self.__BUILD_MANIFEST = {
     "static/chunks/0e9okuvn_lqp5.js"
   ],
   "/404": [
-    "static/chunks/0~ijcn94aof_h.js"
+    "static/chunks/0ud3w0vkgy4iu.js"
   ],
   "/_error": [
     "static/chunks/06grekr0kswj~.js"
@@ -42,10 +42,10 @@ self.__BUILD_MANIFEST = {
     "static/chunks/10hz-j~lubi0p.js"
   ],
   "/blog/search": [
-    "static/chunks/0zz.88bhgk791.js"
+    "static/chunks/0v9b0ba~p~.f9.js"
   ],
   "/blog/search/[kw]": [
-    "static/chunks/0i4i1.q2ilden.js"
+    "static/chunks/0bgl8z8xitr-o.js"
   ],
   "/blog/tags": [
     "static/chunks/17oip_0ff24gh.js"
