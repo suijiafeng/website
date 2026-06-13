@@ -1,0 +1,226 @@
+<!DOCTYPE html><html lang="zh" data-rev="249123085d5796c8ee4d9338540e3b6078636a29" data-rev-ts="1781334643616"><head><meta charSet="utf-8" data-next-head=""/><meta name="viewport" content="width=device-width, initial-scale=1.0" data-next-head=""/><meta name="theme-color" content="#f7f9fb" data-next-head=""/><link rel="alternate" type="application/rss+xml" title="代码民工 RSS" href="https://suijf.site/rss.xml" data-next-head=""/><title data-next-head="">前端国际化工程：不只是把中文替换成英文 - 代码民工</title><meta name="description" content="从文案 key、日期数字格式、布局扩展、路由和翻译流程出发，梳理前端国际化项目的工程细节。" data-next-head=""/><meta name="author" content="代码民工" data-next-head=""/><meta name="keywords" content="前端国际化工程：不只是把中文替换成英文, 前端基础, 构建与模块化, 技术记录" data-next-head=""/><meta name="robots" content="index, follow" data-next-head=""/><link rel="canonical" href="https://suijf.site/blog/articles/frontend-internationalization-2024/" data-next-head=""/><meta property="og:title" content="前端国际化工程：不只是把中文替换成英文 - 代码民工" data-next-head=""/><meta property="og:description" content="从文案 key、日期数字格式、布局扩展、路由和翻译流程出发，梳理前端国际化项目的工程细节。" data-next-head=""/><meta property="og:type" content="article" data-next-head=""/><meta property="og:url" content="https://suijf.site/blog/articles/frontend-internationalization-2024/" data-next-head=""/><meta property="og:site_name" content="代码民工" data-next-head=""/><meta property="og:locale" content="zh_CN" data-next-head=""/><meta property="og:image" content="https://suijf.site/logo.svg" data-next-head=""/><meta property="og:image:alt" content="前端国际化工程：不只是把中文替换成英文" data-next-head=""/><meta name="twitter:card" content="summary" data-next-head=""/><meta name="twitter:title" content="前端国际化工程：不只是把中文替换成英文 - 代码民工" data-next-head=""/><meta name="twitter:description" content="从文案 key、日期数字格式、布局扩展、路由和翻译流程出发，梳理前端国际化项目的工程细节。" data-next-head=""/><meta name="twitter:image" content="https://suijf.site/logo.svg" data-next-head=""/><meta name="twitter:image:alt" content="前端国际化工程：不只是把中文替换成英文" data-next-head=""/><link rel="icon" href="/favicon.png" type="image/png"/><link rel="alternate icon" href="/favicon.svg" type="image/svg+xml"/><link rel="preload" href="/_next/static/chunks/0kfgefhig0jl8.css" as="style"/><script type="application/ld+json" data-next-head="">{"@context":"https://schema.org","@type":"BlogPosting","headline":"前端国际化工程：不只是把中文替换成英文","description":"从文案 key、日期数字格式、布局扩展、路由和翻译流程出发，梳理前端国际化项目的工程细节。","datePublished":"2024-10-31","dateModified":"2024-10-31","mainEntityOfPage":"https://suijf.site/blog/articles/frontend-internationalization-2024/","url":"https://suijf.site/blog/articles/frontend-internationalization-2024/","image":["https://suijf.site/logo.svg"],"inLanguage":"zh-CN","author":{"@type":"Person","name":"代码民工","url":"https://suijf.site/blog/about/"},"publisher":{"@type":"Organization","name":"代码民工","logo":{"@type":"ImageObject","url":"https://suijf.site/logo.svg"}},"keywords":"前端基础, 构建与模块化","articleSection":"前端基础","wordCount":2961}</script><script type="application/ld+json" data-next-head="">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://suijf.site/"},{"@type":"ListItem","position":2,"name":"博客","item":"https://suijf.site/blog/"},{"@type":"ListItem","position":3,"name":"文章","item":"https://suijf.site/blog/articles/"},{"@type":"ListItem","position":4,"name":"前端国际化工程：不只是把中文替换成英文","item":"https://suijf.site/blog/articles/frontend-internationalization-2024/"}]}</script><style>
+            html.official-home-html {
+              background-color: #0d1117;
+              color: #e8eaf0;
+            }
+
+            html.official-home-html body {
+              background-color: #0d1117;
+            }
+
+            html.official-home-html[data-theme='light'] {
+              background-color: #f8fafc;
+              color: #102033;
+            }
+
+            html.official-home-html[data-theme='light'] body {
+              background-color: #f8fafc;
+            }
+
+            html.blog-html {
+              background-color: #f7f9fb;
+              color: #21313c;
+            }
+
+            html.blog-html body {
+              background-color: #f7f9fb;
+            }
+
+            html.blog-html[data-theme='dark'] {
+              background-color: #070910;
+              color: #e8eaf0;
+            }
+
+            html.blog-html[data-theme='dark'] body {
+              background-color: #070910;
+            }
+          </style><script>
+      (function () {
+        var root = document.documentElement;
+        var isOfficialHome = window.location.pathname === '/';
+
+        function isThemeValue(value) {
+          return value === 'light' || value === 'dark';
+        }
+
+        function getSavedTheme() {
+          try {
+            return window.localStorage.getItem('theme');
+          } catch (error) {
+            return null;
+          }
+        }
+
+        function getSystemTheme(fallbackTheme) {
+          if (!window.matchMedia) {
+            return fallbackTheme;
+          }
+
+          return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+
+        function applyInitialTheme(fallbackTheme) {
+          var savedTheme = getSavedTheme();
+          root.dataset.theme = isThemeValue(savedTheme) ? savedTheme : getSystemTheme(fallbackTheme);
+        }
+
+        if (isOfficialHome) {
+          root.classList.add('official-home-html');
+          root.classList.add('theme-preload');
+          applyInitialTheme('dark');
+          return;
+        }
+
+        root.classList.add('blog-html');
+        root.classList.add('theme-preload');
+        applyInitialTheme('light');
+      })();
+    </script><link rel="stylesheet" href="/_next/static/chunks/0kfgefhig0jl8.css" data-n-g=""/><noscript data-n-css=""></noscript><script src="/_next/static/chunks/0ydd6~w3_fayi.js" defer=""></script><script src="/_next/static/chunks/14pv4oi0ea1~e.js" defer=""></script><script src="/_next/static/chunks/0i.lj6jsn6e_1.js" defer=""></script><script src="/_next/static/chunks/0q77~okj5tq6y.js" defer=""></script><script src="/_next/static/chunks/turbopack-08zpjwrn_a2hi.js" defer=""></script><script src="/_next/static/chunks/16~azu22xh1ij.js" defer=""></script><script src="/_next/static/chunks/0ht20btur.jkf.js" defer=""></script><script src="/_next/static/chunks/0n~1o0cr.miug.js" defer=""></script><script src="/_next/static/chunks/0-qns0prdam0t.js" defer=""></script><script src="/_next/static/chunks/turbopack-0qkxk0plhv03l.js" defer=""></script><script src="/_next/static/AWjVQY2AYXoFDDTV4DM2g/_buildManifest.js" defer=""></script><script src="/_next/static/AWjVQY2AYXoFDDTV4DM2g/_ssgManifest.js" defer=""></script><script src="/_next/static/AWjVQY2AYXoFDDTV4DM2g/_clientMiddlewareManifest.js" defer=""></script></head><body><div id="__next"><div class="blog-shell flex flex-col min-h-screen opacity-100 transition-opacity duration-1000"><header class="theme-header theme-border fixed top-0 z-20 w-full border-b shadow-[var(--shadow-card)] backdrop-blur transition-transform duration-300 translate-y-0"><div class="theme-header-progress h-1 fixed transition-all duration-300 ease-in-out w-0"></div><div class="blog-nav-wrapper"><div class="blog-nav-inner"><div class="flex min-w-0 flex-1 items-center gap-4 md:gap-6"><a class="app-brand-logo" href="/"><svg xmlns="http://www.w3.org/2000/svg" width="260" height="57" viewBox="38 68 260 57" fill="none" class="app-brand-logo__image" role="img" aria-label="代码民工"><title>代码民工</title><defs><clipPath id="textReveal-light"><rect x="106" y="72" width="186" height="46" rx="6"></rect></clipPath><linearGradient id="shineGradient-light-off" x1="106" y1="96" x2="140" y2="96" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="rgba(255,255,255,0)"></stop><stop offset="0.5" stop-color="rgba(255,255,255,0.82)"></stop><stop offset="1" stop-color="rgba(255,255,255,0)"></stop></linearGradient></defs><style>
+          .brand-logo__mark {
+            stroke: var(--logo-mark, #4f606b);
+            stroke-width: 8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            opacity: 0.92;
+          }
+
+          .brand-logo__accent {
+            stroke: var(--accent, #0f766e);
+            stroke-width: 8;
+            stroke-linecap: round;
+          }
+
+          .brand-logo__text {
+            fill: var(--logo-text, #21313c);
+            font-family: 'PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans SC',sans-serif;
+            font-size: 41px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+          }
+
+          .brand-logo__shine {
+            fill: url(#shineGradient-light-off);
+            transform: skewX(-20deg) translateX(-170px);
+            animation: none;
+            mix-blend-mode: soft-light;
+            opacity: 0;
+          }
+
+          @keyframes brandLogoSweep {
+            0%, 42% {
+              opacity: 0;
+              transform: skewX(-20deg) translateX(-170px);
+            }
+
+            48% {
+              opacity: 0.26;
+            }
+
+            66% {
+              opacity: 0.26;
+              transform: skewX(-20deg) translateX(190px);
+            }
+
+            72%, 100% {
+              opacity: 0;
+              transform: skewX(-20deg) translateX(190px);
+            }
+          }
+
+          @media (prefers-reduced-motion: reduce) {
+            .brand-logo__shine {
+              animation: none;
+              opacity: 0.14;
+              transform: none;
+            }
+          }
+        </style><path class="brand-logo__mark" d="M44 82L58 95L44 108"></path><path class="brand-logo__accent" d="M67 108H86"></path><g clip-path="url(#textReveal-light)"><text class="brand-logo__text" x="104" y="109">代码民工</text></g></svg></a><nav class="hidden flex-1 items-center justify-end gap-1 pr-4 md:flex xl:pr-8"><a class="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-base font-medium transition-colors theme-nav-link" href="/blog/"><svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5.5A2.5 2.5 0 016.5 3H20v15.5A2.5 2.5 0 0117.5 21H6.5A2.5 2.5 0 014 18.5v-13zM8 7h8M8 11h8M8 15h5"></path></svg>博客</a><a class="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-base font-medium transition-colors theme-nav-link-active" href="/blog/articles/"><svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>文章</a><a class="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-base font-medium transition-colors theme-nav-link" href="/blog/archive/"><svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 8h-1V6a2 2 0 00-2-2h-1V3h-2v1H9V3H7v1H6a2 2 0 00-2 2v2H3v2h1v8a2 2 0 002 2h10a2 2 0 002-2v-8h1V8zm-3 10H6v-6h10v6z"></path></svg>归档</a><a class="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-base font-medium transition-colors theme-nav-link" href="/blog/about/"><svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>关于</a></nav></div><div class="ml-4 flex items-center gap-2 md:gap-3"><a aria-label="搜索文章" title="搜索文章" class="theme-icon-button inline-flex" href="/blog/search/"><svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.3-4.3M11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14z"></path></svg></a><div class="theme-toggle blog-desktop-theme-toggle hidden md:inline-flex" aria-label="主题切换"><button type="button" class="theme-toggle__item is-active" aria-label="浅色模式" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.25"></circle><path d="M12 1.75v2.5M12 19.75v2.5M4.75 4.75l1.8 1.8M17.45 17.45l1.8 1.8M1.75 12h2.5M19.75 12h2.5M4.75 19.25l1.8-1.8M17.45 6.55l1.8-1.8"></path></svg></button><button type="button" class="theme-toggle__item " aria-label="深色模式" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.08 14.64A8.75 8.75 0 1 1 9.36 3.92a7.1 7.1 0 0 0 10.72 10.72Z"></path></svg></button></div><button class="theme-icon-button md:hidden"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg></button></div></div></div></header><div class="mt-14 flex min-h-[calc(100vh-56px)] justify-center md:mt-[72px] md:min-h-[calc(100vh-72px)]"><div class="flex w-full max-w-[1600px] items-start gap-5 px-4 md:px-8 xl:px-10 2xl:px-16 py-6"><div class="blog-sidebar-sticky hidden w-60 flex-shrink-0 self-start transition-[top] duration-300 xl:block xl:w-64 2xl:w-72"><aside class="w-full"><div class="space-y-3 pr-2 transition-[max-height] duration-300"><div class="theme-panel rounded-2xl border shadow-[var(--shadow-xs)] p-4"><div class="body-copy mb-3 font-semibold tracking-[0.12em] text-[--muted] uppercase">热门标签</div><div class="flex flex-wrap gap-1.5"><a class="theme-sidebar-tag inline-flex items-center gap-1 rounded-full border px-2 py-0.5 font-medium" href="/blog/tags/frontend-dev/">前端基础</a><a class="theme-sidebar-tag inline-flex items-center gap-1 rounded-full border px-2 py-0.5 font-medium" href="/blog/tags/engineering/">构建与模块化</a><a class="theme-sidebar-tag inline-flex items-center gap-1 rounded-full border px-2 py-0.5 font-medium" href="/blog/tags/javascript/">JavaScript</a><a class="theme-sidebar-tag inline-flex items-center gap-1 rounded-full border px-2 py-0.5 font-medium" href="/blog/tags/vue/">Vue</a><a class="theme-sidebar-tag inline-flex items-center gap-1 rounded-full border px-2 py-0.5 font-medium" href="/blog/tags/performance/">性能与缓存</a><a class="theme-sidebar-tag inline-flex items-center gap-1 rounded-full border px-2 py-0.5 font-medium" href="/blog/tags/architecture/">组件与状态</a><a class="theme-sidebar-tag inline-flex items-center gap-1 rounded-full border px-2 py-0.5 font-medium" href="/blog/tags/react/">React</a><a class="theme-sidebar-tag inline-flex items-center gap-1 rounded-full border px-2 py-0.5 font-medium" href="/blog/tags/css/">CSS</a><a class="theme-sidebar-tag inline-flex items-center gap-1 rounded-full border px-2 py-0.5 font-medium" href="/blog/tags/typescript/">TypeScript</a><a class="theme-sidebar-tag inline-flex items-center gap-1 rounded-full border px-2 py-0.5 font-medium" href="/blog/tags/ai/">AI</a><a class="theme-sidebar-tag inline-flex items-center gap-1 rounded-full border px-2 py-0.5 font-medium" href="/blog/tags/data-storage/">数据可视化与存储</a><a class="theme-sidebar-tag inline-flex items-center gap-1 rounded-full border px-2 py-0.5 font-medium" href="/blog/tags/interaction/">交互与动效</a><a class="theme-sidebar-tag inline-flex items-center gap-1 rounded-full border px-2 py-0.5 font-medium" href="/blog/tags/network/">请求与异步</a><a class="theme-sidebar-tag inline-flex items-center gap-1 rounded-full border px-2 py-0.5 font-medium" href="/blog/tags/mobile/">移动与小程序</a><a class="theme-sidebar-tag inline-flex items-center gap-1 rounded-full border px-2 py-0.5 font-medium" href="/blog/tags/testing/">测试</a><a class="theme-sidebar-tag inline-flex items-center gap-1 rounded-full border px-2 py-0.5 font-medium" href="/blog/tags/media/">音视频</a></div></div><div class="theme-panel rounded-2xl border shadow-[var(--shadow-xs)] p-4"><div class="body-copy mb-3 font-semibold tracking-[0.12em] text-[--muted] uppercase">年度归档</div><div class="flex flex-wrap gap-1.5"><a class="theme-sidebar-tag inline-flex rounded-full border px-2 py-0.5 font-medium" href="/blog/archive/2026/">2026</a><a class="theme-sidebar-tag inline-flex rounded-full border px-2 py-0.5 font-medium" href="/blog/archive/2025/">2025</a><a class="theme-sidebar-tag inline-flex rounded-full border px-2 py-0.5 font-medium" href="/blog/archive/2024/">2024</a><a class="theme-sidebar-tag inline-flex rounded-full border px-2 py-0.5 font-medium" href="/blog/archive/2023/">2023</a><a class="theme-sidebar-tag inline-flex rounded-full border px-2 py-0.5 font-medium" href="/blog/archive/2022/">2022</a><a class="theme-sidebar-tag inline-flex rounded-full border px-2 py-0.5 font-medium" href="/blog/archive/2021/">2021</a><a class="theme-sidebar-tag inline-flex rounded-full border px-2 py-0.5 font-medium" href="/blog/archive/2020/">2020</a><a class="theme-sidebar-tag inline-flex rounded-full border px-2 py-0.5 font-medium" href="/blog/archive/2019/">2019</a><a class="theme-sidebar-tag inline-flex rounded-full border px-2 py-0.5 font-medium" href="/blog/archive/2018/">2018</a></div></div></div></aside></div><main class="min-w-0 flex-1 overflow-x-hidden"><div class="mx-auto"><div class="theme-panel rounded-2xl border p-5 shadow-[var(--shadow-panel)] md:p-7"><article class="markdown-body prose"><h1 class="theme-heading-strong">前端国际化工程：不只是把中文替换成英文</h1><div class="mb-3 mt-2 flex flex-wrap items-center gap-x-2 gap-y-1.5 meta-text"><div class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon" class="h-3.5 w-3.5 flex-shrink-0"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"></path></svg><time dateTime="2024-10-31">2024-10-31</time></div><span class="h-1 w-1 flex-shrink-0 rounded-full bg-current opacity-30" aria-hidden="true"></span><span class="h-1 w-1 flex-shrink-0 rounded-full bg-current opacity-30" aria-hidden="true"></span><div class="flex flex-wrap gap-1"><a class="meta-text inline-flex items-center underline font-medium transition-colors hover:text-[--accent]" href="/blog/tags/frontend-dev/">前端基础</a><a class="meta-text inline-flex items-center underline font-medium transition-colors hover:text-[--accent]" href="/blog/tags/engineering/">构建与模块化</a></div></div><div class="pt-0"><p>国际化很容易被低估成“加一个语言包”。</p>
+<p>真正做起来会发现，问题远不止文案替换。英文比中文长，德语更长；日期格式不同，货币符号不同；复数规则不同；有些语言从右往左；路由、SEO、缓存、翻译流程都会受影响。</p>
+<p>我第一次做国际化时，只把页面文案抽成了 JSON。上线英文版后，按钮撑爆、表格列错位、日期仍然是中文格式、接口错误还是中文。那次之后我明白，国际化是工程能力，不是翻译任务。</p>
+<h2>文案 key 要稳定</h2>
+<p>最简单的语言包：</p>
+<pre><div class="relative group"><button class="absolute top-2 right-2 px-2 py-1 bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">复制</button></div></pre>
+<p>小项目够用，但项目大了 key 很容易冲突。不同页面的 <code>title</code>、<code>description</code>、<code>submit</code> 到处都是。</p>
+<p>我更喜欢按业务域组织：</p>
+<pre><div class="relative group"><button class="absolute top-2 right-2 px-2 py-1 bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">复制</button></div></pre>
+<p>key 描述的是语义，不是中文本身。不要用中文当 key：</p>
+<pre><div class="relative group"><button class="absolute top-2 right-2 px-2 py-1 bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">复制</button></div></pre>
+<p>这样一旦中文改了，key 也要改，历史翻译全受影响。key 应该稳定，文案可以变化。</p>
+<h2>不要拼接句子</h2>
+<p>中文里可以写：</p>
+<pre><div class="relative group"><button class="absolute top-2 right-2 px-2 py-1 bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">复制</button></div></pre>
+<p>但不同语言语序不一样，复数规则也不一样。不要把句子拆成几段拼。</p>
+<p>更好的方式是把完整句子交给国际化库：</p>
+<pre><div class="relative group"><button class="absolute top-2 right-2 px-2 py-1 bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">复制</button></div></pre>
+<p>英文可能是：</p>
+<pre><div class="relative group"><button class="absolute top-2 right-2 px-2 py-1 bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">复制</button></div></pre>
+<p>复数规则尤其重要。英文有 one/other，其他语言规则更多。不要自己写 <code>count &gt; 1 ? &#x27;orders&#x27; : &#x27;order&#x27;</code>，这只适合很少的语言。</p>
+<h2>日期、数字、货币要用 Intl</h2>
+<p>不要手写日期格式。</p>
+<pre><div class="relative group"><button class="absolute top-2 right-2 px-2 py-1 bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">复制</button></div></pre>
+<p>数字和货币也一样：</p>
+<pre><div class="relative group"><button class="absolute top-2 right-2 px-2 py-1 bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">复制</button></div></pre>
+<p>同一个数字在不同地区显示差异很大：</p>
+<pre><div class="relative group"><button class="absolute top-2 right-2 px-2 py-1 bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">复制</button></div></pre>
+<p>这些细节交给 <code>Intl</code> 比自己维护规则可靠。</p>
+<p>时区也要明确。后端返回的是 UTC 还是本地时间？用户看到的是账号时区、浏览器时区，还是业务地区时区？国际化项目里，时间问题经常比文案更容易出错。</p>
+<h2>布局要给长文案留空间</h2>
+<p>英文通常比中文长，德语可能更长。</p>
+<p>如果按钮宽度写死：</p>
+<pre><div class="relative group"><button class="absolute top-2 right-2 px-2 py-1 bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">复制</button></div></pre>
+<p>换语言后很容易溢出。</p>
+<p>更稳的是用最小宽度和弹性布局：</p>
+<pre><div class="relative group"><button class="absolute top-2 right-2 px-2 py-1 bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">复制</button></div></pre>
+<p>表格、卡片、导航尤其要测长文案。不要只用 <code>Save</code>、<code>Cancel</code> 这种短词，要准备一些接近真实长度的翻译。</p>
+<p>还要避免用背景图承载文字。图片里的文字无法自动翻译，也不利于 SEO 和可访问性。</p>
+<h2>RTL 不只是 text-align 反过来</h2>
+<p>如果支持阿拉伯语、希伯来语，就要考虑 RTL。</p>
+<p>可以在根节点设置：</p>
+<pre><div class="relative group"><button class="absolute top-2 right-2 px-2 py-1 bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">复制</button></div></pre>
+<p>CSS 里尽量使用逻辑属性：</p>
+<pre><div class="relative group"><button class="absolute top-2 right-2 px-2 py-1 bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">复制</button></div></pre>
+<p>少写：</p>
+<pre><div class="relative group"><button class="absolute top-2 right-2 px-2 py-1 bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">复制</button></div></pre>
+<p>逻辑属性会根据书写方向自动映射。布局方向、图标方向、面包屑、进度条都要检查。不是所有图标都要翻转，但表示方向的箭头通常需要。</p>
+<h2>路由和 SEO 要提前设计</h2>
+<p>多语言站点常见路由：</p>
+<pre><div class="relative group"><button class="absolute top-2 right-2 px-2 py-1 bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">复制</button></div></pre>
+<p>或者用域名：</p>
+<pre><div class="relative group"><button class="absolute top-2 right-2 px-2 py-1 bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">复制</button></div></pre>
+<p>无论哪种，都要处理：</p>
+<ul>
+<li>默认语言跳转</li>
+<li>用户语言偏好</li>
+<li>搜索引擎 hreflang</li>
+<li>sitemap</li>
+<li>canonical</li>
+<li>缓存 key</li>
+</ul>
+<p>如果页面是服务端渲染，语言要参与缓存。否则可能出现中文用户拿到英文 HTML，或者 CDN 缓存串语言。</p>
+<h2>翻译流程要能持续</h2>
+<p>国际化最怕的是语言包没人维护。</p>
+<p>新增文案时，应该能发现缺失翻译：</p>
+<pre><div class="relative group"><button class="absolute top-2 right-2 px-2 py-1 bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">复制</button></div></pre>
+<p>CI 可以检查 key 是否齐全，避免上线后页面直接显示 key。</p>
+<p>翻译内容也要有上下文。只给翻译人员一个 <code>submit</code>，他不知道是“提交订单”还是“提交审批”。key、截图、说明都很重要。</p>
+<p>我的经验是，语言包要按模块维护，新增文案和功能代码一起提交。不要等上线前统一补翻译，那时最容易漏。</p>
+<h2>API 错误也要国际化</h2>
+<p>接口错误不要直接返回中文句子让前端展示。</p>
+<p>更好的方式是后端返回稳定错误码：</p>
+<pre><div class="relative group"><button class="absolute top-2 right-2 px-2 py-1 bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">复制</button></div></pre>
+<p>前端根据 code 映射本地文案：</p>
+<pre><div class="relative group"><button class="absolute top-2 right-2 px-2 py-1 bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">复制</button></div></pre>
+<p>这样同一个错误可以按用户语言展示。<code>message</code> 可以作为兜底或日志，不应该成为国际化的主路径。</p>
+<h2>我的国际化清单</h2>
+<p>做国际化前，我会确认：</p>
+<ul>
+<li>文案 key 是否稳定且按模块组织</li>
+<li>是否避免句子拼接</li>
+<li>日期、数字、货币是否使用 locale 格式化</li>
+<li>布局是否能容纳长文案</li>
+<li>是否需要 RTL，CSS 是否使用逻辑属性</li>
+<li>路由、SEO、缓存是否带语言维度</li>
+<li>缺失翻译是否能在开发或 CI 暴露</li>
+<li>API 错误是否用 code 做本地化映射</li>
+</ul>
+<p>国际化不是把中文翻译成英文，而是让产品能在不同语言、地区和书写习惯下稳定运行。越早把这些工程边界想清楚，后面扩语言越轻松。</p></div><div class="mt-5 flex justify-end gap-4"><button class="inline-flex items-center rounded-full border px-2.5 py-1 text-sm font-medium transition-colors duration-300 theme-like-button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-thumbs-up" aria-hidden="true"><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"></path><path d="M7 10v12"></path></svg><span class="ml-1.5 leading-none">点赞<!-- -->（<!-- -->40<!-- -->）</span></button></div></article></div><nav class="mt-4" aria-label="文章导航"><div class="blog-nav-adjacent flex flex-col gap-2 pt-5"><a class="group flex min-w-0 items-baseline gap-4 text-[--muted] transition-colors hover:text-[--accent]" href="/blog/articles/docker-compose-dev-env-2024/"><span class="meta-text w-12 flex-shrink-0">上一篇</span><span class="title-small min-w-0 flex-1 truncate text-[--ink] transition-colors group-hover:text-[--accent]">Docker Compose 开发环境实践：把依赖服务从本机里搬出去</span></a><a class="group flex min-w-0 items-baseline gap-4 text-[--muted] transition-colors hover:text-[--accent]" href="/blog/articles/frontend-css-container-queries-2024/"><span class="meta-text w-12 flex-shrink-0">下一篇</span><span class="title-small min-w-0 flex-1 truncate text-[--ink] transition-colors group-hover:text-[--accent]">CSS 容器查询实践：组件响应式不应该只盯着屏幕宽度</span></a></div><div class="blog-nav-recommended mt-10"><div class="mb-4 flex items-baseline justify-between"><div class="section-title text-[--ink]">推荐阅读</div><a class="btn-text" href="/blog/articles/">全部文章<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon" class="ml-0.5 h-3.5 w-3.5"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"></path></svg></a></div><div class="flex flex-col gap-3"><a class="group flex items-baseline gap-4 min-w-0" href="/blog/articles/zod-4-schema-validation-2026/"><span class="meta-text flex-shrink-0 tabular-nums text-[--muted]">01</span><span class="title-small min-w-0 flex-1 truncate text-[--ink] transition-colors group-hover:text-[--accent]">Zod 4 实践：把校验、类型和接口契约收在一处</span><span class="meta-text flex-shrink-0 tabular-nums text-[--muted]">2026-05-03</span></a><a class="group flex items-baseline gap-4 min-w-0" href="/blog/articles/frontend-typescript-7-go-2026/"><span class="meta-text flex-shrink-0 tabular-nums text-[--muted]">02</span><span class="title-small min-w-0 flex-1 truncate text-[--ink] transition-colors group-hover:text-[--accent]">TypeScript 7 Beta 用 Go 重写之后：我更关心反馈链路有没有变短</span><span class="meta-text flex-shrink-0 tabular-nums text-[--muted]">2026-04-28</span></a><a class="group flex items-baseline gap-4 min-w-0" href="/blog/articles/biome-toolchain-2026/"><span class="meta-text flex-shrink-0 tabular-nums text-[--muted]">03</span><span class="title-small min-w-0 flex-1 truncate text-[--ink] transition-colors group-hover:text-[--accent]">用 Biome 替掉 ESLint + Prettier：一次工具链瘦身的得与失</span><span class="meta-text flex-shrink-0 tabular-nums text-[--muted]">2026-04-18</span></a></div></div></nav></div></main></div></div><footer class="theme-footer app-footer"><div class="app-footer__container mx-auto max-w-[1600px] px-4 py-3 md:px-8 md:py-5 xl:px-10 2xl:px-16"><div class="app-footer__content flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 md:flex-row md:justify-between md:gap-3"><div class="app-footer__brand flex min-w-0 items-center justify-center gap-1.5"><span class="app-footer__name text-sm font-semibold leading-5 text-[var(--app-footer-ink)]">代码民工</span><span class="app-footer__slogan-separator hidden text-xs leading-5 text-[var(--app-footer-dot)] sm:inline">·</span><span class="app-footer__slogan hidden text-xs leading-5 text-[var(--app-footer-muted)] sm:inline">把复杂业务做清楚，把产品体验做完整</span></div><nav class="app-footer__nav flex items-center gap-3 md:gap-4"><a class="inline-flex cursor-pointer items-center border-0 bg-transparent p-0 text-xs font-[inherit] leading-5 text-[var(--app-footer-muted)] transition-colors hover:text-[var(--app-footer-hover)]" href="/">首页</a><a class="inline-flex cursor-pointer items-center border-0 bg-transparent p-0 text-xs font-[inherit] leading-5 text-[var(--app-footer-muted)] transition-colors hover:text-[var(--app-footer-hover)]" href="/blog/articles/">博文</a><a class="inline-flex cursor-pointer items-center border-0 bg-transparent p-0 text-xs font-[inherit] leading-5 text-[var(--app-footer-muted)] transition-colors hover:text-[var(--app-footer-hover)]" href="/blog/tags/">标签</a><a class="inline-flex cursor-pointer items-center border-0 bg-transparent p-0 text-xs font-[inherit] leading-5 text-[var(--app-footer-muted)] transition-colors hover:text-[var(--app-footer-hover)]" href="/blog/archive/">归档</a><a class="inline-flex cursor-pointer items-center border-0 bg-transparent p-0 text-xs font-[inherit] leading-5 text-[var(--app-footer-muted)] transition-colors hover:text-[var(--app-footer-hover)]" href="/blog/about/">关于</a></nav><div class="app-footer__right flex items-center gap-2.5 md:gap-3"><a href="https://github.com/suijiafeng" target="_blank" rel="noreferrer" aria-label="GitHub" class="text-[var(--app-footer-muted)] transition-colors hover:text-[var(--app-footer-hover)]"><svg viewBox="0 0 24 24" class="h-4 w-4 fill-current" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.04c-3.34.73-4.04-1.42-4.04-1.42-.55-1.38-1.34-1.74-1.34-1.74-1.1-.74.08-.73.08-.73 1.21.08 1.85 1.23 1.85 1.23 1.08 1.84 2.83 1.31 3.52 1 .11-.77.42-1.31.76-1.61-2.66-.3-5.47-1.32-5.47-5.9 0-1.3.47-2.36 1.23-3.19-.12-.3-.53-1.52.12-3.17 0 0 1.01-.32 3.3 1.22a11.5 11.5 0 0 1 6 0c2.28-1.54 3.29-1.22 3.29-1.22.66 1.65.25 2.87.12 3.17.77.83 1.23 1.89 1.23 3.19 0 4.59-2.81 5.6-5.49 5.89.43.37.82 1.1.82 2.23v3.31c0 .32.21.7.83.58A12 12 0 0 0 12 .5Z"></path></svg></a><a href="mailto:suijiafeng@hotmail.com" aria-label="Email" class="text-[var(--app-footer-muted)] transition-colors hover:text-[var(--app-footer-hover)]"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg></a><span class="text-xs leading-5 text-[var(--app-footer-dot)]">·</span><span class="text-xs leading-5 text-[var(--app-footer-muted)]">© <!-- -->2018<!-- -->–<!-- -->2026</span></div></div></div></footer></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"postData":{"title":"前端国际化工程：不只是把中文替换成英文","date":"2024-10-31","excerpt":"从文案 key、日期数字格式、布局扩展、路由和翻译流程出发，梳理前端国际化项目的工程细节。","tags":["前端基础","构建与模块化"],"slug":"frontend-internationalization-2024","category":"2024","likeCount":40,"postId":"30cdb540-e1ce-116f-968d-196cc6e77a6b","viewCount":611,"readTime":"4分钟","coverImage":null,"content":"\n国际化很容易被低估成“加一个语言包”。\n\n真正做起来会发现，问题远不止文案替换。英文比中文长，德语更长；日期格式不同，货币符号不同；复数规则不同；有些语言从右往左；路由、SEO、缓存、翻译流程都会受影响。\n\n我第一次做国际化时，只把页面文案抽成了 JSON。上线英文版后，按钮撑爆、表格列错位、日期仍然是中文格式、接口错误还是中文。那次之后我明白，国际化是工程能力，不是翻译任务。\n\n## 文案 key 要稳定\n\n最简单的语言包：\n\n```json\n{\n  \"save\": \"保存\",\n  \"cancel\": \"取消\"\n}\n```\n\n小项目够用，但项目大了 key 很容易冲突。不同页面的 `title`、`description`、`submit` 到处都是。\n\n我更喜欢按业务域组织：\n\n```json\n{\n  \"order.list.title\": \"订单列表\",\n  \"order.list.empty\": \"暂无订单\",\n  \"order.detail.submitRefund\": \"提交退款\"\n}\n```\n\nkey 描述的是语义，不是中文本身。不要用中文当 key：\n\n```json\n{\n  \"保存\": \"Save\"\n}\n```\n\n这样一旦中文改了，key 也要改，历史翻译全受影响。key 应该稳定，文案可以变化。\n\n## 不要拼接句子\n\n中文里可以写：\n\n```ts\n`共 ${count} 个订单`\n```\n\n但不同语言语序不一样，复数规则也不一样。不要把句子拆成几段拼。\n\n更好的方式是把完整句子交给国际化库：\n\n```json\n{\n  \"order.count\": \"共 {count} 个订单\"\n}\n```\n\n英文可能是：\n\n```json\n{\n  \"order.count\": \"{count, plural, one {# order} other {# orders}}\"\n}\n```\n\n复数规则尤其重要。英文有 one/other，其他语言规则更多。不要自己写 `count \u003e 1 ? 'orders' : 'order'`，这只适合很少的语言。\n\n## 日期、数字、货币要用 Intl\n\n不要手写日期格式。\n\n```ts\nnew Intl.DateTimeFormat(locale, {\n  year: 'numeric',\n  month: 'long',\n  day: 'numeric',\n}).format(date)\n```\n\n数字和货币也一样：\n\n```ts\nnew Intl.NumberFormat(locale, {\n  style: 'currency',\n  currency: 'USD',\n}).format(1234.5)\n```\n\n同一个数字在不同地区显示差异很大：\n\n```text\n1,234.50\n1.234,50\n￥1,234\n```\n\n这些细节交给 `Intl` 比自己维护规则可靠。\n\n时区也要明确。后端返回的是 UTC 还是本地时间？用户看到的是账号时区、浏览器时区，还是业务地区时区？国际化项目里，时间问题经常比文案更容易出错。\n\n## 布局要给长文案留空间\n\n英文通常比中文长，德语可能更长。\n\n如果按钮宽度写死：\n\n```css\n.button {\n  width: 80px;\n}\n```\n\n换语言后很容易溢出。\n\n更稳的是用最小宽度和弹性布局：\n\n```css\n.button {\n  min-width: 80px;\n  padding: 0 16px;\n}\n```\n\n表格、卡片、导航尤其要测长文案。不要只用 `Save`、`Cancel` 这种短词，要准备一些接近真实长度的翻译。\n\n还要避免用背景图承载文字。图片里的文字无法自动翻译，也不利于 SEO 和可访问性。\n\n## RTL 不只是 text-align 反过来\n\n如果支持阿拉伯语、希伯来语，就要考虑 RTL。\n\n可以在根节点设置：\n\n```html\n\u003chtml dir=\"rtl\" lang=\"ar\"\u003e\n```\n\nCSS 里尽量使用逻辑属性：\n\n```css\n.card {\n  padding-inline-start: 16px;\n  margin-inline-end: 8px;\n}\n```\n\n少写：\n\n```css\npadding-left: 16px;\nmargin-right: 8px;\n```\n\n逻辑属性会根据书写方向自动映射。布局方向、图标方向、面包屑、进度条都要检查。不是所有图标都要翻转，但表示方向的箭头通常需要。\n\n## 路由和 SEO 要提前设计\n\n多语言站点常见路由：\n\n```text\n/zh-CN/posts\n/en-US/posts\n```\n\n或者用域名：\n\n```text\nexample.com\nen.example.com\n```\n\n无论哪种，都要处理：\n\n- 默认语言跳转\n- 用户语言偏好\n- 搜索引擎 hreflang\n- sitemap\n- canonical\n- 缓存 key\n\n如果页面是服务端渲染，语言要参与缓存。否则可能出现中文用户拿到英文 HTML，或者 CDN 缓存串语言。\n\n## 翻译流程要能持续\n\n国际化最怕的是语言包没人维护。\n\n新增文案时，应该能发现缺失翻译：\n\n```text\nMissing translation: order.detail.refundReason\n```\n\nCI 可以检查 key 是否齐全，避免上线后页面直接显示 key。\n\n翻译内容也要有上下文。只给翻译人员一个 `submit`，他不知道是“提交订单”还是“提交审批”。key、截图、说明都很重要。\n\n我的经验是，语言包要按模块维护，新增文案和功能代码一起提交。不要等上线前统一补翻译，那时最容易漏。\n\n## API 错误也要国际化\n\n接口错误不要直接返回中文句子让前端展示。\n\n更好的方式是后端返回稳定错误码：\n\n```json\n{\n  \"code\": \"ORDER_NOT_FOUND\",\n  \"message\": \"Order not found\"\n}\n```\n\n前端根据 code 映射本地文案：\n\n```ts\nconst errorMessage = t(`errors.${error.code}`, {\n  defaultValue: t('errors.UNKNOWN'),\n})\n```\n\n这样同一个错误可以按用户语言展示。`message` 可以作为兜底或日志，不应该成为国际化的主路径。\n\n## 我的国际化清单\n\n做国际化前，我会确认：\n\n- 文案 key 是否稳定且按模块组织\n- 是否避免句子拼接\n- 日期、数字、货币是否使用 locale 格式化\n- 布局是否能容纳长文案\n- 是否需要 RTL，CSS 是否使用逻辑属性\n- 路由、SEO、缓存是否带语言维度\n- 缺失翻译是否能在开发或 CI 暴露\n- API 错误是否用 code 做本地化映射\n\n国际化不是把中文翻译成英文，而是让产品能在不同语言、地区和书写习惯下稳定运行。越早把这些工程边界想清楚，后面扩语言越轻松。\n"},"recommendedPosts":[{"title":"Zod 4 实践：把校验、类型和接口契约收在一处","date":"2026-05-03","excerpt":"Zod 4 的性能改进和 API 变化落到真实项目里：表单校验、接口出入参解析、和 TypeScript 类型互推，以及 schema 复用时容易踩的坑。","tags":["前端基础","TypeScript","构建与模块化"],"slug":"zod-4-schema-validation-2026","category":"2026","likeCount":47,"postId":"4dba5dc0-897d-90b6-5c0d-6f36518662e8","viewCount":246,"readTime":null,"coverImage":null},{"title":"TypeScript 7 Beta 用 Go 重写之后：我更关心反馈链路有没有变短","date":"2026-04-28","excerpt":"从大型前端项目的类型检查、编辑器响应和 CI 等待说起，聊聊我会怎么评估 TypeScript 7 Beta 的性能收益和升级风险。","tags":["前端基础","TypeScript","构建与模块化"],"slug":"frontend-typescript-7-go-2026","category":"2026","likeCount":24,"postId":"c582b9f3-9184-63db-3ced-7b4c1e26ca12","viewCount":275,"readTime":null,"coverImage":null},{"title":"用 Biome 替掉 ESLint + Prettier：一次工具链瘦身的得与失","date":"2026-04-18","excerpt":"把项目的 lint 和格式化从 ESLint+Prettier 换成 Biome 的过程：速度提升有多明显、规则迁移缺了什么、以及哪些场景我还是留着 ESLint。","tags":["前端基础","构建与模块化","JavaScript"],"slug":"biome-toolchain-2026","category":"2026","likeCount":6,"postId":"37e39142-8bf2-d042-6270-2228c894603c","viewCount":1191,"readTime":null,"coverImage":null}],"prevPost":{"title":"Docker Compose 开发环境实践：把依赖服务从本机里搬出去","date":"2024-11-15","excerpt":"用 Docker Compose 管理数据库、缓存和消息队列等开发依赖，减少本机环境差异，并说明配置、数据卷和健康检查的边界。","tags":["构建与模块化"],"slug":"docker-compose-dev-env-2024","category":"2024","likeCount":5,"postId":"5a459d76-cf2a-ae22-5449-393e7c7f716f","viewCount":1108,"readTime":null,"coverImage":null},"nextPost":{"title":"CSS 容器查询实践：组件响应式不应该只盯着屏幕宽度","date":"2024-10-22","excerpt":"从组件化布局出发解释 CSS Container Queries 的使用方式、适用场景、边界和与媒体查询的配合策略。","tags":["CSS","前端基础"],"slug":"frontend-css-container-queries-2024","category":"2024","likeCount":5,"postId":"b24c456f-3e75-a61b-a6fe-77214981bee5","viewCount":1523,"readTime":null,"coverImage":null}},"__N_SSG":true},"page":"/blog/articles/[...slug]","query":{"slug":["frontend-internationalization-2024"]},"buildId":"AWjVQY2AYXoFDDTV4DM2g","isFallback":false,"gsp":true,"scriptLoader":[]}</script></body></html>

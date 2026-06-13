@@ -1,0 +1,210 @@
+<!DOCTYPE html><html lang="zh" data-rev="249123085d5796c8ee4d9338540e3b6078636a29" data-rev-ts="1781334643616"><head><meta charSet="utf-8" data-next-head=""/><meta name="viewport" content="width=device-width, initial-scale=1.0" data-next-head=""/><meta name="theme-color" content="#f7f9fb" data-next-head=""/><link rel="alternate" type="application/rss+xml" title="代码民工 RSS" href="https://suijf.site/rss.xml" data-next-head=""/><title data-next-head="">React Query 管服务端状态：别再手写一堆 loading 和 error - 代码民工</title><meta name="description" content="从列表、详情、缓存、重新请求和错误处理出发，梳理 React Query 管理服务端状态的实践方式。" data-next-head=""/><meta name="author" content="代码民工" data-next-head=""/><meta name="keywords" content="React Query 管服务端状态：别再手写一堆 loading 和 error, React, 前端基础, 构建与模块化, 技术记录" data-next-head=""/><meta name="robots" content="index, follow" data-next-head=""/><link rel="canonical" href="https://suijf.site/blog/articles/frontend-react-query-server-state-2023/" data-next-head=""/><meta property="og:title" content="React Query 管服务端状态：别再手写一堆 loading 和 error - 代码民工" data-next-head=""/><meta property="og:description" content="从列表、详情、缓存、重新请求和错误处理出发，梳理 React Query 管理服务端状态的实践方式。" data-next-head=""/><meta property="og:type" content="article" data-next-head=""/><meta property="og:url" content="https://suijf.site/blog/articles/frontend-react-query-server-state-2023/" data-next-head=""/><meta property="og:site_name" content="代码民工" data-next-head=""/><meta property="og:locale" content="zh_CN" data-next-head=""/><meta property="og:image" content="https://suijf.site/logo.svg" data-next-head=""/><meta property="og:image:alt" content="React Query 管服务端状态：别再手写一堆 loading 和 error" data-next-head=""/><meta name="twitter:card" content="summary" data-next-head=""/><meta name="twitter:title" content="React Query 管服务端状态：别再手写一堆 loading 和 error - 代码民工" data-next-head=""/><meta name="twitter:description" content="从列表、详情、缓存、重新请求和错误处理出发，梳理 React Query 管理服务端状态的实践方式。" data-next-head=""/><meta name="twitter:image" content="https://suijf.site/logo.svg" data-next-head=""/><meta name="twitter:image:alt" content="React Query 管服务端状态：别再手写一堆 loading 和 error" data-next-head=""/><link rel="icon" href="/favicon.png" type="image/png"/><link rel="alternate icon" href="/favicon.svg" type="image/svg+xml"/><link rel="preload" href="/_next/static/chunks/0kfgefhig0jl8.css" as="style"/><script type="application/ld+json" data-next-head="">{"@context":"https://schema.org","@type":"BlogPosting","headline":"React Query 管服务端状态：别再手写一堆 loading 和 error","description":"从列表、详情、缓存、重新请求和错误处理出发，梳理 React Query 管理服务端状态的实践方式。","datePublished":"2023-01-13","dateModified":"2023-01-13","mainEntityOfPage":"https://suijf.site/blog/articles/frontend-react-query-server-state-2023/","url":"https://suijf.site/blog/articles/frontend-react-query-server-state-2023/","image":["https://suijf.site/logo.svg"],"inLanguage":"zh-CN","author":{"@type":"Person","name":"代码民工","url":"https://suijf.site/blog/about/"},"publisher":{"@type":"Organization","name":"代码民工","logo":{"@type":"ImageObject","url":"https://suijf.site/logo.svg"}},"keywords":"React, 前端基础, 构建与模块化","articleSection":"React","wordCount":3105}</script><script type="application/ld+json" data-next-head="">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://suijf.site/"},{"@type":"ListItem","position":2,"name":"博客","item":"https://suijf.site/blog/"},{"@type":"ListItem","position":3,"name":"文章","item":"https://suijf.site/blog/articles/"},{"@type":"ListItem","position":4,"name":"React Query 管服务端状态：别再手写一堆 loading 和 error","item":"https://suijf.site/blog/articles/frontend-react-query-server-state-2023/"}]}</script><style>
+            html.official-home-html {
+              background-color: #0d1117;
+              color: #e8eaf0;
+            }
+
+            html.official-home-html body {
+              background-color: #0d1117;
+            }
+
+            html.official-home-html[data-theme='light'] {
+              background-color: #f8fafc;
+              color: #102033;
+            }
+
+            html.official-home-html[data-theme='light'] body {
+              background-color: #f8fafc;
+            }
+
+            html.blog-html {
+              background-color: #f7f9fb;
+              color: #21313c;
+            }
+
+            html.blog-html body {
+              background-color: #f7f9fb;
+            }
+
+            html.blog-html[data-theme='dark'] {
+              background-color: #070910;
+              color: #e8eaf0;
+            }
+
+            html.blog-html[data-theme='dark'] body {
+              background-color: #070910;
+            }
+          </style><script>
+      (function () {
+        var root = document.documentElement;
+        var isOfficialHome = window.location.pathname === '/';
+
+        function isThemeValue(value) {
+          return value === 'light' || value === 'dark';
+        }
+
+        function getSavedTheme() {
+          try {
+            return window.localStorage.getItem('theme');
+          } catch (error) {
+            return null;
+          }
+        }
+
+        function getSystemTheme(fallbackTheme) {
+          if (!window.matchMedia) {
+            return fallbackTheme;
+          }
+
+          return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+
+        function applyInitialTheme(fallbackTheme) {
+          var savedTheme = getSavedTheme();
+          root.dataset.theme = isThemeValue(savedTheme) ? savedTheme : getSystemTheme(fallbackTheme);
+        }
+
+        if (isOfficialHome) {
+          root.classList.add('official-home-html');
+          root.classList.add('theme-preload');
+          applyInitialTheme('dark');
+          return;
+        }
+
+        root.classList.add('blog-html');
+        root.classList.add('theme-preload');
+        applyInitialTheme('light');
+      })();
+    </script><link rel="stylesheet" href="/_next/static/chunks/0kfgefhig0jl8.css" data-n-g=""/><noscript data-n-css=""></noscript><script src="/_next/static/chunks/0ydd6~w3_fayi.js" defer=""></script><script src="/_next/static/chunks/14pv4oi0ea1~e.js" defer=""></script><script src="/_next/static/chunks/0i.lj6jsn6e_1.js" defer=""></script><script src="/_next/static/chunks/0q77~okj5tq6y.js" defer=""></script><script src="/_next/static/chunks/turbopack-08zpjwrn_a2hi.js" defer=""></script><script src="/_next/static/chunks/16~azu22xh1ij.js" defer=""></script><script src="/_next/static/chunks/0ht20btur.jkf.js" defer=""></script><script src="/_next/static/chunks/0n~1o0cr.miug.js" defer=""></script><script src="/_next/static/chunks/0-qns0prdam0t.js" defer=""></script><script src="/_next/static/chunks/turbopack-0qkxk0plhv03l.js" defer=""></script><script src="/_next/static/AWjVQY2AYXoFDDTV4DM2g/_buildManifest.js" defer=""></script><script src="/_next/static/AWjVQY2AYXoFDDTV4DM2g/_ssgManifest.js" defer=""></script><script src="/_next/static/AWjVQY2AYXoFDDTV4DM2g/_clientMiddlewareManifest.js" defer=""></script></head><body><div id="__next"><div class="blog-shell flex flex-col min-h-screen opacity-100 transition-opacity duration-1000"><header class="theme-header theme-border fixed top-0 z-20 w-full border-b shadow-[var(--shadow-card)] backdrop-blur transition-transform duration-300 translate-y-0"><div class="theme-header-progress h-1 fixed transition-all duration-300 ease-in-out w-0"></div><div class="blog-nav-wrapper"><div class="blog-nav-inner"><div class="flex min-w-0 flex-1 items-center gap-4 md:gap-6"><a class="app-brand-logo" href="/"><svg xmlns="http://www.w3.org/2000/svg" width="260" height="57" viewBox="38 68 260 57" fill="none" class="app-brand-logo__image" role="img" aria-label="代码民工"><title>代码民工</title><defs><clipPath id="textReveal-light"><rect x="106" y="72" width="186" height="46" rx="6"></rect></clipPath><linearGradient id="shineGradient-light-off" x1="106" y1="96" x2="140" y2="96" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="rgba(255,255,255,0)"></stop><stop offset="0.5" stop-color="rgba(255,255,255,0.82)"></stop><stop offset="1" stop-color="rgba(255,255,255,0)"></stop></linearGradient></defs><style>
+          .brand-logo__mark {
+            stroke: var(--logo-mark, #4f606b);
+            stroke-width: 8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            opacity: 0.92;
+          }
+
+          .brand-logo__accent {
+            stroke: var(--accent, #0f766e);
+            stroke-width: 8;
+            stroke-linecap: round;
+          }
+
+          .brand-logo__text {
+            fill: var(--logo-text, #21313c);
+            font-family: 'PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans SC',sans-serif;
+            font-size: 41px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+          }
+
+          .brand-logo__shine {
+            fill: url(#shineGradient-light-off);
+            transform: skewX(-20deg) translateX(-170px);
+            animation: none;
+            mix-blend-mode: soft-light;
+            opacity: 0;
+          }
+
+          @keyframes brandLogoSweep {
+            0%, 42% {
+              opacity: 0;
+              transform: skewX(-20deg) translateX(-170px);
+            }
+
+            48% {
+              opacity: 0.26;
+            }
+
+            66% {
+              opacity: 0.26;
+              transform: skewX(-20deg) translateX(190px);
+            }
+
+            72%, 100% {
+              opacity: 0;
+              transform: skewX(-20deg) translateX(190px);
+            }
+          }
+
+          @media (prefers-reduced-motion: reduce) {
+            .brand-logo__shine {
+              animation: none;
+              opacity: 0.14;
+              transform: none;
+            }
+          }
+        </style><path class="brand-logo__mark" d="M44 82L58 95L44 108"></path><path class="brand-logo__accent" d="M67 108H86"></path><g clip-path="url(#textReveal-light)"><text class="brand-logo__text" x="104" y="109">代码民工</text></g></svg></a><nav class="hidden flex-1 items-center justify-end gap-1 pr-4 md:flex xl:pr-8"><a class="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-base font-medium transition-colors theme-nav-link" href="/blog/"><svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5.5A2.5 2.5 0 016.5 3H20v15.5A2.5 2.5 0 0117.5 21H6.5A2.5 2.5 0 014 18.5v-13zM8 7h8M8 11h8M8 15h5"></path></svg>博客</a><a class="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-base font-medium transition-colors theme-nav-link-active" href="/blog/articles/"><svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>文章</a><a class="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-base font-medium transition-colors theme-nav-link" href="/blog/archive/"><svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 8h-1V6a2 2 0 00-2-2h-1V3h-2v1H9V3H7v1H6a2 2 0 00-2 2v2H3v2h1v8a2 2 0 002 2h10a2 2 0 002-2v-8h1V8zm-3 10H6v-6h10v6z"></path></svg>归档</a><a class="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-base font-medium transition-colors theme-nav-link" href="/blog/about/"><svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>关于</a></nav></div><div class="ml-4 flex items-center gap-2 md:gap-3"><a aria-label="搜索文章" title="搜索文章" class="theme-icon-button inline-flex" href="/blog/search/"><svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.3-4.3M11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14z"></path></svg></a><div class="theme-toggle blog-desktop-theme-toggle hidden md:inline-flex" aria-label="主题切换"><button type="button" class="theme-toggle__item is-active" aria-label="浅色模式" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.25"></circle><path d="M12 1.75v2.5M12 19.75v2.5M4.75 4.75l1.8 1.8M17.45 17.45l1.8 1.8M1.75 12h2.5M19.75 12h2.5M4.75 19.25l1.8-1.8M17.45 6.55l1.8-1.8"></path></svg></button><button type="button" class="theme-toggle__item " aria-label="深色模式" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.08 14.64A8.75 8.75 0 1 1 9.36 3.92a7.1 7.1 0 0 0 10.72 10.72Z"></path></svg></button></div><button class="theme-icon-button md:hidden"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg></button></div></div></div></header><div class="mt-14 flex min-h-[calc(100vh-56px)] justify-center md:mt-[72px] md:min-h-[calc(100vh-72px)]"><div class="flex w-full max-w-[1600px] items-start gap-5 px-4 md:px-8 xl:px-10 2xl:px-16 py-6"><div class="blog-sidebar-sticky hidden w-60 flex-shrink-0 self-start transition-[top] duration-300 xl:block xl:w-64 2xl:w-72"><aside class="w-full"><div class="space-y-3 pr-2 transition-[max-height] duration-300"><div class="theme-panel rounded-2xl border shadow-[var(--shadow-xs)] p-4"><div class="body-copy mb-3 font-semibold tracking-[0.12em] text-[--muted] uppercase">热门标签</div><div class="flex flex-wrap gap-1.5"><a class="theme-sidebar-tag inline-flex items-center gap-1 rounded-full border px-2 py-0.5 font-medium" href="/blog/tags/frontend-dev/">前端基础</a><a class="theme-sidebar-tag inline-flex items-center gap-1 rounded-full border px-2 py-0.5 font-medium" href="/blog/tags/engineering/">构建与模块化</a><a class="theme-sidebar-tag inline-flex items-center gap-1 rounded-full border px-2 py-0.5 font-medium" href="/blog/tags/javascript/">JavaScript</a><a class="theme-sidebar-tag inline-flex items-center gap-1 rounded-full border px-2 py-0.5 font-medium" href="/blog/tags/vue/">Vue</a><a class="theme-sidebar-tag inline-flex items-center gap-1 rounded-full border px-2 py-0.5 font-medium" href="/blog/tags/performance/">性能与缓存</a><a class="theme-sidebar-tag inline-flex items-center gap-1 rounded-full border px-2 py-0.5 font-medium" href="/blog/tags/architecture/">组件与状态</a><a class="theme-sidebar-tag inline-flex items-center gap-1 rounded-full border px-2 py-0.5 font-medium" href="/blog/tags/react/">React</a><a class="theme-sidebar-tag inline-flex items-center gap-1 rounded-full border px-2 py-0.5 font-medium" href="/blog/tags/css/">CSS</a><a class="theme-sidebar-tag inline-flex items-center gap-1 rounded-full border px-2 py-0.5 font-medium" href="/blog/tags/typescript/">TypeScript</a><a class="theme-sidebar-tag inline-flex items-center gap-1 rounded-full border px-2 py-0.5 font-medium" href="/blog/tags/ai/">AI</a><a class="theme-sidebar-tag inline-flex items-center gap-1 rounded-full border px-2 py-0.5 font-medium" href="/blog/tags/data-storage/">数据可视化与存储</a><a class="theme-sidebar-tag inline-flex items-center gap-1 rounded-full border px-2 py-0.5 font-medium" href="/blog/tags/interaction/">交互与动效</a><a class="theme-sidebar-tag inline-flex items-center gap-1 rounded-full border px-2 py-0.5 font-medium" href="/blog/tags/network/">请求与异步</a><a class="theme-sidebar-tag inline-flex items-center gap-1 rounded-full border px-2 py-0.5 font-medium" href="/blog/tags/mobile/">移动与小程序</a><a class="theme-sidebar-tag inline-flex items-center gap-1 rounded-full border px-2 py-0.5 font-medium" href="/blog/tags/testing/">测试</a><a class="theme-sidebar-tag inline-flex items-center gap-1 rounded-full border px-2 py-0.5 font-medium" href="/blog/tags/media/">音视频</a></div></div><div class="theme-panel rounded-2xl border shadow-[var(--shadow-xs)] p-4"><div class="body-copy mb-3 font-semibold tracking-[0.12em] text-[--muted] uppercase">年度归档</div><div class="flex flex-wrap gap-1.5"><a class="theme-sidebar-tag inline-flex rounded-full border px-2 py-0.5 font-medium" href="/blog/archive/2026/">2026</a><a class="theme-sidebar-tag inline-flex rounded-full border px-2 py-0.5 font-medium" href="/blog/archive/2025/">2025</a><a class="theme-sidebar-tag inline-flex rounded-full border px-2 py-0.5 font-medium" href="/blog/archive/2024/">2024</a><a class="theme-sidebar-tag inline-flex rounded-full border px-2 py-0.5 font-medium" href="/blog/archive/2023/">2023</a><a class="theme-sidebar-tag inline-flex rounded-full border px-2 py-0.5 font-medium" href="/blog/archive/2022/">2022</a><a class="theme-sidebar-tag inline-flex rounded-full border px-2 py-0.5 font-medium" href="/blog/archive/2021/">2021</a><a class="theme-sidebar-tag inline-flex rounded-full border px-2 py-0.5 font-medium" href="/blog/archive/2020/">2020</a><a class="theme-sidebar-tag inline-flex rounded-full border px-2 py-0.5 font-medium" href="/blog/archive/2019/">2019</a><a class="theme-sidebar-tag inline-flex rounded-full border px-2 py-0.5 font-medium" href="/blog/archive/2018/">2018</a></div></div></div></aside></div><main class="min-w-0 flex-1 overflow-x-hidden"><div class="mx-auto"><div class="theme-panel rounded-2xl border p-5 shadow-[var(--shadow-panel)] md:p-7"><article class="markdown-body prose"><h1 class="theme-heading-strong">React Query 管服务端状态：别再手写一堆 loading 和 error</h1><div class="mb-3 mt-2 flex flex-wrap items-center gap-x-2 gap-y-1.5 meta-text"><div class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon" class="h-3.5 w-3.5 flex-shrink-0"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"></path></svg><time dateTime="2023-01-13">2023-01-13</time></div><span class="h-1 w-1 flex-shrink-0 rounded-full bg-current opacity-30" aria-hidden="true"></span><span class="h-1 w-1 flex-shrink-0 rounded-full bg-current opacity-30" aria-hidden="true"></span><div class="flex flex-wrap gap-1"><a class="meta-text inline-flex items-center underline font-medium transition-colors hover:text-[--accent]" href="/blog/tags/react/">React</a><a class="meta-text inline-flex items-center underline font-medium transition-colors hover:text-[--accent]" href="/blog/tags/frontend-dev/">前端基础</a><a class="meta-text inline-flex items-center underline font-medium transition-colors hover:text-[--accent]" href="/blog/tags/engineering/">构建与模块化</a></div></div><div class="pt-0"><p>很多 React 项目一开始请求数据都很直接。</p>
+<pre><div class="relative group"><button class="absolute top-2 right-2 px-2 py-1 bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">复制</button></div></pre>
+<p>这段代码在一个页面里没问题，但项目里每个列表、详情、弹窗都这么写，很快会出现重复请求、错误处理不一致、刷新逻辑散落、组件卸载后还在 setState 等问题。</p>
+<p>我第一次明显感受到这个问题，是一个后台列表页。列表、筛选、详情抽屉、编辑弹窗都在各自请求同一份数据。用户改完状态后，有的地方刷新了，有的地方还是旧的。最后不是接口慢，而是前端不知道哪份数据才是最新的。</p>
+<p>React Query 解决的不是“少写几行请求代码”，而是把接口数据当成服务端状态来管理。</p>
+<h2>服务端状态和本地状态不一样</h2>
+<p>本地状态是前端自己拥有的，比如弹窗开关、当前 tab、输入框值。</p>
+<p>服务端状态是后端拥有的，比如用户列表、订单详情、配置项。前端只是缓存了一份副本。</p>
+<p>这份副本有几个特点：</p>
+<ul>
+<li>会过期</li>
+<li>可能被其他用户修改</li>
+<li>需要重新请求</li>
+<li>可能请求失败</li>
+<li>多个组件可能同时使用</li>
+<li>修改后需要同步缓存</li>
+</ul>
+<p>如果把服务端状态当普通 <code>useState</code>，这些问题都要自己处理。</p>
+<p>React Query 的价值是给这类状态提供统一模型。</p>
+<h2>queryKey 是数据身份</h2>
+<p>最基础的查询：</p>
+<pre><div class="relative group"><button class="absolute top-2 right-2 px-2 py-1 bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">复制</button></div></pre>
+<p>这里的 <code>queryKey</code> 很关键。它不是随便起个名字，而是这份数据的身份。</p>
+<p>带参数的列表要把参数放进 key：</p>
+<pre><div class="relative group"><button class="absolute top-2 right-2 px-2 py-1 bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">复制</button></div></pre>
+<p>如果 key 漏了 <code>keyword</code>，用户搜索后可能拿到旧缓存；如果 key 每次都构造不稳定，也可能导致不必要的请求。我的习惯是先把参数规范化，再同时给 key 和请求函数使用。</p>
+<h2>缓存不是脏东西</h2>
+<p>很多人刚用 React Query 时，一看到“缓存”就紧张，担心数据不新。</p>
+<p>缓存不是为了骗人，而是为了控制数据新鲜度。比如用户从列表进详情，再返回列表，没必要每次都重新白屏加载。先显示缓存，再后台重新验证，体验通常更好。</p>
+<p>可以用 <code>staleTime</code> 表达数据多久内算新鲜：</p>
+<pre><div class="relative group"><button class="absolute top-2 right-2 px-2 py-1 bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">复制</button></div></pre>
+<p>字典、权限选项、地区数据适合更长缓存。订单状态、审批状态就要短一些，甚至操作后主动刷新。</p>
+<p>缓存策略应该来自业务，而不是默认全关。</p>
+<h2>mutation 后要让旧数据失效</h2>
+<p>数据修改后，相关 query 不会自动知道自己过期。</p>
+<pre><div class="relative group"><button class="absolute top-2 right-2 px-2 py-1 bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">复制</button></div></pre>
+<p>这表示更新成功后，让用户列表失效，下一次使用时重新请求。</p>
+<p>如果修改的是详情，也可以同时失效详情：</p>
+<pre><div class="relative group"><button class="absolute top-2 right-2 px-2 py-1 bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">复制</button></div></pre>
+<p>失效范围要控制。范围太小，页面显示旧数据；范围太大，接口会被无意义刷新。</p>
+<p>简单状态切换也可以直接更新缓存：</p>
+<pre><div class="relative group"><button class="absolute top-2 right-2 px-2 py-1 bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">复制</button></div></pre>
+<p>但直接写缓存要谨慎，尤其是列表和详情结构不一致时，不要把半截数据塞进详情缓存。</p>
+<h2>错误处理要统一</h2>
+<p>React Query 能帮你管理 error 状态，但怎么展示仍然要业务决定。</p>
+<p>我一般会在请求层把错误统一成一个结构：</p>
+<pre><div class="relative group"><button class="absolute top-2 right-2 px-2 py-1 bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">复制</button></div></pre>
+<p>页面里再按场景处理：</p>
+<pre><div class="relative group"><button class="absolute top-2 right-2 px-2 py-1 bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">复制</button></div></pre>
+<p>API 错误必须有兜底。不要让未知错误直接把组件炸成白屏，也不要所有错误都只弹一个 toast。</p>
+<h2>不要把 query 数据再复制一份</h2>
+<p>常见坏味道是：</p>
+<pre><div class="relative group"><button class="absolute top-2 right-2 px-2 py-1 bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">复制</button></div></pre>
+<p>如果只是展示，没有必要复制。复制之后就有两份状态：query cache 和本地 state。后面更新哪一份都会让人困惑。</p>
+<p>只有一种情况我会复制：编辑表单。接口数据只是初始值，用户编辑的是草稿。</p>
+<pre><div class="relative group"><button class="absolute top-2 right-2 px-2 py-1 bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">复制</button></div></pre>
+<p>提交成功后再失效 query 或更新缓存。</p>
+<h2>我的使用习惯</h2>
+<p>我会把 React Query 用在这些地方：</p>
+<ul>
+<li>列表和详情数据</li>
+<li>字典和配置</li>
+<li>搜索结果</li>
+<li>分页和无限加载</li>
+<li>需要缓存和刷新的一切接口数据</li>
+</ul>
+<p>不适合放进去的：</p>
+<ul>
+<li>输入框临时值</li>
+<li>弹窗开关</li>
+<li>当前 hover 状态</li>
+<li>未提交的表单草稿</li>
+</ul>
+<p>服务端状态和本地状态分清楚后，组件会轻很多。React Query 不是替代所有状态管理，而是专门把“来自服务端的那一类状态”管好。</p></div><div class="mt-5 flex justify-end gap-4"><button class="inline-flex items-center rounded-full border px-2.5 py-1 text-sm font-medium transition-colors duration-300 theme-like-button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-thumbs-up" aria-hidden="true"><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"></path><path d="M7 10v12"></path></svg><span class="ml-1.5 leading-none">点赞<!-- -->（<!-- -->5<!-- -->）</span></button></div></article></div><nav class="mt-4" aria-label="文章导航"><div class="blog-nav-adjacent flex flex-col gap-2 pt-5"><a class="group flex min-w-0 items-baseline gap-4 text-[--muted] transition-colors hover:text-[--accent]" href="/blog/articles/frontend-mobile-adaptation-2023/"><span class="meta-text w-12 flex-shrink-0">上一篇</span><span class="title-small min-w-0 flex-1 truncate text-[--ink] transition-colors group-hover:text-[--accent]">移动端适配入门：做前端页面时，别把响应式理解成只改宽度</span></a><a class="group flex min-w-0 items-baseline gap-4 text-[--muted] transition-colors hover:text-[--accent]" href="/blog/articles/frontend-typescript-mapped-types-2023/"><span class="meta-text w-12 flex-shrink-0">下一篇</span><span class="title-small min-w-0 flex-1 truncate text-[--ink] transition-colors group-hover:text-[--accent]">TypeScript 映射类型入门：让类型跟着数据结构一起变化</span></a></div><div class="blog-nav-recommended mt-10"><div class="mb-4 flex items-baseline justify-between"><div class="section-title text-[--ink]">推荐阅读</div><a class="btn-text" href="/blog/articles/">全部文章<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon" class="ml-0.5 h-3.5 w-3.5"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"></path></svg></a></div><div class="flex flex-col gap-3"><a class="group flex items-baseline gap-4 min-w-0" href="/blog/articles/frontend-forms-architecture-2024/"><span class="meta-text flex-shrink-0 tabular-nums text-[--muted]">01</span><span class="title-small min-w-0 flex-1 truncate text-[--ink] transition-colors group-hover:text-[--accent]">复杂前端表单设计：不要把所有字段都塞进一个 useState</span><span class="meta-text flex-shrink-0 tabular-nums text-[--muted]">2024-10-16</span></a><a class="group flex items-baseline gap-4 min-w-0" href="/blog/articles/frontend-state-management-2024/"><span class="meta-text flex-shrink-0 tabular-nums text-[--muted]">02</span><span class="title-small min-w-0 flex-1 truncate text-[--ink] transition-colors group-hover:text-[--accent]">前端状态管理分层：不是所有状态都该进全局 store</span><span class="meta-text flex-shrink-0 tabular-nums text-[--muted]">2024-02-23</span></a><a class="group flex items-baseline gap-4 min-w-0" href="/blog/articles/shadcn-ui-component-system-2026/"><span class="meta-text flex-shrink-0 tabular-nums text-[--muted]">03</span><span class="title-small min-w-0 flex-1 truncate text-[--ink] transition-colors group-hover:text-[--accent]">shadcn/ui 这种「把代码抄进项目」的组件方案，用半年后的复盘</span><span class="meta-text flex-shrink-0 tabular-nums text-[--muted]">2026-05-17</span></a></div></div></nav></div></main></div></div><footer class="theme-footer app-footer"><div class="app-footer__container mx-auto max-w-[1600px] px-4 py-3 md:px-8 md:py-5 xl:px-10 2xl:px-16"><div class="app-footer__content flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 md:flex-row md:justify-between md:gap-3"><div class="app-footer__brand flex min-w-0 items-center justify-center gap-1.5"><span class="app-footer__name text-sm font-semibold leading-5 text-[var(--app-footer-ink)]">代码民工</span><span class="app-footer__slogan-separator hidden text-xs leading-5 text-[var(--app-footer-dot)] sm:inline">·</span><span class="app-footer__slogan hidden text-xs leading-5 text-[var(--app-footer-muted)] sm:inline">把复杂业务做清楚，把产品体验做完整</span></div><nav class="app-footer__nav flex items-center gap-3 md:gap-4"><a class="inline-flex cursor-pointer items-center border-0 bg-transparent p-0 text-xs font-[inherit] leading-5 text-[var(--app-footer-muted)] transition-colors hover:text-[var(--app-footer-hover)]" href="/">首页</a><a class="inline-flex cursor-pointer items-center border-0 bg-transparent p-0 text-xs font-[inherit] leading-5 text-[var(--app-footer-muted)] transition-colors hover:text-[var(--app-footer-hover)]" href="/blog/articles/">博文</a><a class="inline-flex cursor-pointer items-center border-0 bg-transparent p-0 text-xs font-[inherit] leading-5 text-[var(--app-footer-muted)] transition-colors hover:text-[var(--app-footer-hover)]" href="/blog/tags/">标签</a><a class="inline-flex cursor-pointer items-center border-0 bg-transparent p-0 text-xs font-[inherit] leading-5 text-[var(--app-footer-muted)] transition-colors hover:text-[var(--app-footer-hover)]" href="/blog/archive/">归档</a><a class="inline-flex cursor-pointer items-center border-0 bg-transparent p-0 text-xs font-[inherit] leading-5 text-[var(--app-footer-muted)] transition-colors hover:text-[var(--app-footer-hover)]" href="/blog/about/">关于</a></nav><div class="app-footer__right flex items-center gap-2.5 md:gap-3"><a href="https://github.com/suijiafeng" target="_blank" rel="noreferrer" aria-label="GitHub" class="text-[var(--app-footer-muted)] transition-colors hover:text-[var(--app-footer-hover)]"><svg viewBox="0 0 24 24" class="h-4 w-4 fill-current" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.04c-3.34.73-4.04-1.42-4.04-1.42-.55-1.38-1.34-1.74-1.34-1.74-1.1-.74.08-.73.08-.73 1.21.08 1.85 1.23 1.85 1.23 1.08 1.84 2.83 1.31 3.52 1 .11-.77.42-1.31.76-1.61-2.66-.3-5.47-1.32-5.47-5.9 0-1.3.47-2.36 1.23-3.19-.12-.3-.53-1.52.12-3.17 0 0 1.01-.32 3.3 1.22a11.5 11.5 0 0 1 6 0c2.28-1.54 3.29-1.22 3.29-1.22.66 1.65.25 2.87.12 3.17.77.83 1.23 1.89 1.23 3.19 0 4.59-2.81 5.6-5.49 5.89.43.37.82 1.1.82 2.23v3.31c0 .32.21.7.83.58A12 12 0 0 0 12 .5Z"></path></svg></a><a href="mailto:suijiafeng@hotmail.com" aria-label="Email" class="text-[var(--app-footer-muted)] transition-colors hover:text-[var(--app-footer-hover)]"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg></a><span class="text-xs leading-5 text-[var(--app-footer-dot)]">·</span><span class="text-xs leading-5 text-[var(--app-footer-muted)]">© <!-- -->2018<!-- -->–<!-- -->2026</span></div></div></div></footer></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"postData":{"title":"React Query 管服务端状态：别再手写一堆 loading 和 error","date":"2023-01-13","excerpt":"从列表、详情、缓存、重新请求和错误处理出发，梳理 React Query 管理服务端状态的实践方式。","tags":["React","前端基础","构建与模块化"],"slug":"frontend-react-query-server-state-2023","category":"2023","likeCount":5,"postId":"6bf0b6ac-f5e3-13a0-402f-32debedc52e4","viewCount":4061,"readTime":"4分钟","coverImage":null,"content":"\n很多 React 项目一开始请求数据都很直接。\n\n```tsx\nconst [data, setData] = useState(null)\nconst [loading, setLoading] = useState(false)\nconst [error, setError] = useState(null)\n\nuseEffect(() =\u003e {\n  setLoading(true)\n  fetchList()\n    .then(setData)\n    .catch(setError)\n    .finally(() =\u003e setLoading(false))\n}, [])\n```\n\n这段代码在一个页面里没问题，但项目里每个列表、详情、弹窗都这么写，很快会出现重复请求、错误处理不一致、刷新逻辑散落、组件卸载后还在 setState 等问题。\n\n我第一次明显感受到这个问题，是一个后台列表页。列表、筛选、详情抽屉、编辑弹窗都在各自请求同一份数据。用户改完状态后，有的地方刷新了，有的地方还是旧的。最后不是接口慢，而是前端不知道哪份数据才是最新的。\n\nReact Query 解决的不是“少写几行请求代码”，而是把接口数据当成服务端状态来管理。\n\n## 服务端状态和本地状态不一样\n\n本地状态是前端自己拥有的，比如弹窗开关、当前 tab、输入框值。\n\n服务端状态是后端拥有的，比如用户列表、订单详情、配置项。前端只是缓存了一份副本。\n\n这份副本有几个特点：\n\n- 会过期\n- 可能被其他用户修改\n- 需要重新请求\n- 可能请求失败\n- 多个组件可能同时使用\n- 修改后需要同步缓存\n\n如果把服务端状态当普通 `useState`，这些问题都要自己处理。\n\nReact Query 的价值是给这类状态提供统一模型。\n\n## queryKey 是数据身份\n\n最基础的查询：\n\n```tsx\nconst { data, isLoading, error } = useQuery({\n  queryKey: ['users'],\n  queryFn: fetchUsers,\n})\n```\n\n这里的 `queryKey` 很关键。它不是随便起个名字，而是这份数据的身份。\n\n带参数的列表要把参数放进 key：\n\n```tsx\nconst query = { page, keyword, status }\n\nconst { data } = useQuery({\n  queryKey: ['users', query],\n  queryFn: () =\u003e fetchUsers(query),\n})\n```\n\n如果 key 漏了 `keyword`，用户搜索后可能拿到旧缓存；如果 key 每次都构造不稳定，也可能导致不必要的请求。我的习惯是先把参数规范化，再同时给 key 和请求函数使用。\n\n## 缓存不是脏东西\n\n很多人刚用 React Query 时，一看到“缓存”就紧张，担心数据不新。\n\n缓存不是为了骗人，而是为了控制数据新鲜度。比如用户从列表进详情，再返回列表，没必要每次都重新白屏加载。先显示缓存，再后台重新验证，体验通常更好。\n\n可以用 `staleTime` 表达数据多久内算新鲜：\n\n```tsx\nuseQuery({\n  queryKey: ['dict', 'roles'],\n  queryFn: fetchRoles,\n  staleTime: 5 * 60 * 1000,\n})\n```\n\n字典、权限选项、地区数据适合更长缓存。订单状态、审批状态就要短一些，甚至操作后主动刷新。\n\n缓存策略应该来自业务，而不是默认全关。\n\n## mutation 后要让旧数据失效\n\n数据修改后，相关 query 不会自动知道自己过期。\n\n```tsx\nconst queryClient = useQueryClient()\n\nconst mutation = useMutation({\n  mutationFn: updateUser,\n  onSuccess: () =\u003e {\n    queryClient.invalidateQueries({ queryKey: ['users'] })\n  },\n})\n```\n\n这表示更新成功后，让用户列表失效，下一次使用时重新请求。\n\n如果修改的是详情，也可以同时失效详情：\n\n```tsx\nqueryClient.invalidateQueries({ queryKey: ['user', userId] })\n```\n\n失效范围要控制。范围太小，页面显示旧数据；范围太大，接口会被无意义刷新。\n\n简单状态切换也可以直接更新缓存：\n\n```tsx\nqueryClient.setQueryData(['user', userId], (old) =\u003e ({\n  ...old,\n  enabled: true,\n}))\n```\n\n但直接写缓存要谨慎，尤其是列表和详情结构不一致时，不要把半截数据塞进详情缓存。\n\n## 错误处理要统一\n\nReact Query 能帮你管理 error 状态，但怎么展示仍然要业务决定。\n\n我一般会在请求层把错误统一成一个结构：\n\n```ts\ntype RequestError = {\n  code: string\n  message: string\n  status: number\n  fields?: Record\u003cstring, string\u003e\n}\n```\n\n页面里再按场景处理：\n\n```tsx\nif (error?.code === 'UNAUTHORIZED') {\n  return \u003cLoginExpired /\u003e\n}\n\nif (error) {\n  return \u003cErrorState message={error.message || '加载失败'} onRetry={refetch} /\u003e\n}\n```\n\nAPI 错误必须有兜底。不要让未知错误直接把组件炸成白屏，也不要所有错误都只弹一个 toast。\n\n## 不要把 query 数据再复制一份\n\n常见坏味道是：\n\n```tsx\nconst { data } = useQuery(...)\nconst [list, setList] = useState([])\n\nuseEffect(() =\u003e {\n  setList(data || [])\n}, [data])\n```\n\n如果只是展示，没有必要复制。复制之后就有两份状态：query cache 和本地 state。后面更新哪一份都会让人困惑。\n\n只有一种情况我会复制：编辑表单。接口数据只是初始值，用户编辑的是草稿。\n\n```tsx\nuseEffect(() =\u003e {\n  if (data) {\n    form.reset(data)\n  }\n}, [data, form])\n```\n\n提交成功后再失效 query 或更新缓存。\n\n## 我的使用习惯\n\n我会把 React Query 用在这些地方：\n\n- 列表和详情数据\n- 字典和配置\n- 搜索结果\n- 分页和无限加载\n- 需要缓存和刷新的一切接口数据\n\n不适合放进去的：\n\n- 输入框临时值\n- 弹窗开关\n- 当前 hover 状态\n- 未提交的表单草稿\n\n服务端状态和本地状态分清楚后，组件会轻很多。React Query 不是替代所有状态管理，而是专门把“来自服务端的那一类状态”管好。\n"},"recommendedPosts":[{"title":"复杂前端表单设计：不要把所有字段都塞进一个 useState","date":"2024-10-16","excerpt":"从复杂业务表单出发，讨论字段状态、校验分层、联动逻辑、提交错误和可维护的表单架构。","tags":["前端基础","React","构建与模块化"],"slug":"frontend-forms-architecture-2024","category":"2024","likeCount":5,"postId":"7e9c1e1c-3033-faec-65b7-7200335b1873","viewCount":1699,"readTime":null,"coverImage":null},{"title":"前端状态管理分层：不是所有状态都该进全局 store","date":"2024-02-23","excerpt":"围绕本地状态、服务端状态、URL 状态和全局状态，讨论前端状态管理的分层方式和常见误区。","tags":["前端基础","React","构建与模块化"],"slug":"frontend-state-management-2024","category":"2024","likeCount":8,"postId":"f0188885-bfff-1844-d5ba-1f8de0a85faa","viewCount":1241,"readTime":null,"coverImage":null},{"title":"shadcn/ui 这种「把代码抄进项目」的组件方案，用半年后的复盘","date":"2026-05-17","excerpt":"shadcn/ui 不发 npm 包、直接把组件源码装进你的仓库。聊聊这种 copy-in 模式的好处、维护成本、和传统组件库（Antd/MUI）的取舍。","tags":["React","前端基础","组件与状态"],"slug":"shadcn-ui-component-system-2026","category":"2026","likeCount":26,"postId":"42e26346-5c9f-6eab-0196-167529529112","viewCount":313,"readTime":null,"coverImage":null}],"prevPost":{"title":"移动端适配入门：做前端页面时，别把响应式理解成只改宽度","date":"2023-01-17","excerpt":"移动端适配别只盯 rem 公式，真机视口、安全区、动态地址栏和表单键盘才是上线后最容易翻车的地方。","tags":["前端基础"],"slug":"frontend-mobile-adaptation-2023","category":"2023","likeCount":6,"postId":"89a606b4-2eea-20c9-6ed3-83e44ee37071","viewCount":1285,"readTime":null,"coverImage":null},"nextPost":{"title":"TypeScript 映射类型入门：让类型跟着数据结构一起变化","date":"2023-01-08","excerpt":"从表单草稿、权限开关和接口 payload 的重复类型维护说起，聊聊 TypeScript 映射类型怎么减少字段不同步。","tags":["前端基础","TypeScript"],"slug":"frontend-typescript-mapped-types-2023","category":"2023","likeCount":7,"postId":"ff0194c8-f4d0-b832-75b2-0a440c49b2ab","viewCount":3523,"readTime":null,"coverImage":null}},"__N_SSG":true},"page":"/blog/articles/[...slug]","query":{"slug":["frontend-react-query-server-state-2023"]},"buildId":"AWjVQY2AYXoFDDTV4DM2g","isFallback":false,"gsp":true,"scriptLoader":[]}</script></body></html>
