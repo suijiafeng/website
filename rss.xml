@@ -5,10 +5,10 @@
     <link>https://suijf.site/</link>
     <description>代码工匠的个人主页，专注复杂中后台、配置平台与数据可视化，记录工程化、性能优化与产品实现上的判断。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Sun, 05 Jul 2026 14:25:11 GMT</lastBuildDate>
+    <lastBuildDate>Sun, 05 Jul 2026 14:34:41 GMT</lastBuildDate>
     <atom:link href="https://suijf.site/rss.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>shadcn/ui 这种「把代码抄进项目」的组件方案，用半年后的复盘</title>
+      <title>shadcn/ui 这种「把代码抄进项目」的组件方案，用半年是什么感受</title>
       <link>https://suijf.site/blog/articles/shadcn-ui-component-system-2026/</link>
       <guid isPermaLink="true">https://suijf.site/blog/articles/shadcn-ui-component-system-2026/</guid>
       <pubDate>Sun, 17 May 2026 00:00:00 GMT</pubDate>
@@ -19,14 +19,14 @@
       <link>https://suijf.site/blog/articles/ai-assisted-coding-tips-pitfalls-2026/</link>
       <guid isPermaLink="true">https://suijf.site/blog/articles/ai-assisted-coding-tips-pitfalls-2026/</guid>
       <pubDate>Tue, 05 May 2026 00:00:00 GMT</pubDate>
-      <description>不聊工具评测，记录几次和 AI 协作写代码后留下来的实用习惯：先给上下文，先讲约束，先读代码和拆计划，每轮改完都要测试。</description>
+      <description>AI 写出的代码在单文件里看着挺对，一放进真实仓库就出问题——记录几条实用习惯：先喂上下文和约束、先让它读代码拆计划、每轮改完必测，以及上下文窗口、工具调用、评测这些容易被略过的细节。</description>
     </item>
     <item>
       <title>TCP/IP 与前端性能：从数据包到首次渲染的底层逻辑</title>
       <link>https://suijf.site/blog/articles/tcp-ip-frontend-performance-2026/</link>
       <guid isPermaLink="true">https://suijf.site/blog/articles/tcp-ip-frontend-performance-2026/</guid>
       <pubDate>Mon, 04 May 2026 00:00:00 GMT</pubDate>
-      <description>从一次首屏慢但 JS 并不大的排查经历出发，把 TTFB、FP、数据包、IP、TCP 握手和前端性能串起来看。</description>
+      <description>页面不大、主线程也不忙，首屏却迟迟不出来——把 TTFB、FP、数据包、IP、TCP 握手这些网络层细节和前端性能连起来讲清楚。</description>
     </item>
     <item>
       <title>Zod 4 实践：把校验、类型和接口契约收在一处</title>
@@ -40,14 +40,14 @@
       <link>https://suijf.site/blog/articles/frontend-typescript-7-go-2026/</link>
       <guid isPermaLink="true">https://suijf.site/blog/articles/frontend-typescript-7-go-2026/</guid>
       <pubDate>Tue, 28 Apr 2026 00:00:00 GMT</pubDate>
-      <description>从大型前端项目的类型检查、编辑器响应和 CI 等待说起，聊聊我会怎么评估 TypeScript 7 Beta 的性能收益和升级风险。</description>
+      <description>大型前端项目的类型检查、编辑器响应和 CI 等待为什么会拖慢反馈链路，以及我会怎么评估 TypeScript 7 Beta（Go 重写）的性能收益和升级风险。</description>
     </item>
     <item>
       <title>看 ES2026 和 ESNext 新特性时，我更关心它什么时候能进业务代码</title>
       <link>https://suijf.site/blog/articles/frontend-es2026-features/</link>
       <guid isPermaLink="true">https://suijf.site/blog/articles/frontend-es2026-features/</guid>
       <pubDate>Fri, 24 Apr 2026 00:00:00 GMT</pubDate>
-      <description>从不可变数据、资源管理和新语法落地说起，记录我如何判断 JavaScript 新特性是否适合进入真实项目。</description>
+      <description>不可变数据、资源管理、新语法这些 ES2026/ESNext 能力，怎么判断它什么时候能真正进业务代码：分清标准阶段、核对工具链转译和 polyfill 成本。</description>
     </item>
     <item>
       <title>用 Biome 替掉 ESLint + Prettier：一次工具链瘦身的得与失</title>
@@ -75,7 +75,7 @@
       <link>https://suijf.site/blog/articles/qiankun-proxy-sandbox-2026/</link>
       <guid isPermaLink="true">https://suijf.site/blog/articles/qiankun-proxy-sandbox-2026/</guid>
       <pubDate>Sun, 15 Mar 2026 00:00:00 GMT</pubDate>
-      <description>从一次微前端全局变量污染排查说起，拆解 qiankun ProxySandbox 和 LegacySandbox 为什么要设计 fakeWindow、with、函数绑定和生命周期补丁。</description>
+      <description>qiankun 的 JS 沙箱怎么隔离子应用的全局变量污染：拆解 ProxySandbox 和 LegacySandbox 为什么要设计 fakeWindow、with、函数绑定和生命周期补丁。</description>
     </item>
     <item>
       <title>TC39 Signals 提案与框架里的信号：响应式终于要进语言层了吗</title>
@@ -117,42 +117,49 @@
       <link>https://suijf.site/blog/articles/frontend-js-native-features-2025/</link>
       <guid isPermaLink="true">https://suijf.site/blog/articles/frontend-js-native-features-2025/</guid>
       <pubDate>Tue, 30 Dec 2025 00:00:00 GMT</pubDate>
-      <description>记录我在维护后台项目时重新审视 JavaScript 原生 API 的过程：哪些地方可以少装库，哪些地方仍然要尊重兼容性和团队成本。</description>
+      <description>query string、格式化、深拷贝、请求取消这些场景，很多时候不需要额外装库——JavaScript 原生 API 已经能表达清楚，前提是先看兼容性和团队成本。</description>
     </item>
     <item>
-      <title>React Context 性能复盘：我不再把“全局状态”当成省事方案</title>
+      <title>React Context 性能这件事：我不再把“全局状态”当成省事方案</title>
       <link>https://suijf.site/blog/articles/react-context-performance-2025/</link>
       <guid isPermaLink="true">https://suijf.site/blog/articles/react-context-performance-2025/</guid>
       <pubDate>Tue, 18 Nov 2025 00:00:00 GMT</pubDate>
-      <description>记录一次中后台页面因 Context 混放状态导致输入卡顿的排查过程，以及我后来对状态边界、局部状态和细粒度订阅的判断。</description>
+      <description>Context 混放状态会让一次输入拖着半个页面重渲染——问题不在 Context 本身，而在状态边界，拆分职责、区分 state 和 actions 才是根本解法。</description>
     </item>
     <item>
       <title>试 Bun 之后我更关心的不是跑分，而是反馈链路有没有变短</title>
       <link>https://suijf.site/blog/articles/frontend-bun-toolchain-2025/</link>
       <guid isPermaLink="true">https://suijf.site/blog/articles/frontend-bun-toolchain-2025/</guid>
       <pubDate>Sun, 16 Nov 2025 00:00:00 GMT</pubDate>
-      <description>从一次工具脚本迁移说起，记录我如何看待 Bun 的速度收益、兼容性边界，以及成熟前端项目为什么不该一口气迁移。</description>
+      <description>Bun 的速度收益到底落在哪一段反馈链路，兼容性边界在哪里，成熟前端项目又为什么不该一口气全量迁移，从低风险脚本切入才是稳妥的验证方式。</description>
+    </item>
+    <item>
+      <title>虚拟列表与大数据渲染：万行表格卡顿的 DOM 成本账，以及什么时候分页就够了</title>
+      <link>https://suijf.site/blog/articles/virtual-list-large-data-2025/</link>
+      <guid isPermaLink="true">https://suijf.site/blog/articles/virtual-list-large-data-2025/</guid>
+      <pubDate>Sat, 25 Oct 2025 00:00:00 GMT</pubDate>
+      <description>后台万行表格的卡顿是 DOM 数量问题，不是重渲染问题。这篇先划清分页和虚拟化的边界，再用 scrollTop、可视区、缓冲区三个数手写一个固定行高虚拟列表，讲清动态行高的难点、TanStack Virtual 的取舍、表格场景的特殊性和 Ctrl+F 失效这类可访问性代价。</description>
     </item>
     <item>
       <title>AI 工具调用不是能调通就行：错误处理和可观测性才是落地关键</title>
       <link>https://suijf.site/blog/articles/ai-tool-calling-error-handling-2025/</link>
       <guid isPermaLink="true">https://suijf.site/blog/articles/ai-tool-calling-error-handling-2025/</guid>
       <pubDate>Tue, 14 Oct 2025 00:00:00 GMT</pubDate>
-      <description>从 Agent 和工具调用的真实失败场景出发，讨论 AI 应用为什么必须统一处理工具错误、参数校验和调用日志。</description>
+      <description>工具调用真正难的不是能不能调通，而是失败之后怎么办；这篇讲清楚为什么 AI 应用必须统一处理工具错误、参数校验和调用日志。</description>
     </item>
     <item>
       <title>WebAssembly 3.0 我会怎么判断该不该用：别把它当成更快的 JS</title>
       <link>https://suijf.site/blog/articles/frontend-webassembly-3-2025/</link>
       <guid isPermaLink="true">https://suijf.site/blog/articles/frontend-webassembly-3-2025/</guid>
       <pubDate>Sat, 20 Sep 2025 00:00:00 GMT</pubDate>
-      <description>从图像处理、文件解析和跨语言复用说起，记录我如何判断 WebAssembly 是否真的适合前端项目，以及它会带来哪些成本。</description>
+      <description>WebAssembly 不是更快的 JavaScript，判断该不该上它，要先看任务是不是真的计算密集，再算清楚加载、调试和团队维护这几项隐藏成本。</description>
     </item>
     <item>
-      <title>React 复杂表单复盘：我为什么不再一路 useState 写到底</title>
+      <title>React 复杂表单：我为什么不再一路 useState 写到底</title>
       <link>https://suijf.site/blog/articles/react-form-state-2025/</link>
       <guid isPermaLink="true">https://suijf.site/blog/articles/react-form-state-2025/</guid>
       <pubDate>Sun, 07 Sep 2025 00:00:00 GMT</pubDate>
-      <description>从一次配置平台表单改造说起，记录我如何拆分表单值、校验、异步检查和提交流程，让复杂表单后续还能改得动。</description>
+      <description>表单值、字段状态、错误状态、流程状态混在一个对象里迟早会失控——拆开这四类状态，异步校验的竞态和多阶段提交才有地方安放。</description>
     </item>
     <item>
       <title>Prompt 工程在 2025 年还有价值吗：真正有用的不是技巧，而是约束</title>
@@ -162,11 +169,25 @@
       <description>讨论 Prompt 工程在真实业务中的作用，重点不在花哨模板，而在输入结构、输出约束和系统边界设计。</description>
     </item>
     <item>
-      <title>容器查询用下来之后：我终于少写了一些页面级补丁样式</title>
-      <link>https://suijf.site/blog/articles/frontend-css-container-queries-2025/</link>
-      <guid isPermaLink="true">https://suijf.site/blog/articles/frontend-css-container-queries-2025/</guid>
-      <pubDate>Sat, 12 Jul 2025 00:00:00 GMT</pubDate>
-      <description>从后台卡片组件在不同容器里反复写补丁说起，记录我为什么觉得 CSS 容器查询更适合组件化响应式布局。</description>
+      <title>WebGPU 初探：十万点散点图卡死 Canvas 之后的渲染能力预研</title>
+      <link>https://suijf.site/blog/articles/webgpu-first-look-2025/</link>
+      <guid isPermaLink="true">https://suijf.site/blog/articles/webgpu-first-look-2025/</guid>
+      <pubDate>Sat, 09 Aug 2025 00:00:00 GMT</pubDate>
+      <description>Canvas 2D 画十万个点为什么拖不动、WebGL 的门槛卡在哪、WebGPU 的 adapter/device/pipeline 心智模型怎么理解。附一个最小的点集渲染示例、2025 年中的浏览器支持现状与降级策略，以及什么业务根本用不上它。</description>
+    </item>
+    <item>
+      <title>MCP 与 AI 工具生态：给 AI 助手接内部系统，胶水代码写到第三套之前</title>
+      <link>https://suijf.site/blog/articles/mcp-ai-tooling-2025/</link>
+      <guid isPermaLink="true">https://suijf.site/blog/articles/mcp-ai-tooling-2025/</guid>
+      <pubDate>Sat, 26 Jul 2025 00:00:00 GMT</pubDate>
+      <description>AI 助手每接一个内部系统就要写一套 function calling 胶水代码，接入成本随系统数量线性涨。这篇算清楚这笔账，写一个暴露只读订单查询的最小 MCP server，聊聊 MCP 解决的标准化问题、权限边界怎么划，以及它和直接 function calling 的取舍。</description>
+    </item>
+    <item>
+      <title>RAG 与向量检索入门：文档里明明有答案，AI 为什么还答错</title>
+      <link>https://suijf.site/blog/articles/rag-vector-search-intro-2025/</link>
+      <guid isPermaLink="true">https://suijf.site/blog/articles/rag-vector-search-intro-2025/</guid>
+      <pubDate>Wed, 25 Jun 2025 00:00:00 GMT</pubDate>
+      <description>内部文档问答工具答错的问题，多数出在检索层而不是生成层。这篇讲清楚文本切块策略的实际影响、embedding 与相似度检索的直观理解、混合检索怎么补短板，以及评估召回质量的土办法。</description>
     </item>
     <item>
       <title>做 AI 应用时，为什么上下文管理比模型选型更容易决定成败</title>
@@ -180,14 +201,14 @@
       <link>https://suijf.site/blog/articles/frontend-web-performance-inp-2025/</link>
       <guid isPermaLink="true">https://suijf.site/blog/articles/frontend-web-performance-inp-2025/</guid>
       <pubDate>Tue, 27 May 2025 00:00:00 GMT</pubDate>
-      <description>从一次中后台筛选卡顿排查说起，记录我如何从只看首屏，转向关注 INP、长任务、React 重渲染和真实用户交互。</description>
+      <description>首屏指标再好看，用户点一下筛选还是能卡半拍——INP、长任务拆分、React 重渲染边界，才是交互性能真正要盯的地方。</description>
     </item>
     <item>
-      <title>前端 API 错误处理复盘：我后来才意识到，统一兜底不是弹同一句话</title>
+      <title>前端 API 错误处理：统一兜底不是弹同一句话</title>
       <link>https://suijf.site/blog/articles/frontend-api-error-handling/</link>
       <guid isPermaLink="true">https://suijf.site/blog/articles/frontend-api-error-handling/</guid>
       <pubDate>Fri, 02 May 2025 00:00:00 GMT</pubDate>
-      <description>记录一次中后台项目里 API 错误处理越写越散的经历，以及我后来怎么把网络错误、业务错误、表单错误和页面反馈重新分层。</description>
+      <description>同一个错误码在不同页面提示不一致、表单字段错误只会弹 toast，这篇讲清楚怎么把网络错误、业务错误、表单错误和页面反馈重新分层。</description>
     </item>
     <item>
       <title>和 AI 协作写代码：先让它读懂系统，再让它动手</title>
@@ -195,27 +216,6 @@
       <guid isPermaLink="true">https://suijf.site/blog/articles/ai-coding-agent-review/</guid>
       <pubDate>Thu, 01 May 2025 00:00:00 GMT</pubDate>
       <description>记录和 AI 编程助手协作时更稳定的工作方式：先读代码、拆任务、说明改动，再执行和验证。</description>
-    </item>
-    <item>
-      <title>CSS view() 滚动动画：我想少写的是那堆 scroll 计算</title>
-      <link>https://suijf.site/blog/articles/frontend-css-view-scroll-animation/</link>
-      <guid isPermaLink="true">https://suijf.site/blog/articles/frontend-css-view-scroll-animation/</guid>
-      <pubDate>Wed, 30 Apr 2025 00:00:00 GMT</pubDate>
-      <description>从一次滚动动画维护成本说起，记录 CSS view() 适合解决什么问题，以及真实项目里如何做兼容、降级和动效克制。</description>
-    </item>
-    <item>
-      <title>Constructable Stylesheets：我在 Shadow DOM 重复样式里看到的价值</title>
-      <link>https://suijf.site/blog/articles/frontend-constructable-stylesheets/</link>
-      <guid isPermaLink="true">https://suijf.site/blog/articles/frontend-constructable-stylesheets/</guid>
-      <pubDate>Mon, 28 Apr 2025 00:00:00 GMT</pubDate>
-      <description>从 Web Components 里重复插入 style 的维护成本说起，记录 Constructable Stylesheets 适合什么场景，以及它和普通 CSS 的边界。</description>
-    </item>
-    <item>
-      <title>关注 Anchor Positioning：我最想少掉的是浮层定位里的那堆测量代码</title>
-      <link>https://suijf.site/blog/articles/frontend-css-anchor-positioning-2025/</link>
-      <guid isPermaLink="true">https://suijf.site/blog/articles/frontend-css-anchor-positioning-2025/</guid>
-      <pubDate>Wed, 23 Apr 2025 00:00:00 GMT</pubDate>
-      <description>从 Tooltip、Dropdown、Popover 的定位维护成本说起，记录我为什么关注 CSS Anchor Positioning，以及真实项目里不会立刻全量替换的原因。</description>
     </item>
   </channel>
 </rss>
