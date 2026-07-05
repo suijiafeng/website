@@ -5,7 +5,7 @@
     <link>https://suijf.site/</link>
     <description>代码工匠的个人主页，专注复杂中后台、配置平台与数据可视化，记录工程化、性能优化与产品实现上的判断。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Sun, 05 Jul 2026 04:33:33 GMT</lastBuildDate>
+    <lastBuildDate>Sun, 05 Jul 2026 14:14:52 GMT</lastBuildDate>
     <atom:link href="https://suijf.site/rss.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>shadcn/ui 这种「把代码抄进项目」的组件方案，用半年是什么感受</title>
@@ -134,6 +134,13 @@
       <description>Bun 的速度收益到底落在哪一段反馈链路，兼容性边界在哪里，成熟前端项目又为什么不该一口气全量迁移，从低风险脚本切入才是稳妥的验证方式。</description>
     </item>
     <item>
+      <title>虚拟列表与大数据渲染：万行表格卡顿的 DOM 成本账，以及什么时候分页就够了</title>
+      <link>https://suijf.site/blog/articles/virtual-list-large-data-2025/</link>
+      <guid isPermaLink="true">https://suijf.site/blog/articles/virtual-list-large-data-2025/</guid>
+      <pubDate>Sat, 25 Oct 2025 00:00:00 GMT</pubDate>
+      <description>后台万行表格的卡顿是 DOM 数量问题，不是重渲染问题。这篇先划清分页和虚拟化的边界，再用 scrollTop、可视区、缓冲区三个数手写一个固定行高虚拟列表，讲清动态行高的难点、TanStack Virtual 的取舍、表格场景的特殊性和 Ctrl+F 失效这类可访问性代价。</description>
+    </item>
+    <item>
       <title>AI 工具调用不是能调通就行：错误处理和可观测性才是落地关键</title>
       <link>https://suijf.site/blog/articles/ai-tool-calling-error-handling-2025/</link>
       <guid isPermaLink="true">https://suijf.site/blog/articles/ai-tool-calling-error-handling-2025/</guid>
@@ -162,11 +169,25 @@
       <description>讨论 Prompt 工程在真实业务中的作用，重点不在花哨模板，而在输入结构、输出约束和系统边界设计。</description>
     </item>
     <item>
-      <title>容器查询用下来之后：我终于少写了一些页面级补丁样式</title>
-      <link>https://suijf.site/blog/articles/frontend-css-container-queries-2025/</link>
-      <guid isPermaLink="true">https://suijf.site/blog/articles/frontend-css-container-queries-2025/</guid>
-      <pubDate>Sat, 12 Jul 2025 00:00:00 GMT</pubDate>
-      <description>同一个卡片组件放进不同容器就要补一次样式，这篇讲清楚 CSS 容器查询为什么比媒体查询更适合组件化响应式布局。</description>
+      <title>WebGPU 初探：十万点散点图卡死 Canvas 之后的渲染能力预研</title>
+      <link>https://suijf.site/blog/articles/webgpu-first-look-2025/</link>
+      <guid isPermaLink="true">https://suijf.site/blog/articles/webgpu-first-look-2025/</guid>
+      <pubDate>Sat, 09 Aug 2025 00:00:00 GMT</pubDate>
+      <description>Canvas 2D 画十万个点为什么拖不动、WebGL 的门槛卡在哪、WebGPU 的 adapter/device/pipeline 心智模型怎么理解。附一个最小的点集渲染示例、2025 年中的浏览器支持现状与降级策略，以及什么业务根本用不上它。</description>
+    </item>
+    <item>
+      <title>MCP 与 AI 工具生态：给 AI 助手接内部系统，胶水代码写到第三套之前</title>
+      <link>https://suijf.site/blog/articles/mcp-ai-tooling-2025/</link>
+      <guid isPermaLink="true">https://suijf.site/blog/articles/mcp-ai-tooling-2025/</guid>
+      <pubDate>Sat, 26 Jul 2025 00:00:00 GMT</pubDate>
+      <description>AI 助手每接一个内部系统就要写一套 function calling 胶水代码，接入成本随系统数量线性涨。这篇算清楚这笔账，写一个暴露只读订单查询的最小 MCP server，聊聊 MCP 解决的标准化问题、权限边界怎么划，以及它和直接 function calling 的取舍。</description>
+    </item>
+    <item>
+      <title>RAG 与向量检索入门：文档里明明有答案，AI 为什么还答错</title>
+      <link>https://suijf.site/blog/articles/rag-vector-search-intro-2025/</link>
+      <guid isPermaLink="true">https://suijf.site/blog/articles/rag-vector-search-intro-2025/</guid>
+      <pubDate>Wed, 25 Jun 2025 00:00:00 GMT</pubDate>
+      <description>内部文档问答工具答错的问题，多数出在检索层而不是生成层。这篇讲清楚文本切块策略的实际影响、embedding 与相似度检索的直观理解、混合检索怎么补短板，以及评估召回质量的土办法。</description>
     </item>
     <item>
       <title>做 AI 应用时，为什么上下文管理比模型选型更容易决定成败</title>
@@ -195,27 +216,6 @@
       <guid isPermaLink="true">https://suijf.site/blog/articles/ai-coding-agent-review/</guid>
       <pubDate>Thu, 01 May 2025 00:00:00 GMT</pubDate>
       <description>记录和 AI 编程助手协作时更稳定的工作方式：先读代码、拆任务、说明改动，再执行和验证。</description>
-    </item>
-    <item>
-      <title>CSS view() 滚动动画：我想少写的是那堆 scroll 计算</title>
-      <link>https://suijf.site/blog/articles/frontend-css-view-scroll-animation/</link>
-      <guid isPermaLink="true">https://suijf.site/blog/articles/frontend-css-view-scroll-animation/</guid>
-      <pubDate>Wed, 30 Apr 2025 00:00:00 GMT</pubDate>
-      <description>手写 scroll 监听算进度容易卡顿，也难维护；CSS view() 能把这类动画交还给浏览器，但兼容降级和动效克制要做到位。</description>
-    </item>
-    <item>
-      <title>Constructable Stylesheets：我在 Shadow DOM 重复样式里看到的价值</title>
-      <link>https://suijf.site/blog/articles/frontend-constructable-stylesheets/</link>
-      <guid isPermaLink="true">https://suijf.site/blog/articles/frontend-constructable-stylesheets/</guid>
-      <pubDate>Mon, 28 Apr 2025 00:00:00 GMT</pubDate>
-      <description>Shadow DOM 里重复插入 style 的维护成本有多高，Constructable Stylesheets 适合什么场景，它和普通 CSS 的边界又在哪里，这篇讲清楚。</description>
-    </item>
-    <item>
-      <title>关注 Anchor Positioning：我最想少掉的是浮层定位里的那堆测量代码</title>
-      <link>https://suijf.site/blog/articles/frontend-css-anchor-positioning-2025/</link>
-      <guid isPermaLink="true">https://suijf.site/blog/articles/frontend-css-anchor-positioning-2025/</guid>
-      <pubDate>Wed, 23 Apr 2025 00:00:00 GMT</pubDate>
-      <description>Tooltip、Dropdown、Popover 的定位维护成本一直很高，这篇讲清楚 CSS Anchor Positioning 能省掉哪部分测量代码，以及真实项目里为什么不会立刻全量替换。</description>
     </item>
   </channel>
 </rss>

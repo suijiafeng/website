@@ -33,15 +33,15 @@
 - [少装一个库之后：我重新补了一遍 JavaScript 原生能力](https://suijf.site/blog/articles/frontend-js-native-features-2025/): query string、格式化、深拷贝、请求取消这些场景，很多时候不需要额外装库——JavaScript 原生 API 已经能表达清楚，前提是先看兼容性和团队成本。
 - [React Context 性能这件事：我不再把“全局状态”当成省事方案](https://suijf.site/blog/articles/react-context-performance-2025/): Context 混放状态会让一次输入拖着半个页面重渲染——问题不在 Context 本身，而在状态边界，拆分职责、区分 state 和 actions 才是根本解法。
 - [试 Bun 之后我更关心的不是跑分，而是反馈链路有没有变短](https://suijf.site/blog/articles/frontend-bun-toolchain-2025/): Bun 的速度收益到底落在哪一段反馈链路，兼容性边界在哪里，成熟前端项目又为什么不该一口气全量迁移，从低风险脚本切入才是稳妥的验证方式。
+- [虚拟列表与大数据渲染：万行表格卡顿的 DOM 成本账，以及什么时候分页就够了](https://suijf.site/blog/articles/virtual-list-large-data-2025/): 后台万行表格的卡顿是 DOM 数量问题，不是重渲染问题。这篇先划清分页和虚拟化的边界，再用 scrollTop、可视区、缓冲区三个数手写一个固定行高虚拟列表，讲清动态行高的难点、TanStack Virtual 的取舍、表格场景的特殊性和 Ctrl+F 失效这类可访问性代价。
 - [AI 工具调用不是能调通就行：错误处理和可观测性才是落地关键](https://suijf.site/blog/articles/ai-tool-calling-error-handling-2025/): 工具调用真正难的不是能不能调通，而是失败之后怎么办；这篇讲清楚为什么 AI 应用必须统一处理工具错误、参数校验和调用日志。
 - [WebAssembly 3.0 我会怎么判断该不该用：别把它当成更快的 JS](https://suijf.site/blog/articles/frontend-webassembly-3-2025/): WebAssembly 不是更快的 JavaScript，判断该不该上它，要先看任务是不是真的计算密集，再算清楚加载、调试和团队维护这几项隐藏成本。
 - [React 复杂表单：我为什么不再一路 useState 写到底](https://suijf.site/blog/articles/react-form-state-2025/): 表单值、字段状态、错误状态、流程状态混在一个对象里迟早会失控——拆开这四类状态，异步校验的竞态和多阶段提交才有地方安放。
 - [Prompt 工程在 2025 年还有价值吗：真正有用的不是技巧，而是约束](https://suijf.site/blog/articles/ai-prompt-engineering-2025/): 讨论 Prompt 工程在真实业务中的作用，重点不在花哨模板，而在输入结构、输出约束和系统边界设计。
-- [容器查询用下来之后：我终于少写了一些页面级补丁样式](https://suijf.site/blog/articles/frontend-css-container-queries-2025/): 同一个卡片组件放进不同容器就要补一次样式，这篇讲清楚 CSS 容器查询为什么比媒体查询更适合组件化响应式布局。
+- [WebGPU 初探：十万点散点图卡死 Canvas 之后的渲染能力预研](https://suijf.site/blog/articles/webgpu-first-look-2025/): Canvas 2D 画十万个点为什么拖不动、WebGL 的门槛卡在哪、WebGPU 的 adapter/device/pipeline 心智模型怎么理解。附一个最小的点集渲染示例、2025 年中的浏览器支持现状与降级策略，以及什么业务根本用不上它。
+- [MCP 与 AI 工具生态：给 AI 助手接内部系统，胶水代码写到第三套之前](https://suijf.site/blog/articles/mcp-ai-tooling-2025/): AI 助手每接一个内部系统就要写一套 function calling 胶水代码，接入成本随系统数量线性涨。这篇算清楚这笔账，写一个暴露只读订单查询的最小 MCP server，聊聊 MCP 解决的标准化问题、权限边界怎么划，以及它和直接 function calling 的取舍。
+- [RAG 与向量检索入门：文档里明明有答案，AI 为什么还答错](https://suijf.site/blog/articles/rag-vector-search-intro-2025/): 内部文档问答工具答错的问题，多数出在检索层而不是生成层。这篇讲清楚文本切块策略的实际影响、embedding 与相似度检索的直观理解、混合检索怎么补短板，以及评估召回质量的土办法。
 - [做 AI 应用时，为什么上下文管理比模型选型更容易决定成败](https://suijf.site/blog/articles/ai-context-management-2025/): 结合几次 AI 应用迭代经历，聊聊为什么系统输出不稳时，很多问题其实不在模型，而在上下文怎么组织。
 - [INP 之后的性能复盘：我开始认真看用户点击后的那几百毫秒](https://suijf.site/blog/articles/frontend-web-performance-inp-2025/): 首屏指标再好看，用户点一下筛选还是能卡半拍——INP、长任务拆分、React 重渲染边界，才是交互性能真正要盯的地方。
 - [前端 API 错误处理：统一兜底不是弹同一句话](https://suijf.site/blog/articles/frontend-api-error-handling/): 同一个错误码在不同页面提示不一致、表单字段错误只会弹 toast，这篇讲清楚怎么把网络错误、业务错误、表单错误和页面反馈重新分层。
 - [和 AI 协作写代码：先让它读懂系统，再让它动手](https://suijf.site/blog/articles/ai-coding-agent-review/): 记录和 AI 编程助手协作时更稳定的工作方式：先读代码、拆任务、说明改动，再执行和验证。
-- [CSS view() 滚动动画：我想少写的是那堆 scroll 计算](https://suijf.site/blog/articles/frontend-css-view-scroll-animation/): 手写 scroll 监听算进度容易卡顿，也难维护；CSS view() 能把这类动画交还给浏览器，但兼容降级和动效克制要做到位。
-- [Constructable Stylesheets：我在 Shadow DOM 重复样式里看到的价值](https://suijf.site/blog/articles/frontend-constructable-stylesheets/): Shadow DOM 里重复插入 style 的维护成本有多高，Constructable Stylesheets 适合什么场景，它和普通 CSS 的边界又在哪里，这篇讲清楚。
-- [关注 Anchor Positioning：我最想少掉的是浮层定位里的那堆测量代码](https://suijf.site/blog/articles/frontend-css-anchor-positioning-2025/): Tooltip、Dropdown、Popover 的定位维护成本一直很高，这篇讲清楚 CSS Anchor Positioning 能省掉哪部分测量代码，以及真实项目里为什么不会立刻全量替换。
