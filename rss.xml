@@ -5,8 +5,78 @@
     <link>https://suijf.site/</link>
     <description>代码工匠的个人主页，专注复杂中后台、配置平台与数据可视化，记录工程化、性能优化与产品实现上的判断。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Sun, 05 Jul 2026 14:34:41 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 11 Jul 2026 04:58:42 GMT</lastBuildDate>
     <atom:link href="https://suijf.site/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Trusted Types 落地记：CSP 挡不住的 DOM XSS 怎么补</title>
+      <link>https://suijf.site/blog/articles/trusted-types-xss-defense-2026/</link>
+      <guid isPermaLink="true">https://suijf.site/blog/articles/trusted-types-xss-defense-2026/</guid>
+      <pubDate>Fri, 10 Jul 2026 00:00:00 GMT</pubDate>
+      <description>CSP 管得住脚本从哪个域加载，管不住页面自己往 innerHTML 里塞了什么字符串。Trusted Types 把危险 DOM Sink 的写入变成浏览器强制审查，这篇讲它的机制、落地代码和撞见的真实麻烦。</description>
+    </item>
+    <item>
+      <title>Local-first 与 CRDT 实践：用 Yjs 做协同编辑不再依赖后端合并冲突</title>
+      <link>https://suijf.site/blog/articles/local-first-crdt-yjs-2026/</link>
+      <guid isPermaLink="true">https://suijf.site/blog/articles/local-first-crdt-yjs-2026/</guid>
+      <pubDate>Tue, 07 Jul 2026 00:00:00 GMT</pubDate>
+      <description>团队要做一个多人协同编辑的功能，传统的后端合并冲突加乐观锁在多人同时改同一段内容时很难写干净；记录一下改用 CRDT、用 Yjs 落地协同文档的过程，以及这套方案要付出的代价。</description>
+    </item>
+    <item>
+      <title>Svelte 5 Runes 实践：从 `let` 赋值到 `$state`、`$derived`、`$effect`</title>
+      <link>https://suijf.site/blog/articles/svelte-5-runes-2026/</link>
+      <guid isPermaLink="true">https://suijf.site/blog/articles/svelte-5-runes-2026/</guid>
+      <pubDate>Fri, 03 Jul 2026 00:00:00 GMT</pubDate>
+      <description>Svelte 4 的响应式声明依赖编译期静态分析，没法在组件外的普通模块里复用；Runes 用 `$state`、`$derived`、`$effect`、`$props` 这套显式 API 解决了这个问题，这篇记录我们把内部发布看板一部分模块迁移到 Runes 后的具体判断。</description>
+    </item>
+    <item>
+      <title>WebGPU 落地记录：从 Canvas 2D/WebGL 的绘制瓶颈到 Compute Shader</title>
+      <link>https://suijf.site/blog/articles/webgpu-frontend-practice-2026/</link>
+      <guid isPermaLink="true">https://suijf.site/blog/articles/webgpu-frontend-practice-2026/</guid>
+      <pubDate>Mon, 29 Jun 2026 00:00:00 GMT</pubDate>
+      <description>几十万个点位的散点图在 Canvas 2D 下卡到没法交互，换 WebGL 也只是把卡顿从主线程挪到了每帧几千次 draw call 上——记录我排查这个瓶颈、最终用 WebGPU 的 Compute Shader 重写数据聚合逻辑的过程。</description>
+    </item>
+    <item>
+      <title>OPFS 源私有文件系统：浏览器里跑 SQLite 之前要搞懂的存储模型</title>
+      <link>https://suijf.site/blog/articles/opfs-browser-storage-2026/</link>
+      <guid isPermaLink="true">https://suijf.site/blog/articles/opfs-browser-storage-2026/</guid>
+      <pubDate>Wed, 24 Jun 2026 00:00:00 GMT</pubDate>
+      <description>评估一个离线优先的文档编辑器要不要把数据存进浏览器时，IndexedDB 的异步 API 在高频写入场景下写起来啰嗦、性能也一般，OPFS 提供的同步访问句柄和更接近真实文件的操作方式是另一条路，这篇讲清楚它的存储模型、权限模型、和 IndexedDB/Cache Storage 的分工，以及配额和数据清除时该怎么应对。</description>
+    </item>
+    <item>
+      <title>Speculation Rules 预渲染：把下一个页面提前跑起来</title>
+      <link>https://suijf.site/blog/articles/speculation-rules-prerender-2026/</link>
+      <guid isPermaLink="true">https://suijf.site/blog/articles/speculation-rules-prerender-2026/</guid>
+      <pubDate>Fri, 19 Jun 2026 00:00:00 GMT</pubDate>
+      <description>Speculation Rules API 能让浏览器提前预取甚至预渲染下一跳页面，比 link rel=prefetch 和悬停预加载库更进一步，但预渲染错页面会白白浪费带宽，预渲染有副作用的页面还可能提前触发埋点或写操作，这些代价得先算清楚。</description>
+    </item>
+    <item>
+      <title>用 scheduler.postTask 和 scheduler.yield 给长任务分优先级</title>
+      <link>https://suijf.site/blog/articles/scheduler-posttask-api-2026/</link>
+      <guid isPermaLink="true">https://suijf.site/blog/articles/scheduler-posttask-api-2026/</guid>
+      <pubDate>Sun, 14 Jun 2026 00:00:00 GMT</pubDate>
+      <description>长任务把主线程堵住的时候，setTimeout(fn, 0) 和 requestIdleCallback 都救不了场——scheduler.postTask() 的优先级参数和 scheduler.yield() 的循环内让出，才是浏览器原生给出的任务调度方案。</description>
+    </item>
+    <item>
+      <title>什么时候该用 light-dark() 替换手写的暗色模式方案</title>
+      <link>https://suijf.site/blog/articles/css-light-dark-color-scheme-2026/</link>
+      <guid isPermaLink="true">https://suijf.site/blog/articles/css-light-dark-color-scheme-2026/</guid>
+      <pubDate>Tue, 09 Jun 2026 00:00:00 GMT</pubDate>
+      <description>light-dark() 函数和 color-scheme 属性能不能替换项目里现有的暗色模式实现，这篇给出具体判断标准：暗色变量数量、是否依赖 data-theme 做第三方组件适配，以及原生表单控件、滚动条怎么借 color-scheme 自动换色。</description>
+    </item>
+    <item>
+      <title>用原生 Popover 和 dialog 替换手写下拉菜单与弹层组件</title>
+      <link>https://suijf.site/blog/articles/native-popover-dialog-2026/</link>
+      <guid isPermaLink="true">https://suijf.site/blog/articles/native-popover-dialog-2026/</guid>
+      <pubDate>Tue, 02 Jun 2026 00:00:00 GMT</pubDate>
+      <description>记录给后台表格行加一个操作菜单时，把原本要手写的 z-index、点击外部关闭、Esc、焦点管理和定位计算，逐步换成 popover 属性、dialog 元素和 CSS 锚点定位的过程，附选型判断和可运行代码。</description>
+    </item>
+    <item>
+      <title>Temporal API 落地：用不可变的日期时间对象替换 Date</title>
+      <link>https://suijf.site/blog/articles/js-temporal-api-2026/</link>
+      <guid isPermaLink="true">https://suijf.site/blog/articles/js-temporal-api-2026/</guid>
+      <pubDate>Tue, 26 May 2026 00:00:00 GMT</pubDate>
+      <description>Date 对象在时区、夏令时和月份索引上的历史包袱一直没解决，这篇讲 TC39 Temporal API 的对象设计、时区处理方式、不可变性的实际收益，以及在账单周期计算这类场景里落地的判断过程。</description>
+    </item>
     <item>
       <title>shadcn/ui 这种「把代码抄进项目」的组件方案，用半年是什么感受</title>
       <link>https://suijf.site/blog/articles/shadcn-ui-component-system-2026/</link>
@@ -124,35 +194,21 @@
       <link>https://suijf.site/blog/articles/react-context-performance-2025/</link>
       <guid isPermaLink="true">https://suijf.site/blog/articles/react-context-performance-2025/</guid>
       <pubDate>Tue, 18 Nov 2025 00:00:00 GMT</pubDate>
-      <description>Context 混放状态会让一次输入拖着半个页面重渲染——问题不在 Context 本身，而在状态边界，拆分职责、区分 state 和 actions 才是根本解法。</description>
+      <description>Context 混放状态会让一次输入拖着半个页面重渲染——问题不在 Context 本身，而在状态该放在哪一层、归谁管，拆分职责、区分 state 和 actions 才是根本解法。</description>
     </item>
     <item>
       <title>试 Bun 之后我更关心的不是跑分，而是反馈链路有没有变短</title>
       <link>https://suijf.site/blog/articles/frontend-bun-toolchain-2025/</link>
       <guid isPermaLink="true">https://suijf.site/blog/articles/frontend-bun-toolchain-2025/</guid>
       <pubDate>Sun, 16 Nov 2025 00:00:00 GMT</pubDate>
-      <description>Bun 的速度收益到底落在哪一段反馈链路，兼容性边界在哪里，成熟前端项目又为什么不该一口气全量迁移，从低风险脚本切入才是稳妥的验证方式。</description>
-    </item>
-    <item>
-      <title>虚拟列表与大数据渲染：万行表格卡顿的 DOM 成本账，以及什么时候分页就够了</title>
-      <link>https://suijf.site/blog/articles/virtual-list-large-data-2025/</link>
-      <guid isPermaLink="true">https://suijf.site/blog/articles/virtual-list-large-data-2025/</guid>
-      <pubDate>Sat, 25 Oct 2025 00:00:00 GMT</pubDate>
-      <description>后台万行表格的卡顿是 DOM 数量问题，不是重渲染问题。这篇先划清分页和虚拟化的边界，再用 scrollTop、可视区、缓冲区三个数手写一个固定行高虚拟列表，讲清动态行高的难点、TanStack Virtual 的取舍、表格场景的特殊性和 Ctrl+F 失效这类可访问性代价。</description>
+      <description>Bun 的速度收益到底落在哪一段反馈链路，兼容性能扛到什么程度，成熟前端项目又为什么不该一口气全量迁移，从低风险脚本切入才是稳妥的验证方式。</description>
     </item>
     <item>
       <title>AI 工具调用不是能调通就行：错误处理和可观测性才是落地关键</title>
       <link>https://suijf.site/blog/articles/ai-tool-calling-error-handling-2025/</link>
       <guid isPermaLink="true">https://suijf.site/blog/articles/ai-tool-calling-error-handling-2025/</guid>
       <pubDate>Tue, 14 Oct 2025 00:00:00 GMT</pubDate>
-      <description>工具调用真正难的不是能不能调通，而是失败之后怎么办；这篇讲清楚为什么 AI 应用必须统一处理工具错误、参数校验和调用日志。</description>
-    </item>
-    <item>
-      <title>WebAssembly 3.0 我会怎么判断该不该用：别把它当成更快的 JS</title>
-      <link>https://suijf.site/blog/articles/frontend-webassembly-3-2025/</link>
-      <guid isPermaLink="true">https://suijf.site/blog/articles/frontend-webassembly-3-2025/</guid>
-      <pubDate>Sat, 20 Sep 2025 00:00:00 GMT</pubDate>
-      <description>WebAssembly 不是更快的 JavaScript，判断该不该上它，要先看任务是不是真的计算密集，再算清楚加载、调试和团队维护这几项隐藏成本。</description>
+      <description>调通工具只是开了个头，参数错了、接口超时、结果不完整，这些失败路径没处理好，Agent 很快会变得不可靠；这篇讲清楚怎么统一处理工具错误、参数校验和调用日志。</description>
     </item>
     <item>
       <title>React 复杂表单：我为什么不再一路 useState 写到底</title>
@@ -160,62 +216,6 @@
       <guid isPermaLink="true">https://suijf.site/blog/articles/react-form-state-2025/</guid>
       <pubDate>Sun, 07 Sep 2025 00:00:00 GMT</pubDate>
       <description>表单值、字段状态、错误状态、流程状态混在一个对象里迟早会失控——拆开这四类状态，异步校验的竞态和多阶段提交才有地方安放。</description>
-    </item>
-    <item>
-      <title>Prompt 工程在 2025 年还有价值吗：真正有用的不是技巧，而是约束</title>
-      <link>https://suijf.site/blog/articles/ai-prompt-engineering-2025/</link>
-      <guid isPermaLink="true">https://suijf.site/blog/articles/ai-prompt-engineering-2025/</guid>
-      <pubDate>Thu, 21 Aug 2025 00:00:00 GMT</pubDate>
-      <description>讨论 Prompt 工程在真实业务中的作用，重点不在花哨模板，而在输入结构、输出约束和系统边界设计。</description>
-    </item>
-    <item>
-      <title>WebGPU 初探：十万点散点图卡死 Canvas 之后的渲染能力预研</title>
-      <link>https://suijf.site/blog/articles/webgpu-first-look-2025/</link>
-      <guid isPermaLink="true">https://suijf.site/blog/articles/webgpu-first-look-2025/</guid>
-      <pubDate>Sat, 09 Aug 2025 00:00:00 GMT</pubDate>
-      <description>Canvas 2D 画十万个点为什么拖不动、WebGL 的门槛卡在哪、WebGPU 的 adapter/device/pipeline 心智模型怎么理解。附一个最小的点集渲染示例、2025 年中的浏览器支持现状与降级策略，以及什么业务根本用不上它。</description>
-    </item>
-    <item>
-      <title>MCP 与 AI 工具生态：给 AI 助手接内部系统，胶水代码写到第三套之前</title>
-      <link>https://suijf.site/blog/articles/mcp-ai-tooling-2025/</link>
-      <guid isPermaLink="true">https://suijf.site/blog/articles/mcp-ai-tooling-2025/</guid>
-      <pubDate>Sat, 26 Jul 2025 00:00:00 GMT</pubDate>
-      <description>AI 助手每接一个内部系统就要写一套 function calling 胶水代码，接入成本随系统数量线性涨。这篇算清楚这笔账，写一个暴露只读订单查询的最小 MCP server，聊聊 MCP 解决的标准化问题、权限边界怎么划，以及它和直接 function calling 的取舍。</description>
-    </item>
-    <item>
-      <title>RAG 与向量检索入门：文档里明明有答案，AI 为什么还答错</title>
-      <link>https://suijf.site/blog/articles/rag-vector-search-intro-2025/</link>
-      <guid isPermaLink="true">https://suijf.site/blog/articles/rag-vector-search-intro-2025/</guid>
-      <pubDate>Wed, 25 Jun 2025 00:00:00 GMT</pubDate>
-      <description>内部文档问答工具答错的问题，多数出在检索层而不是生成层。这篇讲清楚文本切块策略的实际影响、embedding 与相似度检索的直观理解、混合检索怎么补短板，以及评估召回质量的土办法。</description>
-    </item>
-    <item>
-      <title>做 AI 应用时，为什么上下文管理比模型选型更容易决定成败</title>
-      <link>https://suijf.site/blog/articles/ai-context-management-2025/</link>
-      <guid isPermaLink="true">https://suijf.site/blog/articles/ai-context-management-2025/</guid>
-      <pubDate>Thu, 12 Jun 2025 00:00:00 GMT</pubDate>
-      <description>结合几次 AI 应用迭代经历，聊聊为什么系统输出不稳时，很多问题其实不在模型，而在上下文怎么组织。</description>
-    </item>
-    <item>
-      <title>INP 之后的性能复盘：我开始认真看用户点击后的那几百毫秒</title>
-      <link>https://suijf.site/blog/articles/frontend-web-performance-inp-2025/</link>
-      <guid isPermaLink="true">https://suijf.site/blog/articles/frontend-web-performance-inp-2025/</guid>
-      <pubDate>Tue, 27 May 2025 00:00:00 GMT</pubDate>
-      <description>首屏指标再好看，用户点一下筛选还是能卡半拍——INP、长任务拆分、React 重渲染边界，才是交互性能真正要盯的地方。</description>
-    </item>
-    <item>
-      <title>前端 API 错误处理：统一兜底不是弹同一句话</title>
-      <link>https://suijf.site/blog/articles/frontend-api-error-handling/</link>
-      <guid isPermaLink="true">https://suijf.site/blog/articles/frontend-api-error-handling/</guid>
-      <pubDate>Fri, 02 May 2025 00:00:00 GMT</pubDate>
-      <description>同一个错误码在不同页面提示不一致、表单字段错误只会弹 toast，这篇讲清楚怎么把网络错误、业务错误、表单错误和页面反馈重新分层。</description>
-    </item>
-    <item>
-      <title>和 AI 协作写代码：先让它读懂系统，再让它动手</title>
-      <link>https://suijf.site/blog/articles/ai-coding-agent-review/</link>
-      <guid isPermaLink="true">https://suijf.site/blog/articles/ai-coding-agent-review/</guid>
-      <pubDate>Thu, 01 May 2025 00:00:00 GMT</pubDate>
-      <description>记录和 AI 编程助手协作时更稳定的工作方式：先读代码、拆任务、说明改动，再执行和验证。</description>
     </item>
   </channel>
 </rss>
